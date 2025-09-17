@@ -6,9 +6,9 @@ const About = () => {
       {/* Hero Section */}
       <section className="relative py-24 lg:py-32">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 charcoal-effect"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
+            backgroundImage: 'url("https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
         <div className="relative z-10 container-custom text-center">
@@ -28,7 +28,7 @@ const About = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary-900 mb-6">
-                  Our Mission
+                  About GMWB
                 </h2>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 The Global Mission Wind Band, made up of talented middle and high school students, is dedicated to enriching our community through 
@@ -56,9 +56,9 @@ const About = () => {
               </div>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Band rehearsal"
-                  className="rounded-xl shadow-lg w-full h-96 object-cover"
+                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  alt="Musical sheet with wind band instruments"
+                  className="rounded-xl shadow-lg w-full h-96 object-cover charcoal-effect"
                 />
               </div>
             </div>
@@ -103,6 +103,56 @@ const About = () => {
                       className="rounded-xl shadow-lg w-full h-96 object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2025 GMWB Board Members */}
+            <div className="bg-primary-50 rounded-2xl p-8 mb-16">
+              <h3 className="font-serif text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
+                2025 GMWB Board Members
+              </h3>
+              <div className="max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Users className="h-8 w-8 text-brass-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">President</h4>
+                    <p className="text-gray-700 font-medium">Yunhee Lee</p>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+                    <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Award className="h-8 w-8 text-primary-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Vice President</h4>
+                    <p className="text-gray-700 font-medium">Yunjin Lee</p>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Calendar className="h-8 w-8 text-brass-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Secretary</h4>
+                    <p className="text-gray-700 font-medium">Ahyoung Cho</p>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-6 shadow-sm text-center md:col-start-1 lg:col-start-2">
+                    <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Heart className="h-8 w-8 text-primary-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Treasurer</h4>
+                    <p className="text-gray-700 font-medium">Hyejin Park</p>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-6 shadow-sm text-center md:col-start-2 lg:col-start-3">
+                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Music className="h-8 w-8 text-brass-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Committee</h4>
+                    <p className="text-gray-700 font-medium">Jinmi Do</p>
                   </div>
                 </div>
               </div>
