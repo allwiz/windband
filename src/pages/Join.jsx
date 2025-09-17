@@ -52,9 +52,9 @@ const Join = () => {
       {/* Hero Section */}
       <section className="relative py-24 lg:py-32">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 charcoal-effect"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
+            backgroundImage: 'url("https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
         <div className="relative z-10 container-custom text-center">

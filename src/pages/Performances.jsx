@@ -23,7 +23,7 @@ const Performances = () => {
       address: "456 River Road, Music City, MC 12345",
       description: "Welcome spring with a delightful afternoon of classical and modern wind ensemble pieces performed in the beautiful outdoor setting of Riverside Park.",
       ticketPrice: "$10 Adults, $5 Students",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      image: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       featured: false
     },
     {
