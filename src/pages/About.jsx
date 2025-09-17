@@ -1,4 +1,4 @@
-import { Award, Users, Music, Heart, Calendar, MapPin } from 'lucide-react';
+import { Award, Users, Music, Heart, Calendar } from 'lucide-react';
 
 const About = () => {
   return (
@@ -16,7 +16,7 @@ const About = () => {
             About Our Band
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
-            A legacy of musical excellence and community service spanning nearly four decades
+          GMWB inspires young musicians to use their talents to serve others and spread joy throughout the community
           </p>
         </div>
       </section>
@@ -31,9 +31,9 @@ const About = () => {
                   Our Mission
                 </h2>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  The Global Mission Wind Band is dedicated to enriching our community through exceptional
-                  musical performances, fostering musical education, and creating lasting bonds among
-                  musicians of all ages and backgrounds.
+                The Global Mission Wind Band, made up of talented middle and high school students, is dedicated to enriching our community through 
+                outstanding musical performances. Every Saturday evening in Irvine, they rehearse under the guidance of Dr. Andrew Park, a professor
+                at Pacific University who has led the ensemble for over 16 years..
                 </p>
                 <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                   We believe in the transformative power of music to bring people together, inspire
@@ -60,6 +60,51 @@ const About = () => {
                   alt="Band rehearsal"
                   className="rounded-xl shadow-lg w-full h-96 object-cover"
                 />
+              </div>
+            </div>
+
+            {/* GMWB Director */}
+            <div className="bg-gray-50 rounded-2xl p-8 mb-16">
+              <h3 className="font-serif text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
+                GMWB Director
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <h4 className="font-serif text-2xl font-bold text-primary-900 mb-2">
+                    Dr. Andrew Park
+                  </h4>
+                  <h5 className="font-serif text-lg font-bold text-brass-700 mb-6">
+                    GMWB Director and Conductor
+                  </h5>
+                  <div className="space-y-4 text-gray-700">
+                    <p className="flex items-center space-x-3">
+                      <Music className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>Professor at Azusa Pacific University</span>
+                    </p>
+                    <p className="flex items-center space-x-3">
+                      <Award className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>CEO & Executive Director, OpusOne International Music Festival</span>
+                    </p>
+                    <p className="flex items-center space-x-3">
+                      <Users className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>Artistic Director, Satori and IAPMT Competitions</span>
+                    </p>
+                    <p className="flex items-center space-x-3">
+                      <Heart className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>Dedicated educator, pianist, conductor, and chamber musician</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="order-1 lg:order-2">
+                  <div className="relative">
+                    <img
+                      src="https://lh3.googleusercontent.com/sitesv/AICyYdaVs3WYZehOaOu4St_335Ytba7P5S7i-K5KIzFIKZZgonKeJlu4VTFmpKdVAU4wEN6eeEHD1CrA9jtePTCsK5UwgYm2d65E9ar6IOMBK7rTR_jleU_auFG0j0d6WsxTnB7ULCaj5lN51XRkDYjHMtUPUpN79HZdkzMG-igxXuWVOi8yJw62PCeb9OT5Ojp_AFoeayavXGnpcE3OIDKIibkk_kmgIvtkjfLg=w1280"
+                      alt="Dr. Andrew Park, GMWB Director and Conductor"
+                      className="rounded-xl shadow-lg w-full h-96 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl" />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -131,56 +176,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Conductor Section */}
-      <section className="section-padding bg-primary-50">
-        <div className="container-custom">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1">
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary-900 mb-6">
-                  Meet Our Conductor
-                </h2>
-                <h3 className="font-serif text-xl font-bold text-brass-700 mb-4">
-                  Dr. Sarah Mitchell
-                </h3>
-                <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  Dr. Sarah Mitchell brings over 20 years of conducting experience to the Global Mission Wind Band.
-                  A graduate of the prestigious Juilliard School, she has led ensembles across the country
-                  and is known for her passionate approach to music education and performance.
-                </p>
-                <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  Under her leadership since 2015, the band has achieved new heights of artistic excellence
-                  and community engagement, earning recognition from the National Band Association.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <Award className="h-5 w-5 text-brass-600 flex-shrink-0" />
-                    <span className="text-gray-700">Master of Music, Juilliard School</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Award className="h-5 w-5 text-brass-600 flex-shrink-0" />
-                    <span className="text-gray-700">National Band Association Outstanding Conductor Award</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Calendar className="h-5 w-5 text-brass-600 flex-shrink-0" />
-                    <span className="text-gray-700">20+ Years Conducting Experience</span>
-                  </div>
-                </div>
-              </div>
-              <div className="order-1 lg:order-2">
-                <div className="relative">
-                  <img
-                    src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Dr. Sarah Mitchell conducting"
-                    className="rounded-xl shadow-lg w-full h-96 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Statistics & Achievements */}
       <section className="section-padding bg-white">
