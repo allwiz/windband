@@ -31,7 +31,7 @@ const About = () => {
                   Our Mission
                 </h2>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  The Wind Concert Band is dedicated to enriching our community through exceptional
+                  The Global Mission Wind Band is dedicated to enriching our community through exceptional
                   musical performances, fostering musical education, and creating lasting bonds among
                   musicians of all ages and backgrounds.
                 </p>
@@ -144,7 +144,7 @@ const About = () => {
                   Dr. Sarah Mitchell
                 </h3>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  Dr. Sarah Mitchell brings over 20 years of conducting experience to the Wind Concert Band.
+                  Dr. Sarah Mitchell brings over 20 years of conducting experience to the Global Mission Wind Band.
                   A graduate of the prestigious Juilliard School, she has led ensembles across the country
                   and is known for her passionate approach to music education and performance.
                 </p>

@@ -1,4 +1,4 @@
-# Wind Concert Band Website
+# Global Mission Wind Band Website
 
 A professional, responsive website for a community wind concert band, built with React, Vite, and Tailwind CSS. Inspired by the design and functionality of the GMC Orchestra website.
 
@@ -224,4 +224,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Wind Concert Band Website** - Excellence in Musical Performance Since 1985
+**Global Mission Wind Band Website** - Excellence in Musical Performance Since 1985

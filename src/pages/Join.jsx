@@ -160,7 +160,7 @@ const Join = () => {
                   Member Benefits
                 </h2>
                 <p className="text-lg text-gray-700 mb-8">
-                  Joining the Wind Concert Band offers more than just the opportunity to make music.
+                  Joining the Global Mission Wind Band offers more than just the opportunity to make music.
                   You'll become part of a supportive community that values artistic growth and
                   meaningful connections.
                 </p>
@@ -271,7 +271,7 @@ const Join = () => {
                     </h3>
                     <p className="text-gray-700">
                       Upon acceptance, you'll receive your music folder, rehearsal schedule,
-                      and be invited to your first rehearsal. Welcome to the Wind Concert Band family!
+                      and be invited to your first rehearsal. Welcome to the Global Mission Wind Band family!
                     </p>
                   </div>
                 </div>
@@ -296,7 +296,7 @@ const Join = () => {
               Start Your Application
             </button>
             <a
-              href="mailto:auditions@windconcertband.org"
+              href="mailto:auditions@globalmissionwindband.org"
               className="btn-outline border-white text-white hover:bg-white hover:text-primary-900 inline-flex items-center"
             >
               Email Questions
@@ -304,7 +304,7 @@ const Join = () => {
           </div>
           <div className="mt-8 text-primary-200">
             <p>Questions? Contact our audition coordinator:</p>
-            <p className="font-semibold">auditions@windconcertband.org</p>
+            <p className="font-semibold">auditions@globalmissionwindband.org</p>
             <p>(123) 456-7890</p>
           </div>
         </div>

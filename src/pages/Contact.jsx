@@ -16,7 +16,7 @@ const Contact = () => {
             Contact Us
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
-            Get in touch with the Wind Concert Band - we'd love to hear from you
+            Get in touch with the Global Mission Wind Band - we'd love to hear from you
           </p>
         </div>
       </section>
@@ -75,7 +75,7 @@ const Contact = () => {
                       <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
                         Email
                       </h3>
-                      <p className="text-gray-700">info@windconcertband.org</p>
+                      <p className="text-gray-700">info@globalmissionwindband.org</p>
                       <p className="text-gray-600 text-sm mt-1">
                         We typically respond within 24 hours
                       </p>
@@ -108,36 +108,36 @@ const Contact = () => {
                       <Users className="h-5 w-5 text-brass-600" />
                       <div>
                         <a
-                          href="mailto:auditions@windconcertband.org"
+                          href="mailto:auditions@globalmissionwindband.org"
                           className="text-primary-900 hover:text-brass-600 font-medium"
                         >
                           Auditions & Membership
                         </a>
-                        <p className="text-gray-600 text-sm">auditions@windconcertband.org</p>
+                        <p className="text-gray-600 text-sm">auditions@globalmissionwindband.org</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Calendar className="h-5 w-5 text-brass-600" />
                       <div>
                         <a
-                          href="mailto:events@windconcertband.org"
+                          href="mailto:events@globalmissionwindband.org"
                           className="text-primary-900 hover:text-brass-600 font-medium"
                         >
                           Events & Bookings
                         </a>
-                        <p className="text-gray-600 text-sm">events@windconcertband.org</p>
+                        <p className="text-gray-600 text-sm">events@globalmissionwindband.org</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Music className="h-5 w-5 text-brass-600" />
                       <div>
                         <a
-                          href="mailto:conductor@windconcertband.org"
+                          href="mailto:conductor@globalmissionwindband.org"
                           className="text-primary-900 hover:text-brass-600 font-medium"
                         >
                           Musical Director
                         </a>
-                        <p className="text-gray-600 text-sm">conductor@windconcertband.org</p>
+                        <p className="text-gray-600 text-sm">conductor@globalmissionwindband.org</p>
                       </div>
                     </div>
                   </div>
@@ -305,7 +305,7 @@ const Contact = () => {
                   Are there any fees to join?
                 </h3>
                 <p className="text-gray-700">
-                  No! The Wind Concert Band is completely free to join. We provide music and music stands.
+                  No! The Global Mission Wind Band is completely free to join. We provide music and music stands.
                   You just need to bring your instrument and enthusiasm.
                 </p>
               </div>

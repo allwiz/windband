@@ -18,7 +18,7 @@ const Home = () => {
         {/* Hero Content */}
         <div className="relative z-10 text-center text-white container-custom">
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Wind Concert Band
+            Global Mission Wind Band
           </h1>
           <p className="text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto font-light">
             Excellence in Musical Performance Since 1985
@@ -55,7 +55,7 @@ const Home = () => {
               Welcome to Our Musical Community
             </h2>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              For nearly four decades, the Wind Concert Band has been a cornerstone of our community's
+              For nearly four decades, the Global Mission Wind Band has been a cornerstone of our community's
               cultural life. We bring together passionate musicians of all ages and backgrounds to create
               memorable performances that inspire and entertain audiences throughout the region.
             </p>

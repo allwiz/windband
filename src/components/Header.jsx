@@ -27,7 +27,7 @@ const Header = () => {
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-xl lg:text-2xl font-bold text-primary-900">
-                Wind Concert Band
+                Global Mission Wind Band
               </span>
               <span className="text-sm text-gray-600 hidden sm:block">
                 Excellence in Musical Performance
