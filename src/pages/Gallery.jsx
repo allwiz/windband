@@ -16,13 +16,34 @@ const Gallery = () => {
   const [galleryItems, setGalleryItems] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [selectedItem, setSelectedItem] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [filter, setFilter] = useState('all') // all, photos, videos
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    fetchGalleryItems()
+    let mounted = true
+
+    const initializeGallery = async () => {
+      try {
+        if (mounted) {
+          await fetchGalleryItems()
+        }
+      } catch (err) {
+        console.error('Gallery initialization error:', err)
+        if (mounted) {
+          setError('Failed to load gallery')
+          setSampleData()
+        }
+      }
+    }
+
+    initializeGallery()
+
+    return () => {
+      mounted = false
+    }
   }, [])
 
   useEffect(() => {
@@ -31,16 +52,32 @@ const Gallery = () => {
 
   const fetchGalleryItems = async () => {
     try {
+      setError(null)
+
       const { data, error } = await supabase
         .from('gallery_items')
         .select('*')
         .order('created_at', { ascending: false })
 
-      if (error) throw error
+      if (error) {
+        console.error('Database error:', error)
+        // If table doesn't exist or other database error, use sample data
+        setError(`Database error: ${error.message}`)
+        setSampleData()
+        return
+      }
+
+      // Successfully fetched data from database
       setGalleryItems(data || [])
+
+      // If no data in database, use sample data
+      if (!data || data.length === 0) {
+        setSampleData()
+      }
     } catch (error) {
       console.error('Error fetching gallery items:', error)
-      // Use sample data if no database connection
+      setError(`Connection error: ${error.message}`)
+      // Use sample data if no database connection or any other error
       setSampleData()
     } finally {
       setLoading(false)
@@ -165,6 +202,17 @@ const Gallery = () => {
     )
   }
 
+  // Show error message if there's an error (but still show sample data)
+  const errorMessage = error && (
+    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-8">
+      <div className="flex items-center">
+        <div className="text-yellow-600">
+          ⚠️ {error}. Using sample gallery data for demonstration.
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -177,6 +225,9 @@ const Gallery = () => {
             <p className="text-large text-gray-600 mb-8 leading-relaxed">
               Explore our musical journey through photos and videos from concerts, rehearsals, and special events
             </p>
+
+            {/* Error Message */}
+            {errorMessage}
 
             {/* Filters */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -347,7 +398,7 @@ const Gallery = () => {
                     src={getYouTubeEmbedUrl(selectedItem.url)}
                     title={selectedItem.title}
                     className="w-full h-full"
-                    frameBorder="0"
+                    style={{ border: 'none' }}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
