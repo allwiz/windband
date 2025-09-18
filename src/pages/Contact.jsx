@@ -45,9 +45,9 @@ const Contact = () => {
                       <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
                         Rehearsal Location
                       </h3>
-                      <p className="text-gray-700">Community Music Center</p>
-                      <p className="text-gray-700">123 Harmony Street</p>
-                      <p className="text-gray-700">Music City, MC 12345</p>
+                      <p className="text-gray-700">Irvine Baptist Church</p>
+                      <p className="text-gray-700">5101 Walnut Ave, </p>
+                      <p className="text-gray-700">Irvine, CA 92604</p>
                     </div>
                   </div>
 
@@ -59,10 +59,10 @@ const Contact = () => {
                       <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
                         Rehearsal Schedule
                       </h3>
-                      <p className="text-gray-700">Tuesday Evenings</p>
-                      <p className="text-gray-700">7:00 PM - 9:30 PM</p>
+                      <p className="text-gray-700">Saturday Evenings</p>
+                      <p className="text-gray-700">5:00 PM - 7:00 PM</p>
                       <p className="text-gray-600 text-sm mt-1">
-                        September through May (breaks for holidays)
+                        (Breaks for holidays)
                       </p>
                     </div>
                   </div>
@@ -82,66 +82,10 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-brass-100 p-3 rounded-lg flex-shrink-0">
-                      <Phone className="h-6 w-6 text-brass-700" />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
-                        Phone
-                      </h3>
-                      <p className="text-gray-700">(123) 456-7890</p>
-                      <p className="text-gray-600 text-sm mt-1">
-                        Messages returned within 2 business days
-                      </p>
-                    </div>
-                  </div>
+                  
                 </div>
 
-                {/* Quick Contact Options */}
-                <div className="mt-12">
-                  <h3 className="font-serif text-xl font-bold text-primary-900 mb-6">
-                    Quick Contact Options
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <Users className="h-5 w-5 text-brass-600" />
-                      <div>
-                        <a
-                          href="mailto:auditions@globalmissionwindband.org"
-                          className="text-primary-900 hover:text-brass-600 font-medium"
-                        >
-                          Auditions & Membership
-                        </a>
-                        <p className="text-gray-600 text-sm">auditions@globalmissionwindband.org</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="h-5 w-5 text-brass-600" />
-                      <div>
-                        <a
-                          href="mailto:events@globalmissionwindband.org"
-                          className="text-primary-900 hover:text-brass-600 font-medium"
-                        >
-                          Events & Bookings
-                        </a>
-                        <p className="text-gray-600 text-sm">events@globalmissionwindband.org</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Music className="h-5 w-5 text-brass-600" />
-                      <div>
-                        <a
-                          href="mailto:conductor@globalmissionwindband.org"
-                          className="text-primary-900 hover:text-brass-600 font-medium"
-                        >
-                          Musical Director
-                        </a>
-                        <p className="text-gray-600 text-sm">conductor@globalmissionwindband.org</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
 
               {/* Contact Form */}
@@ -263,8 +207,8 @@ const Contact = () => {
               <div className="text-center">
                 <MapPin className="h-16 w-16 text-gray-500 mx-auto mb-4" />
                 <p className="text-gray-600 text-lg font-medium">Interactive Map</p>
-                <p className="text-gray-500">Community Music Center</p>
-                <p className="text-gray-500">123 Harmony Street, Music City, MC 12345</p>
+                <p className="text-gray-500">Irvine Baptist Church</p>
+                <p className="text-gray-500">5101 Walnut Ave, Irvine, CA 92604</p>
               </div>
             </div>
           </div>
