@@ -191,6 +191,35 @@ const Gallery = () => {
     document.body.style.overflow = 'unset'
   }
 
+  // Keyboard navigation for modal
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (!showModal) return
+
+      switch (event.key) {
+        case 'Escape':
+          closeModal()
+          break
+        case 'ArrowLeft':
+          event.preventDefault()
+          navigateModal('prev')
+          break
+        case 'ArrowRight':
+          event.preventDefault()
+          navigateModal('next')
+          break
+      }
+    }
+
+    if (showModal) {
+      document.addEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [showModal, selectedItem, filteredItems])
+
   const navigateModal = (direction) => {
     const currentIndex = filteredItems.findIndex(item => item.id === selectedItem.id)
     let newIndex
@@ -380,14 +409,14 @@ const Gallery = () => {
 
       {/* Modal */}
       {showModal && selectedItem && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="relative max-w-6xl w-full bg-white rounded-3xl overflow-hidden">
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4 lg:p-8">
+          <div className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white rounded-3xl overflow-hidden shadow-2xl">
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-2 transition-colors"
+              className="absolute top-6 right-6 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-3 transition-all duration-200 hover:scale-110"
             >
-              <X className="h-5 w-5 text-gray-900" />
+              <X className="h-6 w-6" />
             </button>
 
             {/* Navigation Buttons */}
@@ -395,66 +424,140 @@ const Gallery = () => {
               <>
                 <button
                   onClick={() => navigateModal('prev')}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-2 transition-colors"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-3 transition-all duration-200 hover:scale-110"
                 >
-                  <ChevronLeft className="h-5 w-5 text-gray-900" />
+                  <ChevronLeft className="h-6 w-6" />
                 </button>
                 <button
                   onClick={() => navigateModal('next')}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-2 transition-colors"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-3 transition-all duration-200 hover:scale-110"
                 >
-                  <ChevronRight className="h-5 w-5 text-gray-900" />
+                  <ChevronRight className="h-6 w-6" />
                 </button>
               </>
             )}
 
-            <div className="flex flex-col lg:flex-row">
-              {/* Media */}
-              <div className="flex-1 aspect-video lg:aspect-auto">
+            <div className="flex flex-col lg:flex-row h-full">
+              {/* Media Section */}
+              <div className="flex-1 lg:flex-[2] relative bg-black">
                 {selectedItem.type === 'video' ? (
                   <iframe
                     src={getYouTubeEmbedUrl(selectedItem.url)}
                     title={selectedItem.title}
-                    className="w-full h-full"
+                    className="w-full h-full min-h-[60vh] lg:min-h-full"
                     style={{ border: 'none' }}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 ) : (
-                  <img
-                    src={selectedItem.url}
-                    alt={selectedItem.title}
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="relative w-full h-full min-h-[60vh] lg:min-h-full">
+                    <img
+                      src={selectedItem.url}
+                      alt={selectedItem.title}
+                      className="w-full h-full object-contain"
+                    />
+                    {/* Image zoom indicator */}
+                    <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+                      Click to zoom
+                    </div>
+                  </div>
                 )}
               </div>
 
-              {/* Details */}
-              <div className="lg:w-96 p-8">
-                <h2 className="font-display text-2xl font-semibold text-gray-900 mb-4">
+              {/* Details Panel */}
+              <div className="lg:w-96 lg:flex-shrink-0 bg-white p-8 lg:p-10 overflow-y-auto">
+                {/* Content Type Badge */}
+                <div className="mb-6">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                    selectedItem.type === 'video'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-blue-100 text-blue-800'
+                  }`}>
+                    {selectedItem.type === 'video' ? (
+                      <>
+                        <Play className="h-4 w-4 mr-1" />
+                        Video
+                      </>
+                    ) : (
+                      <>
+                        <ImageIcon className="h-4 w-4 mr-1" />
+                        Photo
+                      </>
+                    )}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h2 className="font-display text-3xl font-bold text-gray-900 mb-4 leading-tight">
                   {selectedItem.title}
                 </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
+
+                {/* Description */}
+                <p className="text-gray-600 text-lg leading-relaxed mb-8">
                   {selectedItem.description}
                 </p>
 
+                {/* Metadata */}
                 {selectedItem.created_at && (
-                  <div className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
-                    <Calendar className="h-4 w-4" />
-                    <span>{new Date(selectedItem.created_at).toLocaleDateString()}</span>
+                  <div className="flex items-center space-x-3 text-gray-500 mb-8 pb-6 border-b border-gray-200">
+                    <div className="bg-gray-100 p-2 rounded-lg">
+                      <Calendar className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">Date</p>
+                      <p className="text-sm">{new Date(selectedItem.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}</p>
+                    </div>
                   </div>
                 )}
 
-                {selectedItem.type === 'video' && (
-                  <a
-                    href={`https://www.youtube.com/watch?v=${selectedItem.url}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-outline inline-flex items-center"
+                {/* Action Buttons */}
+                <div className="space-y-4">
+                  {selectedItem.type === 'video' && (
+                    <a
+                      href={`https://www.youtube.com/watch?v=${selectedItem.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-xl transition-colors inline-flex items-center justify-center"
+                    >
+                      <ExternalLink className="h-5 w-5 mr-2" />
+                      Watch on YouTube
+                    </a>
+                  )}
+
+                  {selectedItem.type === 'photo' && (
+                    <a
+                      href={selectedItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-6 rounded-xl transition-colors inline-flex items-center justify-center"
+                    >
+                      <ExternalLink className="h-5 w-5 mr-2" />
+                      View Full Size
+                    </a>
+                  )}
+
+                  <button
+                    onClick={closeModal}
+                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors"
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Watch on YouTube
-                  </a>
+                    Close
+                  </button>
+                </div>
+
+                {/* Navigation Info */}
+                {filteredItems.length > 1 && (
+                  <div className="mt-8 pt-6 border-t border-gray-200">
+                    <p className="text-sm text-gray-500 text-center">
+                      {filteredItems.findIndex(item => item.id === selectedItem.id) + 1} of {filteredItems.length}
+                    </p>
+                    <p className="text-xs text-gray-400 text-center mt-1">
+                      Use arrow keys or buttons to navigate
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
