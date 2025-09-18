@@ -31,7 +31,7 @@ const About = () => {
                   About GMWB
                 </h2>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                The Global Mission Wind Band, made up of talented middle and high school students, is dedicated to enriching our community through 
+                The Global Mission Wind Band, made up of talented middle and high school students, is dedicated to enriching our community through
                 outstanding musical performances. Every Saturday evening in Irvine, they rehearse under the guidance of Dr. Andrew Park, a professor
                 at Pacific University who has led the ensemble for over 16 years..
                 </p>
@@ -56,8 +56,8 @@ const About = () => {
               </div>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Musical sheet with wind band instruments"
+                  src="https://images.unsplash.com/photo-1519139270850-e7371968f6d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  alt="Charcoal drawing style wind band ensemble with brass and woodwind instruments"
                   className="rounded-xl shadow-lg w-full h-96 object-cover charcoal-effect"
                 />
               </div>
