@@ -60,25 +60,43 @@ const Gallery = () => {
         .order('created_at', { ascending: false })
 
       if (error) {
+        // Check if it's a table not found error (common in development)
+        if (error.message.includes('relation "gallery_items" does not exist') ||
+            error.code === '42P01' ||
+            error.code === 'PGRST116') {
+          console.info('Gallery items table not found, using sample data')
+          setError('Database table not configured. Using sample data for demonstration.')
+          setSampleData()
+          return
+        }
+
         console.error('Database error:', error)
-        // If table doesn't exist or other database error, use sample data
         setError(`Database error: ${error.message}`)
         setSampleData()
         return
       }
 
       // Successfully fetched data from database
-      setGalleryItems(data || [])
-
-      // If no data in database, use sample data
-      if (!data || data.length === 0) {
-        setSampleData()
+      if (data && data.length > 0) {
+        console.info(`Successfully loaded ${data.length} gallery items from database`)
+        setGalleryItems(data)
+      } else {
+        // If database is empty, show message but don't use sample data
+        console.info('No gallery items found in database')
+        setGalleryItems([])
+        setError(null) // Clear any previous errors
       }
     } catch (error) {
       console.error('Error fetching gallery items:', error)
-      setError(`Connection error: ${error.message}`)
-      // Use sample data if no database connection or any other error
-      setSampleData()
+      // Check for specific network or connection errors
+      if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch')) {
+        setError('Unable to connect to database. Please check your internet connection.')
+        console.info('Network issue detected, using sample data for gallery')
+        setSampleData()
+      } else {
+        setError(`Connection error: ${error.message}`)
+        setSampleData()
+      }
     } finally {
       setLoading(false)
     }
@@ -202,12 +220,12 @@ const Gallery = () => {
     )
   }
 
-  // Show error message if there's an error (but still show sample data)
+  // Show error message if there's an error
   const errorMessage = error && (
     <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-8">
       <div className="flex items-center">
         <div className="text-yellow-600">
-          ⚠️ {error}. Using sample gallery data for demonstration.
+          ⚠️ {error}
         </div>
       </div>
     </div>
