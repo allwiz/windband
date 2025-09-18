@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Music } from 'lucide-react';
+import { Menu, X, Music, LogIn, User, LogOut } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut, isAdmin } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMenuOpen(false);
+  };
 
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'Performances', href: '/performances' },
+    { name: 'Gallery', href: '/gallery' },
     { name: 'Join Us', href: '/join' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -17,34 +25,31 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50">
+    <header className="nav-blur sticky top-0 z-50">
       <nav className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-11 lg:h-11">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="bg-primary-900 p-2 rounded-lg">
-              <Music className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
+          <Link to="/" className="flex items-center space-x-3 hover-lift">
+            <div className="bg-gray-900 p-1.5 rounded-xl">
+              <Music className="h-5 w-5 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif text-xl lg:text-2xl font-bold text-primary-900">
+              <span className="font-display text-lg lg:text-xl font-semibold text-gray-900 tracking-tight">
                 Global Mission Wind Band
-              </span>
-              <span className="text-sm text-gray-600 hidden sm:block">
-                Excellence in Musical Performance
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex space-x-8">
+          <div className="hidden lg:flex space-x-10">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`font-medium transition-colors duration-200 ${
+                className={`font-medium transition-all duration-200 text-sm py-2 ${
                   isActive(item.href)
-                    ? 'text-primary-900 border-b-2 border-primary-900 pb-1'
-                    : 'text-gray-700 hover:text-primary-900'
+                    ? 'text-gray-900 font-semibold'
+                    : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 {item.name}
@@ -52,11 +57,40 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Member Login Button - Desktop */}
+          {/* Member Login/Dashboard Button - Desktop */}
           <div className="hidden lg:flex items-center space-x-4">
-            <button className="btn-outline text-sm">
-              Member Login
-            </button>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/dashboard"
+                  className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 font-medium text-sm transition-colors"
+                >
+                  <User className="h-4 w-4" />
+                  <span>Dashboard</span>
+                </Link>
+                {isAdmin() && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center space-x-2 text-accent-600 hover:text-accent-700 font-medium text-sm transition-colors"
+                  >
+                    <span>🛡️</span>
+                    <span>Admin</span>
+                  </Link>
+                )}
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-2 text-gray-600 hover:text-red-600 font-medium text-sm transition-colors"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="bg-accent-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-accent-700 transition-all duration-200 flex items-center space-x-2">
+                <LogIn className="h-4 w-4" />
+                <span>Member Login</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -76,25 +110,60 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="lg:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t">
+            <div className="px-4 pt-2 pb-3 space-y-1 glass-effect border-t border-white/20">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                  className={`block px-4 py-3 rounded-2xl text-base font-medium transition-all duration-200 ${
                     isActive(item.href)
-                      ? 'text-primary-900 bg-primary-50'
-                      : 'text-gray-700 hover:text-primary-900 hover:bg-gray-100'
+                      ? 'text-gray-900 bg-white/60 font-semibold'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-white/40'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-gray-200">
-                <button className="btn-primary w-full text-sm">
-                  Member Login
-                </button>
+              <div className="pt-4 border-t border-white/20">
+                {user ? (
+                  <div className="space-y-2">
+                    <Link
+                      to="/dashboard"
+                      className="w-full px-4 py-3 text-sm bg-white/40 text-gray-900 rounded-2xl font-medium flex items-center justify-center space-x-2 transition-all hover:bg-white/60"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <User className="h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Link>
+                    {isAdmin() && (
+                      <Link
+                        to="/admin"
+                        className="w-full px-4 py-3 text-sm bg-accent-100/60 text-accent-700 rounded-2xl font-medium flex items-center justify-center space-x-2 transition-all hover:bg-accent-200/60"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span>🛡️</span>
+                        <span>Admin</span>
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50/60 rounded-2xl font-medium flex items-center justify-center space-x-2 transition-all"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="w-full px-4 py-3 text-sm bg-accent-600 text-white rounded-2xl font-medium flex items-center justify-center space-x-2 hover:bg-accent-700 transition-all"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <LogIn className="h-4 w-4" />
+                    <span>Member Login</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
