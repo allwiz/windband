@@ -56,8 +56,8 @@ const About = () => {
               </div>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1519139270850-e7371968f6d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Charcoal drawing style wind band ensemble with brass and woodwind instruments"
+                  src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  alt="Wind band instruments including brass and woodwind instruments"
                   className="rounded-xl shadow-lg w-full h-96 object-cover charcoal-effect"
                 />
               </div>
