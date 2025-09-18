@@ -108,77 +108,109 @@ const About = () => {
               </div>
             </div>
 
-            {/* 2025 GMWB Board Members */}
+            {/* 2025 GMWB Leadership */}
             <div className="bg-primary-50 rounded-2xl p-8 mb-16">
               <h3 className="font-serif text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
-                2025 GMWB Board Members
+                2025 GMWB Leadership
               </h3>
-              <div className="max-w-4xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="bg-white rounded-xl p-6 shadow-sm text-center">
-                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="h-8 w-8 text-brass-700" />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Board Members Column */}
+                <div>
+                  <h4 className="font-serif text-xl font-bold text-primary-900 mb-6 text-center">
+                    Board Members
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-brass-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Users className="h-6 w-6 text-brass-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">President</h5>
+                          <p className="text-gray-700 font-medium">Yunhee Lee</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">President</h4>
-                    <p className="text-gray-700 font-medium">Yunhee Lee</p>
-                  </div>
 
-                  <div className="bg-white rounded-xl p-6 shadow-sm text-center">
-                    <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Award className="h-8 w-8 text-primary-700" />
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Award className="h-6 w-6 text-primary-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">Vice President</h5>
+                          <p className="text-gray-700 font-medium">Yunjin Lee</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Vice President</h4>
-                    <p className="text-gray-700 font-medium">Yunjin Lee</p>
-                  </div>
 
-                  <div className="bg-white rounded-xl p-6 shadow-sm text-center">
-                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Calendar className="h-8 w-8 text-brass-700" />
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-brass-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Calendar className="h-6 w-6 text-brass-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">Secretary</h5>
+                          <p className="text-gray-700 font-medium">Ahyoung Cho</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Secretary</h4>
-                    <p className="text-gray-700 font-medium">Ahyoung Cho</p>
-                  </div>
 
-                  <div className="bg-white rounded-xl p-6 shadow-sm text-center md:col-start-1 lg:col-start-2">
-                    <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Heart className="h-8 w-8 text-primary-700" />
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Heart className="h-6 w-6 text-primary-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">Treasurer</h5>
+                          <p className="text-gray-700 font-medium">Hyejin Park</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Treasurer</h4>
-                    <p className="text-gray-700 font-medium">Hyejin Park</p>
-                  </div>
 
-                  <div className="bg-white rounded-xl p-6 shadow-sm text-center md:col-start-2 lg:col-start-3">
-                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Music className="h-8 w-8 text-brass-700" />
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-brass-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Music className="h-6 w-6 text-brass-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">Committee</h5>
+                          <p className="text-gray-700 font-medium">Jinmi Do</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Committee</h4>
-                    <p className="text-gray-700 font-medium">Jinmi Do</p>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* 2025 GMWB Principal Players */}
-            <div className="bg-white rounded-2xl p-8 mb-16 border border-gray-200">
-              <h3 className="font-serif text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
-                2025 GMWB Principal Players
-              </h3>
-              <div className="max-w-2xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-primary-50 rounded-xl p-6 shadow-sm text-center">
-                    <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="h-8 w-8 text-primary-700" />
+                {/* Principal Players Column */}
+                <div>
+                  <h4 className="font-serif text-xl font-bold text-primary-900 mb-6 text-center">
+                    Principal Players
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Users className="h-6 w-6 text-primary-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">President</h5>
+                          <p className="text-gray-700 font-medium">Jihu Lee</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">President</h4>
-                    <p className="text-gray-700 font-medium">Jihu Lee</p>
-                  </div>
 
-                  <div className="bg-brass-50 rounded-xl p-6 shadow-sm text-center">
-                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Award className="h-8 w-8 text-brass-700" />
+                    <div className="bg-white rounded-xl p-4 shadow-sm">
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-brass-100 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Award className="h-6 w-6 text-brass-700" />
+                        </div>
+                        <div>
+                          <h5 className="font-serif text-lg font-bold text-primary-900">Vice President</h5>
+                          <p className="text-gray-700 font-medium">Olivia Park</p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Vice President</h4>
-                    <p className="text-gray-700 font-medium">Olivia Park</p>
                   </div>
                 </div>
               </div>
