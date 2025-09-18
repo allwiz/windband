@@ -158,6 +158,32 @@ const About = () => {
               </div>
             </div>
 
+            {/* 2025 GMWB Principal Players */}
+            <div className="bg-white rounded-2xl p-8 mb-16 border border-gray-200">
+              <h3 className="font-serif text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
+                2025 GMWB Principal Players
+              </h3>
+              <div className="max-w-2xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-primary-50 rounded-xl p-6 shadow-sm text-center">
+                    <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Users className="h-8 w-8 text-primary-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">President</h4>
+                    <p className="text-gray-700 font-medium">Jihu Lee</p>
+                  </div>
+
+                  <div className="bg-brass-50 rounded-xl p-6 shadow-sm text-center">
+                    <div className="bg-brass-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Award className="h-8 w-8 text-brass-700" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-1">Vice President</h4>
+                    <p className="text-gray-700 font-medium">Olivia Park</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* History Timeline */}
             <div className="bg-gray-50 rounded-2xl p-8 mb-16">
               <h3 className="font-serif text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
@@ -166,7 +192,7 @@ const About = () => {
               <div className="space-y-8">
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary-900 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold flex-shrink-0">
-                    1985
+                    2025
                   </div>
                   <div>
                     <h4 className="font-serif text-lg font-bold text-primary-900 mb-2">
@@ -178,48 +204,9 @@ const About = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-brass-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold flex-shrink-0">
-                    1995
-                  </div>
-                  <div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-2">
-                      First Award
-                    </h4>
-                    <p className="text-gray-700">
-                      Received the Community Excellence in Arts Award, recognizing our contributions
-                      to local cultural life and musical education.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary-900 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold flex-shrink-0">
-                    2010
-                  </div>
-                  <div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-2">
-                      Expansion
-                    </h4>
-                    <p className="text-gray-700">
-                      Expanded to 60+ members and began our annual scholarship program for young musicians,
-                      supporting music education in local schools.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-brass-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold flex-shrink-0">
-                    2020
-                  </div>
-                  <div>
-                    <h4 className="font-serif text-lg font-bold text-primary-900 mb-2">
-                      Digital Innovation
-                    </h4>
-                    <p className="text-gray-700">
-                      Adapted to virtual performances during the pandemic, reaching new audiences
-                      and pioneering innovative concert formats.
-                    </p>
-                  </div>
-                </div>
+                
+                
+                
               </div>
             </div>
           </div>
@@ -227,34 +214,7 @@ const About = () => {
       </section>
 
 
-      {/* Statistics & Achievements */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary-900 mb-12">
-              By the Numbers
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-brass-600 mb-2">39</div>
-                <p className="text-gray-700 font-medium">Years of Excellence</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-brass-600 mb-2">65</div>
-                <p className="text-gray-700 font-medium">Active Members</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-brass-600 mb-2">100+</div>
-                <p className="text-gray-700 font-medium">Performances</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-brass-600 mb-2">50K+</div>
-                <p className="text-gray-700 font-medium">Audience Members</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Community Impact */}
       <section className="section-padding bg-primary-900 text-white">
