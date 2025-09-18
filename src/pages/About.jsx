@@ -98,7 +98,7 @@ const About = () => {
                 <div className="order-1 lg:order-2">
                   <div className="relative">
                     <img
-                      src="https://lh3.googleusercontent.com/sitesv/AICyYdaVs3WYZehOaOu4St_335Ytba7P5S7i-K5KIzFIKZZgonKeJlu4VTFmpKdVAU4wEN6eeEHD1CrA9jtePTCsK5UwgYm2d65E9ar6IOMBK7rTR_jleU_auFG0j0d6WsxTnB7ULCaj5lN51XRkDYjHMtUPUpN79HZdkzMG-igxXuWVOi8yJw62PCeb9OT5Ojp_AFoeayavXGnpcE3OIDKIibkk_kmgIvtkjfLg=w1280"
+                      src="/apark.jpg"
                       alt="Dr. Andrew Park, GMWB Director and Conductor"
                       className="rounded-xl shadow-lg w-full h-96 object-cover"
                     />
