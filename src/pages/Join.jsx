@@ -49,23 +49,24 @@ const Join = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative py-24 lg:py-32">
+      {/* Hero Section - Enhanced */}
+      <section className="relative py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-accent-50/20">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 charcoal-effect"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15 charcoal-effect"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-600/5 via-transparent to-primary-600/10" />
         <div className="relative z-10 container-custom text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 mb-6">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 mb-6 animate-slide-up">
             Join Our Band
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-8">
+          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed animate-slide-up" style={{animationDelay: '0.1s'}}>
             Become part of our musical family and share your passion for wind ensemble music
           </p>
-          <button className="btn-primary inline-flex items-center">
-            <Mail className="mr-2 h-5 w-5" />
+          <button className="btn-primary inline-flex items-center group hover:scale-[1.02] transition-transform duration-200 animate-slide-up" style={{animationDelay: '0.2s'}}>
+            <Mail className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             Apply Now
           </button>
         </div>

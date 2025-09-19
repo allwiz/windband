@@ -66,19 +66,20 @@ const Performances = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative py-24 lg:py-32">
+      {/* Hero Section - Enhanced */}
+      <section className="relative py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-accent-50/20">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-600/5 via-transparent to-primary-600/10" />
         <div className="relative z-10 container-custom text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 mb-6">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 mb-6 animate-slide-up">
             Performances
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{animationDelay: '0.1s'}}>
             Experience the magic of live wind ensemble music at our upcoming concerts
           </p>
         </div>

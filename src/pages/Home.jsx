@@ -4,15 +4,16 @@ import { Calendar, Music, Users, Award, ArrowRight, PlayCircle } from 'lucide-re
 const Home = () => {
   return (
     <div>
-      {/* Hero Section - Apple Style */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
-        {/* Background Image with Apple-style treatment */}
+      {/* Hero Section - Modern Design */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-accent-50/30">
+        {/* Enhanced Background with Multiple Layers */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-600/5 via-transparent to-primary-600/10" />
 
         {/* Hero Content */}
         <div className="relative z-10 text-center container-custom animate-fade-in">
@@ -27,12 +28,12 @@ const Home = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up" style={{animationDelay: '0.3s'}}>
-            <Link to="/performances" className="btn-primary inline-flex items-center">
-              <Calendar className="mr-2 h-5 w-5" />
+            <Link to="/performances" className="btn-primary inline-flex items-center group">
+              <Calendar className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
               Upcoming Concerts
             </Link>
-            <Link to="/join" className="btn-outline inline-flex items-center">
-              <Users className="mr-2 h-5 w-5" />
+            <Link to="/join" className="btn-outline inline-flex items-center group">
+              <Users className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               Join Our Band
             </Link>
           </div>
@@ -59,29 +60,29 @@ const Home = () => {
               memorable performances that inspire and entertain audiences throughout the region.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16">
-              <div className="text-center hover-lift">
-                <div className="bg-accent-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                  <Music className="h-10 w-10 text-accent-600" />
+              <div className="text-center hover-lift group">
+                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Music className="h-10 w-10 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4">Excellence</h3>
+                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4 group-hover:text-accent-700 transition-colors">Excellence</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Committed to the highest standards of musical performance and artistic expression
                 </p>
               </div>
-              <div className="text-center hover-lift">
-                <div className="bg-gray-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                  <Users className="h-10 w-10 text-gray-700" />
+              <div className="text-center hover-lift group">
+                <div className="bg-gradient-to-br from-gray-100 to-gray-200 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Users className="h-10 w-10 text-gray-700 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4">Community</h3>
+                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4 group-hover:text-gray-700 transition-colors">Community</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Building lasting friendships through shared passion for wind ensemble music
                 </p>
               </div>
-              <div className="text-center hover-lift">
-                <div className="bg-accent-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                  <Award className="h-10 w-10 text-accent-600" />
+              <div className="text-center hover-lift group">
+                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Award className="h-10 w-10 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4">Achievement</h3>
+                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4 group-hover:text-accent-700 transition-colors">Achievement</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Recognized for outstanding performances and community service contributions
                 </p>
@@ -127,22 +128,28 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative order-1 lg:order-2 hover-lift">
+              <div className="relative order-1 lg:order-2 hover-lift group">
                 <img
                   src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                   alt="Wind ensemble performance"
-                  className="rounded-3xl shadow-2xl w-full h-96 lg:h-128 object-cover"
+                  className="rounded-3xl shadow-2xl w-full h-96 lg:h-128 object-cover group-hover:shadow-3xl transition-all duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl group-hover:from-black/10 transition-all duration-500" />
+                <div className="gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action - Apple Style */}
-      <section className="section-padding bg-gray-900 text-white">
-        <div className="container-custom text-center">
+      {/* Call to Action - Modern Design */}
+      <section className="section-padding bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='30'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }} />
+
+        <div className="container-custom text-center relative z-10">
           <h2 className="text-subhero font-display text-white mb-8">
             Ready to Make Music With Us?
           </h2>
@@ -151,13 +158,13 @@ const Home = () => {
             Join our family and be part of something special.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/join" className="btn-primary inline-flex items-center">
-              <Users className="mr-2 h-5 w-5" />
+            <Link to="/join" className="btn-primary inline-flex items-center group">
+              <Users className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               Audition Information
             </Link>
-            <Link to="/contact" className="btn-outline border-white text-white hover:bg-white hover:text-gray-900 inline-flex items-center">
+            <Link to="/contact" className="border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:text-gray-900 inline-flex items-center transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/20 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-[1.02] group">
               Learn More
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
         </div>

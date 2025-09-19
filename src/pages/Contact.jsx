@@ -3,19 +3,20 @@ import { Mail, Phone, MapPin, Clock, Send, Music, Users, Calendar } from 'lucide
 const Contact = () => {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative py-24 lg:py-32">
+      {/* Hero Section - Enhanced */}
+      <section className="relative py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-accent-50/20">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-600/5 via-transparent to-primary-600/10" />
         <div className="relative z-10 container-custom text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 mb-6">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 mb-6 animate-slide-up">
             Contact Us
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{animationDelay: '0.1s'}}>
             Get in touch with the Global Mission Wind Band - we'd love to hear from you
           </p>
         </div>
@@ -37,52 +38,56 @@ const Contact = () => {
                 </p>
 
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-primary-100 p-3 rounded-lg flex-shrink-0">
-                      <MapPin className="h-6 w-6 text-primary-900" />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
-                        Rehearsal Location
-                      </h3>
-                      <p className="text-gray-700">Irvine Baptist Church</p>
-                      <p className="text-gray-700">5101 Walnut Ave, </p>
-                      <p className="text-gray-700">Irvine, CA 92604</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-brass-100 p-3 rounded-lg flex-shrink-0">
-                      <Clock className="h-6 w-6 text-brass-700" />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
-                        Rehearsal Schedule
-                      </h3>
-                      <p className="text-gray-700">Saturday Evenings</p>
-                      <p className="text-gray-700">5:00 PM - 7:00 PM</p>
-                      <p className="text-gray-600 text-sm mt-1">
-                        (Breaks for holidays)
-                      </p>
+                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-gradient-to-br from-primary-100 to-primary-200 p-3 rounded-xl flex-shrink-0 shadow-sm group">
+                        <MapPin className="h-6 w-6 text-primary-900 group-hover:scale-110 transition-transform duration-300" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-lg font-bold text-primary-900 mb-2">
+                          Rehearsal Location
+                        </h3>
+                        <p className="text-gray-700 font-medium">Irvine Baptist Church</p>
+                        <p className="text-gray-600">5101 Walnut Ave</p>
+                        <p className="text-gray-600">Irvine, CA 92604</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-primary-100 p-3 rounded-lg flex-shrink-0">
-                      <Mail className="h-6 w-6 text-primary-900" />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-lg font-bold text-primary-900 mb-1">
-                        Email
-                      </h3>
-                      <p className="text-gray-700">info@globalmissionwindband.org</p>
-                      <p className="text-gray-600 text-sm mt-1">
-                        We typically respond within 24 hours
-                      </p>
+                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-gradient-to-br from-brass-100 to-brass-200 p-3 rounded-xl flex-shrink-0 shadow-sm group">
+                        <Clock className="h-6 w-6 text-brass-700 group-hover:rotate-12 transition-transform duration-300" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-lg font-bold text-primary-900 mb-2">
+                          Rehearsal Schedule
+                        </h3>
+                        <p className="text-gray-700 font-medium">Saturday Evenings</p>
+                        <p className="text-gray-600">5:00 PM - 7:00 PM</p>
+                        <p className="text-gray-500 text-sm mt-1">
+                          (Breaks for holidays)
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  
+                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-gradient-to-br from-primary-100 to-primary-200 p-3 rounded-xl flex-shrink-0 shadow-sm group">
+                        <Mail className="h-6 w-6 text-primary-900 group-hover:scale-110 transition-transform duration-300" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-lg font-bold text-primary-900 mb-2">
+                          Email
+                        </h3>
+                        <p className="text-gray-700 font-medium">info@globalmissionwindband.org</p>
+                        <p className="text-gray-500 text-sm mt-1">
+                          We typically respond within 24 hours
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 
@@ -90,8 +95,8 @@ const Contact = () => {
 
               {/* Contact Form */}
               <div>
-                <div className="bg-gray-50 rounded-2xl p-8">
-                  <h2 className="font-serif text-2xl font-bold text-primary-900 mb-6">
+                <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100">
+                  <h2 className="font-display text-2xl font-bold text-primary-900 mb-6">
                     Send Us a Message
                   </h2>
                   <form className="space-y-6">
@@ -184,8 +189,8 @@ const Contact = () => {
                       </label>
                     </div>
 
-                    <button type="submit" className="btn-primary w-full inline-flex items-center justify-center">
-                      <Send className="mr-2 h-5 w-5" />
+                    <button type="submit" className="btn-primary w-full inline-flex items-center justify-center group hover:scale-[1.02] transition-transform duration-200">
+                      <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                       Send Message
                     </button>
                   </form>

@@ -60,19 +60,19 @@
 /* Apple-inspired component styles */
 @layer components {
   .btn-primary {
-    @apply bg-accent-600 text-white px-8 py-4 rounded-2xl font-semibold hover:bg-accent-700 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+    @apply bg-gradient-to-r from-accent-600 to-accent-700 text-white px-8 py-4 rounded-2xl font-semibold hover:from-accent-700 hover:to-accent-800 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-200/50 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-[1.02];
     font-size: 17px;
     letter-spacing: -0.01em;
   }
 
   .btn-secondary {
-    @apply bg-gray-900 text-white px-8 py-4 rounded-2xl font-semibold hover:bg-gray-800 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+    @apply bg-gradient-to-r from-gray-900 to-gray-800 text-white px-8 py-4 rounded-2xl font-semibold hover:from-gray-800 hover:to-gray-700 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-300/50 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-[1.02];
     font-size: 17px;
     letter-spacing: -0.01em;
   }
 
   .btn-outline {
-    @apply border-2 border-gray-900 text-gray-900 px-8 py-4 rounded-2xl font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-200 backdrop-blur-sm transform hover:-translate-y-0.5;
+    @apply border-2 border-gray-900 text-gray-900 px-8 py-4 rounded-2xl font-semibold hover:bg-gradient-to-r hover:from-gray-900 hover:to-gray-800 hover:text-white transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-200/50 backdrop-blur-sm transform hover:-translate-y-1 hover:scale-[1.02] shadow-md hover:shadow-lg;
     font-size: 17px;
     letter-spacing: -0.01em;
   }
@@ -82,7 +82,7 @@
   }
 
   .card {
-    @apply bg-white/80 backdrop-blur-apple rounded-3xl shadow-2xl p-8 hover:shadow-2xl hover:bg-white/90 transition-all duration-500 border border-white/20;
+    @apply bg-white/90 backdrop-blur-apple rounded-3xl shadow-2xl p-8 hover:shadow-3xl hover:bg-white/95 transition-all duration-500 border border-white/30 hover:border-white/50 transform hover:-translate-y-1;
   }
 
   .section-padding {
@@ -143,8 +143,23 @@
     }
   }
 
-  /* Apple-style hover effects */
+  /* Modern hover effects */
   .hover-lift {
-    @apply transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-2xl;
+    @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl;
+  }
+
+  /* Enhanced gradient overlays */
+  .gradient-overlay {
+    @apply absolute inset-0 bg-gradient-to-br from-accent-600/20 via-transparent to-primary-600/20 rounded-3xl;
+  }
+
+  /* Modern glass effect */
+  .glass-modern {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl;
+  }
+
+  /* Smooth scaling animation */
+  .scale-hover {
+    @apply transition-transform duration-300 hover:scale-105;
   }
 }

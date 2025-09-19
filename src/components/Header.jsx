@@ -27,15 +27,18 @@ const Header = () => {
   return (
     <header className="nav-blur sticky top-0 z-50">
       <nav className="container-custom">
-        <div className="flex items-center justify-between h-11 lg:h-11">
+        <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 hover-lift">
-            <div className="bg-gray-900 p-1.5 rounded-xl">
-              <Music className="h-5 w-5 text-white" />
+          <Link to="/" className="flex items-center space-x-3 hover-lift group">
+            <div className="bg-gradient-to-br from-gray-900 to-gray-700 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+              <Music className="h-6 w-6 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-lg lg:text-xl font-semibold text-gray-900 tracking-tight">
+              <span className="font-display text-lg lg:text-xl font-semibold text-gray-900 tracking-tight group-hover:text-gray-700 transition-colors">
                 Global Mission Wind Band
+              </span>
+              <span className="text-xs text-gray-500 font-medium hidden sm:block">
+                Excellence in Musical Performance
               </span>
             </div>
           </Link>
@@ -86,7 +89,7 @@ const Header = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="bg-accent-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-accent-700 transition-all duration-200 flex items-center space-x-2">
+              <Link to="/login" className="bg-gradient-to-r from-accent-600 to-accent-700 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:from-accent-700 hover:to-accent-800 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 <LogIn className="h-4 w-4" />
                 <span>Member Login</span>
               </Link>
@@ -157,7 +160,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to="/login"
-                    className="w-full px-4 py-3 text-sm bg-accent-600 text-white rounded-2xl font-medium flex items-center justify-center space-x-2 hover:bg-accent-700 transition-all"
+                    className="w-full px-4 py-3 text-sm bg-gradient-to-r from-accent-600 to-accent-700 text-white rounded-2xl font-medium flex items-center justify-center space-x-2 hover:from-accent-700 hover:to-accent-800 transition-all shadow-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <LogIn className="h-4 w-4" />
