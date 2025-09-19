@@ -33,12 +33,9 @@ const About = () => {
                   <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                   The Global Mission Wind Band, made up of talented middle and high school students, is dedicated to enriching our community through
                   outstanding musical performances. Every Saturday evening in Irvine, they rehearse under the guidance of Dr. Andrew Park, a professor
-                  at Pacific University who has led the ensemble for over 16 years..
+                  at Pacific University who has led the ensemble for over 16 years.
                   </p>
-                  <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                    We believe in the transformative power of music to bring people together, inspire
-                    audiences, and create meaningful experiences that resonate long after the final note.
-                  </p>
+                  
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3">
                       <Music className="h-5 w-5 text-brass-600 flex-shrink-0" />

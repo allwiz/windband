@@ -55,9 +55,10 @@ const Home = () => {
               Welcome to Our Musical Community
             </h2>
             <p className="text-large text-gray-600 mb-16 leading-relaxed max-w-4xl mx-auto">
-              For nearly four decades, the Global Mission Wind Band has been a cornerstone of our community's
-              cultural life. We bring together passionate musicians of all ages and backgrounds to create
-              memorable performances that inspire and entertain audiences throughout the region.
+            The Global Mission Wind Band, founded in 2025, has quickly become a vibrant part of our
+            community’s cultural life. Composed of talented middle and high school students, we unite young
+            musicians from diverse backgrounds to create inspiring performances that entertain and engage
+            audiences across the region.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16">
               <div className="text-center hover-lift group">
