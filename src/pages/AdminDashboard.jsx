@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { supabase } from '../lib/supabase'
 import MemberManagement from '../components/admin/MemberManagement'
 import ContentManagement from '../components/admin/ContentManagement'
+import DatabaseDiagnostics from '../components/DatabaseDiagnostics'
+import AdminTestPanel from '../components/admin/AdminTestPanel'
 import {
   Users,
   Settings,
@@ -16,11 +17,12 @@ import {
   UserX,
   Crown,
   Activity,
-  LogOut
+  LogOut,
+  Database
 } from 'lucide-react'
 
 const AdminDashboard = () => {
-  const { user, profile, signOut, isSuperAdmin } = useAuth()
+  const { user, signOut, isAdmin, getAllUsers } = useAuth()
   const [activeTab, setActiveTab] = useState('overview')
   const [stats, setStats] = useState({
     totalMembers: 0,
@@ -37,40 +39,32 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      // Fetch member stats
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, status, role, created_at')
+      // Get basic user stats from new authentication system
+      const result = await getAllUsers()
 
-      // Fetch application stats
-      const { data: applications } = await supabase
-        .from('applications')
-        .select('id, status')
-
-      // Fetch event stats
-      const { data: events } = await supabase
-        .from('events')
-        .select('id, status, start_date')
-
-      // Fetch recent activity
-      const { data: activity } = await supabase
-        .from('admin_activity_log')
-        .select(`
-          id, action, target_type, created_at,
-          profiles!admin_id(full_name, email)
-        `)
-        .order('created_at', { ascending: false })
-        .limit(10)
-
-      setStats({
-        totalMembers: profiles?.length || 0,
-        activeMembers: profiles?.filter(p => p.status === 'active').length || 0,
-        pendingApplications: applications?.filter(a => a.status === 'pending').length || 0,
-        totalEvents: events?.filter(e => e.status === 'scheduled').length || 0,
-        recentActivity: activity || []
-      })
+      if (result.success) {
+        const users = result.users
+        setStats({
+          totalMembers: users.length,
+          activeMembers: users.filter(u => u.status === 'active').length,
+          pendingApplications: users.filter(u => u.status === 'pending').length,
+          totalEvents: 0, // This would need to be implemented separately
+          recentActivity: [] // This would need to be implemented separately
+        })
+      } else {
+        throw new Error(result.message)
+      }
     } catch (error) {
       console.error('Error fetching dashboard stats:', error)
+
+      // Set fallback stats on error
+      setStats({
+        totalMembers: 0,
+        activeMembers: 0,
+        pendingApplications: 0,
+        totalEvents: 0,
+        recentActivity: []
+      })
     } finally {
       setLoading(false)
     }
@@ -83,10 +77,17 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-600"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading admin dashboard...</p>
+        </div>
       </div>
     )
   }
+
+  // Debug information - remove in production
+  console.log('AdminDashboard - User:', user)
+  console.log('AdminDashboard - Stats:', stats)
 
   const navigationItems = [
     { id: 'overview', label: 'Overview', icon: BarChart3 },
@@ -95,7 +96,8 @@ const AdminDashboard = () => {
     { id: 'content', label: 'Content', icon: FileText },
     { id: 'events', label: 'Events', icon: Calendar },
     { id: 'announcements', label: 'Announcements', icon: Bell },
-    ...(isSuperAdmin() ? [{ id: 'settings', label: 'Settings', icon: Settings }] : [])
+    { id: 'diagnostics', label: 'Database', icon: Database },
+    { id: 'test', label: 'System Test', icon: Settings }
   ]
 
   return (
@@ -121,18 +123,14 @@ const AdminDashboard = () => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <div className="bg-gray-100 p-2 rounded-full">
-                  {isSuperAdmin() ? (
-                    <Crown className="h-4 w-4 text-yellow-600" />
-                  ) : (
-                    <Shield className="h-4 w-4 text-accent-600" />
-                  )}
+                  <Shield className="h-4 w-4 text-accent-600" />
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-medium text-gray-900">
-                    {profile?.full_name || user?.email}
+                    {user?.fullName || user?.email}
                   </p>
                   <p className="text-xs text-gray-600 capitalize">
-                    {profile?.role}
+                    {user?.role || 'admin'}
                   </p>
                 </div>
               </div>
@@ -276,8 +274,10 @@ const AdminDashboard = () => {
 
           {activeTab === 'members' && <MemberManagement />}
           {activeTab === 'content' && <ContentManagement />}
+          {activeTab === 'diagnostics' && <DatabaseDiagnostics />}
+          {activeTab === 'test' && <AdminTestPanel />}
 
-          {activeTab !== 'overview' && activeTab !== 'members' && activeTab !== 'content' && (
+          {activeTab !== 'overview' && activeTab !== 'members' && activeTab !== 'content' && activeTab !== 'diagnostics' && activeTab !== 'test' && (
             <div className="card">
               <div className="text-center py-12">
                 <div className="bg-gray-100 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-4">

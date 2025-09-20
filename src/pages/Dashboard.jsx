@@ -1,5 +1,6 @@
 import { useAuth } from '../contexts/AuthContext'
-import { User, Mail, Phone, LogOut } from 'lucide-react'
+import { User, Mail, Phone, LogOut, Home } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
   const { user, signOut } = useAuth()
@@ -17,13 +18,22 @@ const Dashboard = () => {
             <h1 className="font-serif text-2xl font-bold text-primary-900">
               Member Dashboard
             </h1>
-            <button
-              onClick={handleSignOut}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-primary-900 hover:bg-primary-800"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </button>
+            <div className="flex items-center space-x-3">
+              <Link
+                to="/"
+                className="inline-flex items-center px-4 py-2 border border-primary-900 text-sm font-medium rounded-lg text-primary-900 bg-white hover:bg-primary-50 transition-colors duration-300"
+              >
+                <Home className="h-4 w-4 mr-2" />
+                Back to Home
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-primary-900 hover:bg-primary-800 transition-colors duration-300"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </button>
+            </div>
           </div>
         </div>
       </div>

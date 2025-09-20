@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
+import { useAuth } from '../../contexts/AuthContext'
 import {
   FileText,
   Edit3,
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react'
 
 const ContentManagement = () => {
+  const { user } = useAuth()
   const [content, setContent] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingContent, setEditingContent] = useState(null)
@@ -53,19 +55,11 @@ const ContentManagement = () => {
         .from('site_content')
         .update({
           ...updatedData,
-          updated_by: (await supabase.auth.getUser()).data.user?.id
+          updated_by: user?.id
         })
         .eq('id', id)
 
       if (error) throw error
-
-      // Log admin activity
-      await supabase.from('admin_activity_log').insert({
-        action: 'Updated site content',
-        target_type: 'content',
-        target_id: id,
-        details: { page: updatedData.page, section: updatedData.section }
-      })
 
       fetchContent()
       setEditingContent(null)
@@ -80,18 +74,11 @@ const ContentManagement = () => {
         .from('site_content')
         .insert({
           ...newContent,
-          created_by: (await supabase.auth.getUser()).data.user?.id,
-          updated_by: (await supabase.auth.getUser()).data.user?.id
+          created_by: user?.id,
+          updated_by: user?.id
         })
 
       if (error) throw error
-
-      // Log admin activity
-      await supabase.from('admin_activity_log').insert({
-        action: 'Created site content',
-        target_type: 'content',
-        details: { page: newContent.page, section: newContent.section }
-      })
 
       fetchContent()
       setShowAddModal(false)
@@ -117,13 +104,6 @@ const ContentManagement = () => {
         .eq('id', id)
 
       if (error) throw error
-
-      // Log admin activity
-      await supabase.from('admin_activity_log').insert({
-        action: 'Deleted site content',
-        target_type: 'content',
-        target_id: id
-      })
 
       fetchContent()
     } catch (error) {

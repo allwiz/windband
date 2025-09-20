@@ -28,15 +28,25 @@ const Login = () => {
     setLoading(true)
     setError('')
 
-    const { data, error } = await signIn(formData.email, formData.password)
+    try {
+      const { data, error } = await signIn(formData.email, formData.password)
 
-    if (error) {
-      setError(error.message)
-    } else {
-      navigate('/dashboard')
+      if (error) {
+        setError(error.message)
+        setLoading(false)
+        return
+      }
+
+      if (data?.user) {
+        // Wait a moment for auth state to update, then navigate to dashboard
+        setTimeout(() => {
+          navigate('/dashboard')
+        }, 100)
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.')
+      setLoading(false)
     }
-
-    setLoading(false)
   }
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
+import { db } from '../lib/database'
 import {
   Play,
   Image as ImageIcon,
@@ -54,27 +54,8 @@ const Gallery = () => {
     try {
       setError(null)
 
-      const { data, error } = await supabase
-        .from('gallery_items')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (error) {
-        // Check if it's a table not found error (common in development)
-        if (error.message.includes('relation "gallery_items" does not exist') ||
-            error.code === '42P01' ||
-            error.code === 'PGRST116') {
-          console.info('Gallery items table not found, using sample data')
-          setError('Database table not configured. Using sample data for demonstration.')
-          setSampleData()
-          return
-        }
-
-        console.error('Database error:', error)
-        setError(`Database error: ${error.message}`)
-        setSampleData()
-        return
-      }
+      // Use the new database service with timeout and retry
+      const data = await db.fetchGalleryItems()
 
       // Successfully fetched data from database
       if (data && data.length > 0) {
@@ -88,15 +69,22 @@ const Gallery = () => {
       }
     } catch (error) {
       console.error('Error fetching gallery items:', error)
-      // Check for specific network or connection errors
-      if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch')) {
+
+      // Handle specific error types
+      if (error.message.includes('timed out')) {
+        setError('Database connection timed out. Using sample data for demonstration.')
+      } else if (error.message.includes('relation "gallery_items" does not exist') ||
+                 error.code === '42P01' ||
+                 error.code === 'PGRST116') {
+        setError('Database table not configured. Using sample data for demonstration.')
+      } else if (error.message.includes('fetch') || error.message.includes('network')) {
         setError('Unable to connect to database. Please check your internet connection.')
-        console.info('Network issue detected, using sample data for gallery')
-        setSampleData()
       } else {
-        setError(`Connection error: ${error.message}`)
-        setSampleData()
+        setError(`Database error: ${error.message}`)
       }
+
+      // Always use sample data on error
+      setSampleData()
     } finally {
       setLoading(false)
     }

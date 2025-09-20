@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { useAuth } from '../../contexts/AuthContext'
 import {
   Users,
   Search,
@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 
 const MemberManagement = () => {
+  const { getAllUsers, setUserRole } = useAuth()
   const [members, setMembers] = useState([])
   const [filteredMembers, setFilteredMembers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -37,25 +38,16 @@ const MemberManagement = () => {
 
   const fetchMembers = async () => {
     try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select(`
-          id,
-          email,
-          full_name,
-          phone,
-          role,
-          status,
-          joined_date,
-          last_login,
-          created_at
-        `)
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-      setMembers(data || [])
+      const result = await getAllUsers()
+      if (result.success) {
+        setMembers(result.users || [])
+      } else {
+        console.error('Error fetching members:', result.message)
+        setMembers([])
+      }
     } catch (error) {
       console.error('Error fetching members:', error)
+      setMembers([])
     } finally {
       setLoading(false)
     }
@@ -85,58 +77,27 @@ const MemberManagement = () => {
     setFilteredMembers(filtered)
   }
 
-  const updateMemberStatus = async (memberId, newStatus) => {
-    try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ status: newStatus })
-        .eq('id', memberId)
-
-      if (error) throw error
-
-      // Log admin activity
-      await supabase.from('admin_activity_log').insert({
-        action: `Updated member status to ${newStatus}`,
-        target_type: 'member',
-        target_id: memberId
-      })
-
-      // Refresh members list
-      fetchMembers()
-    } catch (error) {
-      console.error('Error updating member status:', error)
-    }
-  }
-
   const updateMemberRole = async (memberId, newRole) => {
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ role: newRole })
-        .eq('id', memberId)
-
-      if (error) throw error
-
-      // Log admin activity
-      await supabase.from('admin_activity_log').insert({
-        action: `Updated member role to ${newRole}`,
-        target_type: 'member',
-        target_id: memberId
-      })
-
-      // Refresh members list
-      fetchMembers()
+      const result = await setUserRole(memberId, newRole)
+      if (result.success) {
+        // Refresh members list
+        fetchMembers()
+      } else {
+        console.error('Error updating member role:', result.message)
+        alert(`Failed to update role: ${result.message}`)
+      }
     } catch (error) {
       console.error('Error updating member role:', error)
+      alert('Failed to update member role')
     }
   }
 
   const getRoleIcon = (role) => {
     switch (role) {
-      case 'super_admin':
-        return <Crown className="h-4 w-4 text-yellow-600" />
       case 'admin':
         return <Shield className="h-4 w-4 text-accent-600" />
+      case 'user':
       default:
         return <Users className="h-4 w-4 text-gray-600" />
     }
@@ -218,9 +179,8 @@ const MemberManagement = () => {
             className="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
           >
             <option value="all">All Roles</option>
-            <option value="member">Member</option>
+            <option value="user">User</option>
             <option value="admin">Admin</option>
-            <option value="super_admin">Super Admin</option>
           </select>
         </div>
       </div>
@@ -277,7 +237,7 @@ const MemberManagement = () => {
                     <div className="flex items-center space-x-2">
                       {getRoleIcon(member.role)}
                       <span className="text-sm font-medium text-gray-900 capitalize">
-                        {member.role?.replace('_', ' ') || 'Member'}
+                        {member.role || 'User'}
                       </span>
                     </div>
                   </td>
@@ -298,22 +258,22 @@ const MemberManagement = () => {
 
                   <td className="py-4 px-6">
                     <div className="flex items-center space-x-2">
-                      {/* Quick Status Toggle */}
-                      {member.status === 'active' ? (
+                      {/* Role Toggle */}
+                      {member.role === 'admin' ? (
                         <button
-                          onClick={() => updateMemberStatus(member.id, 'inactive')}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                          title="Deactivate member"
+                          onClick={() => updateMemberRole(member.id, 'user')}
+                          className="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
+                          title="Remove admin role"
                         >
                           <UserX className="h-4 w-4" />
                         </button>
                       ) : (
                         <button
-                          onClick={() => updateMemberStatus(member.id, 'active')}
+                          onClick={() => updateMemberRole(member.id, 'admin')}
                           className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                          title="Activate member"
+                          title="Make admin"
                         >
-                          <UserCheck className="h-4 w-4" />
+                          <Shield className="h-4 w-4" />
                         </button>
                       )}
 
@@ -374,7 +334,7 @@ const MemberManagement = () => {
         </div>
         <div className="bg-white p-4 rounded-2xl border border-gray-200">
           <div className="text-2xl font-bold text-accent-600">
-            {members.filter(m => m.role === 'admin' || m.role === 'super_admin').length}
+            {members.filter(m => m.role === 'admin').length}
           </div>
           <div className="text-sm text-gray-600">Admins</div>
         </div>

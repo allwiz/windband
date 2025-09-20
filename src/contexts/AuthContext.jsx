@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { authDb } from '../lib/authDatabase'
 
 const AuthContext = createContext({})
 
@@ -9,159 +9,194 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Fetch user profile data
-  const fetchProfile = async (userId) => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single()
-
-      if (error) throw error
-      setProfile(data)
-      return data
-    } catch (error) {
-      console.error('Error fetching profile:', error)
-      setProfile(null)
-      return null
-    }
-  }
-
   useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user || null)
+    let mounted = true
 
-      if (session?.user) {
-        await fetchProfile(session.user.id)
+    // Initialize authentication state from stored session
+    const initializeAuth = async () => {
+      try {
+        setLoading(true)
+
+        // Try to validate existing session
+        const result = await authDb.validateSession()
+
+        if (!mounted) return
+
+        if (result.valid && result.user) {
+          setUser(result.user)
+          console.log('Session restored for:', result.user.email)
+        } else {
+          setUser(null)
+          console.log('No valid session found')
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error)
+        if (mounted) {
+          setUser(null)
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false)
+        }
       }
-
-      setLoading(false)
     }
 
-    getSession()
+    initializeAuth()
 
-    // Listen for authentication state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUser(session?.user || null)
-
-        if (session?.user) {
-          await fetchProfile(session.user.id)
-        } else {
-          setProfile(null)
-        }
-
-        setLoading(false)
-      }
-    )
-
-    return () => subscription.unsubscribe()
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const signUp = async (email, password, userData = {}) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const result = await authDb.register(
         email,
         password,
-        options: {
-          data: userData
-        }
-      })
+        userData.full_name || userData.fullName,
+        userData.phone
+      )
 
-      if (error) throw error
-      return { data, error: null }
+      if (result.success) {
+        return {
+          data: { userId: result.userId },
+          error: null
+        }
+      } else {
+        return {
+          data: null,
+          error: { message: result.message }
+        }
+      }
     } catch (error) {
-      return { data: null, error }
+      return {
+        data: null,
+        error: { message: error.message || 'Registration failed' }
+      }
     }
   }
 
   const signIn = async (email, password) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      })
+      const result = await authDb.login(email, password)
 
-      if (error) throw error
-      return { data, error: null }
+      if (result.success) {
+        setUser(result.user)
+        return {
+          data: { user: result.user },
+          error: null
+        }
+      } else {
+        return {
+          data: null,
+          error: { message: result.message }
+        }
+      }
     } catch (error) {
-      return { data: null, error }
+      return {
+        data: null,
+        error: { message: error.message || 'Login failed' }
+      }
     }
   }
 
   const signOut = async () => {
     try {
-      const { error } = await supabase.auth.signOut()
-      if (error) throw error
+      const result = await authDb.logout()
+      setUser(null)
       return { error: null }
     } catch (error) {
-      return { error }
+      // Always clear user state on logout, even if there's an error
+      setUser(null)
+      return { error: { message: error.message || 'Logout failed' } }
     }
   }
 
   const resetPassword = async (email) => {
-    try {
-      // Use environment variable for production or fallback to current origin
-      const redirectTo = import.meta.env.VITE_APP_URL
-        ? `${import.meta.env.VITE_APP_URL}/reset-password`
-        : `${window.location.origin}/reset-password`
-
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo
-      })
-
-      if (error) throw error
-      return { data, error: null }
-    } catch (error) {
-      return { data: null, error }
+    // Password reset functionality would need to be implemented
+    // For now, return not implemented
+    return {
+      data: null,
+      error: { message: 'Password reset not implemented yet' }
     }
   }
 
-  const updatePassword = async (password) => {
+  const updatePassword = async (oldPassword, newPassword) => {
     try {
-      const { data, error } = await supabase.auth.updateUser({
-        password
-      })
+      if (!user) {
+        return {
+          data: null,
+          error: { message: 'User not authenticated' }
+        }
+      }
 
-      if (error) throw error
-      return { data, error: null }
+      const result = await authDb.changePassword(user.id, oldPassword, newPassword)
+
+      if (result.success) {
+        return { data: { message: result.message }, error: null }
+      } else {
+        return { data: null, error: { message: result.message } }
+      }
     } catch (error) {
-      return { data: null, error }
+      return {
+        data: null,
+        error: { message: error.message || 'Password update failed' }
+      }
     }
   }
 
   // Admin helper functions
   const isAdmin = () => {
-    return profile?.role === 'admin' || profile?.role === 'super_admin'
-  }
-
-  const isSuperAdmin = () => {
-    return profile?.role === 'super_admin'
+    return user?.role === 'admin'
   }
 
   const hasRole = (role) => {
-    return profile?.role === role
+    return user?.role === role
+  }
+
+  // Additional helper functions for the new system
+  const getAllUsers = async () => {
+    if (!isAdmin()) {
+      return {
+        success: false,
+        message: 'Unauthorized',
+        users: []
+      }
+    }
+
+    return await authDb.getAllUsers()
+  }
+
+  const setUserRole = async (targetUserId, newRole) => {
+    if (!isAdmin() || !user) {
+      return {
+        success: false,
+        message: 'Unauthorized'
+      }
+    }
+
+    return await authDb.setUserRole(user.id, targetUserId, newRole)
+  }
+
+  const updateProfile = async (userId, updates) => {
+    return await authDb.updateProfile(userId, updates)
   }
 
   const value = {
     user,
-    profile,
     loading,
     signUp,
     signIn,
     signOut,
     resetPassword,
     updatePassword,
-    fetchProfile,
     isAdmin,
-    isSuperAdmin,
-    hasRole
+    hasRole,
+    getAllUsers,
+    setUserRole,
+    updateProfile
   }
 
   return (
