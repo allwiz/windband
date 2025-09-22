@@ -47,44 +47,43 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Welcome Section - Apple Style */}
-      <section className="section-padding bg-white">
+      {/* Welcome Section - Ultra Compact Design */}
+      <section className="py-8 lg:py-10 bg-white">
         <div className="container-custom">
-          <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-subhero font-display text-gray-900 mb-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl lg:text-4xl font-display text-gray-900 mb-2">
               Welcome to Our Musical Community
             </h2>
-            <p className="text-large text-gray-600 mb-16 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base lg:text-lg text-gray-600 mb-6 leading-relaxed max-w-3xl mx-auto">
             The Global Mission Wind Band, founded in 2025, has quickly become a vibrant part of our
-            community’s cultural life. Composed of talented middle and high school students, we unite young
-            musicians from diverse backgrounds to create inspiring performances that entertain and engage
-            audiences across the region.
+            community's cultural life. We unite young musicians from diverse backgrounds to create
+            inspiring performances that entertain and engage audiences across the region.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center hover-lift group">
-                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  <Music className="h-10 w-10 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
+                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Music className="h-6 w-6 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4 group-hover:text-accent-700 transition-colors">Excellence</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="font-display text-lg font-semibold text-gray-900 mb-1 group-hover:text-accent-700 transition-colors">Excellence</h3>
+                <p className="text-gray-600 leading-relaxed text-xs">
                   Committed to the highest standards of musical performance and artistic expression
                 </p>
               </div>
               <div className="text-center hover-lift group">
-                <div className="bg-gradient-to-br from-gray-100 to-gray-200 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  <Users className="h-10 w-10 text-gray-700 group-hover:scale-110 transition-transform duration-300" />
+                <div className="bg-gradient-to-br from-gray-100 to-gray-200 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Users className="h-6 w-6 text-gray-700 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4 group-hover:text-gray-700 transition-colors">Community</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="font-display text-lg font-semibold text-gray-900 mb-1 group-hover:text-gray-700 transition-colors">Community</h3>
+                <p className="text-gray-600 leading-relaxed text-xs">
                   Building lasting friendships through shared passion for wind ensemble music
                 </p>
               </div>
               <div className="text-center hover-lift group">
-                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  <Award className="h-10 w-10 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
+                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <Award className="h-6 w-6 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-gray-900 mb-4 group-hover:text-accent-700 transition-colors">Achievement</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="font-display text-lg font-semibold text-gray-900 mb-1 group-hover:text-accent-700 transition-colors">Achievement</h3>
+                <p className="text-gray-600 leading-relaxed text-xs">
                   Recognized for outstanding performances and community service contributions
                 </p>
               </div>
@@ -106,10 +105,10 @@ const Home = () => {
                   <div className="flex items-start justify-between mb-6">
                     <div>
                       <h3 className="font-display text-3xl font-semibold text-gray-900 mb-3">
-                        Holiday Spectacular
+                        GMWB Debut
                       </h3>
-                      <p className="text-accent-600 font-semibold mb-2 text-lg">December 15, 2024 • 7:30 PM</p>
-                      <p className="text-gray-600 mb-4 text-lg">Community Music Center Auditorium</p>
+                      <p className="text-accent-600 font-semibold mb-2 text-lg">December 20, 2025 • 7:00 PM</p>
+                      <p className="text-gray-600 mb-4 text-lg">Bethel Church</p>
                     </div>
                     <Calendar className="h-10 w-10 text-accent-600" />
                   </div>

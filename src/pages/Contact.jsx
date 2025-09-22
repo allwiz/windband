@@ -64,7 +64,7 @@ const Contact = () => {
                           Rehearsal Schedule
                         </h3>
                         <p className="text-gray-700 font-medium">Saturday Evenings</p>
-                        <p className="text-gray-600">5:00 PM - 7:00 PM</p>
+                        <p className="text-gray-600">6:00 PM - 7:15 PM</p>
                         <p className="text-gray-500 text-sm mt-1">
                           (Breaks for holidays)
                         </p>
@@ -81,7 +81,7 @@ const Contact = () => {
                         <h3 className="font-display text-lg font-bold text-primary-900 mb-2">
                           Email
                         </h3>
-                        <p className="text-gray-700 font-medium">info@globalmissionwindband.org</p>
+                        <p className="text-gray-700 font-medium">gmwbirvine@gmail.com</p>
                         <p className="text-gray-500 text-sm mt-1">
                           We typically respond within 24 hours
                         </p>

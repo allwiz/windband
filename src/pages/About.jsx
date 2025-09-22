@@ -25,34 +25,7 @@ const About = () => {
           <div className="max-w-6xl mx-auto">
             <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 mb-16 shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* About GMWB Column */}
-                <div>
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-900 mb-6">
-                    About GMWB
-                  </h2>
-                  <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  The Global Mission Wind Band, made up of talented middle and high school students, is dedicated to enriching our community through
-                  outstanding musical performances. Every Saturday evening in Irvine, they rehearse under the guidance of Dr. Andrew Park, a professor
-                  at Pacific University who has led the ensemble for over 16 years.
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <Music className="h-5 w-5 text-brass-600 flex-shrink-0" />
-                      <span className="text-gray-700 font-medium">Musical Excellence</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Heart className="h-5 w-5 text-brass-600 flex-shrink-0" />
-                      <span className="text-gray-700 font-medium">Community Service</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Users className="h-5 w-5 text-brass-600 flex-shrink-0" />
-                      <span className="text-gray-700 font-medium">Inclusive Environment</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* GMWB Director Column */}
+                {/* GMWB Director Section */}
                 <div>
                   <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-900 mb-6">
                     GMWB Director
@@ -79,6 +52,33 @@ const About = () => {
                     <p className="flex items-center space-x-3">
                       <Heart className="h-5 w-5 text-brass-600 flex-shrink-0" />
                       <span>Dedicated educator, pianist, conductor, and chamber musician</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* GMWB Assistant Conductor Section */}
+                <div>
+                  <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-900 mb-6">
+                    GMWB Assistant Conductor
+                  </h2>
+                  <h3 className="font-serif text-2xl font-bold text-primary-900 mb-2">
+                    Jongeui Kim
+                  </h3>
+                  <h4 className="font-serif text-lg font-bold text-brass-700 mb-6">
+                    GMWB Assistant Conductor
+                  </h4>
+                  <div className="space-y-4 text-gray-700">
+                    <p className="flex items-center space-x-3">
+                      <Award className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>Master of Music at USC</span>
+                    </p>
+                    <p className="flex items-center space-x-3">
+                      <Music className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>Performs with LA Phil, San Diego Symphony, LA Opera, and New West Symphony</span>
+                    </p>
+                    <p className="flex items-center space-x-3">
+                      <Heart className="h-5 w-5 text-brass-600 flex-shrink-0" />
+                      <span>Active soloist and chamber musician</span>
                     </p>
                   </div>
                 </div>
