@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import MemberManagement from '../components/admin/MemberManagement'
 import ContentManagement from '../components/admin/ContentManagement'
+import GalleryManagement from '../components/admin/GalleryManagement'
 import DatabaseDiagnostics from '../components/DatabaseDiagnostics'
 import AdminTestPanel from '../components/admin/AdminTestPanel'
 import {
@@ -18,7 +19,8 @@ import {
   Crown,
   Activity,
   LogOut,
-  Database
+  Database,
+  Image
 } from 'lucide-react'
 
 const AdminDashboard = () => {
@@ -94,6 +96,7 @@ const AdminDashboard = () => {
     { id: 'members', label: 'Members', icon: Users },
     { id: 'applications', label: 'Applications', icon: UserCheck },
     { id: 'content', label: 'Content', icon: FileText },
+    { id: 'gallery', label: 'Gallery', icon: Image },
     { id: 'events', label: 'Events', icon: Calendar },
     { id: 'announcements', label: 'Announcements', icon: Bell },
     { id: 'diagnostics', label: 'Database', icon: Database },
@@ -274,10 +277,11 @@ const AdminDashboard = () => {
 
           {activeTab === 'members' && <MemberManagement />}
           {activeTab === 'content' && <ContentManagement />}
+          {activeTab === 'gallery' && <GalleryManagement />}
           {activeTab === 'diagnostics' && <DatabaseDiagnostics />}
           {activeTab === 'test' && <AdminTestPanel />}
 
-          {activeTab !== 'overview' && activeTab !== 'members' && activeTab !== 'content' && activeTab !== 'diagnostics' && activeTab !== 'test' && (
+          {activeTab !== 'overview' && activeTab !== 'members' && activeTab !== 'content' && activeTab !== 'gallery' && activeTab !== 'diagnostics' && activeTab !== 'test' && (
             <div className="card">
               <div className="text-center py-12">
                 <div className="bg-gray-100 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-4">

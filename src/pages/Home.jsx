@@ -1,7 +1,41 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Music, Users, Award, ArrowRight, PlayCircle } from 'lucide-react';
+import { galleryService } from '../lib/galleryService';
 
 const Home = () => {
+  const [featuredImage, setFeaturedImage] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadFeaturedImage();
+  }, []);
+
+  const loadFeaturedImage = async () => {
+    try {
+      // First try to get featured images
+      const featuredResult = await galleryService.getFeaturedImages();
+
+      if (featuredResult.success && featuredResult.data?.length > 0) {
+        setFeaturedImage(featuredResult.data[0].file_url);
+      } else {
+        // Fallback: get any recent image from gallery
+        const items = await galleryService.getGalleryItems();
+        const anyImage = items.find(item =>
+          item.file_type?.startsWith('image/') &&
+          (item.category === 'general' || item.category === 'concert')
+        );
+
+        if (anyImage) {
+          setFeaturedImage(anyImage.file_url);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading featured image:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div>
       {/* Hero Section - Modern Design */}
@@ -129,13 +163,23 @@ const Home = () => {
                 </div>
               </div>
               <div className="relative order-1 lg:order-2 hover-lift group">
-                <img
-                  src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Wind ensemble performance"
-                  className="rounded-3xl shadow-2xl w-full h-96 lg:h-128 object-cover group-hover:shadow-3xl transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl group-hover:from-black/10 transition-all duration-500" />
-                <div className="gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {loading ? (
+                  <div className="rounded-3xl shadow-2xl w-full h-96 lg:h-128 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse" />
+                ) : featuredImage ? (
+                  <>
+                    <img
+                      src={featuredImage}
+                      alt="Wind ensemble performance"
+                      className="rounded-3xl shadow-2xl w-full h-96 lg:h-128 object-cover group-hover:shadow-3xl transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl group-hover:from-black/10 transition-all duration-500" />
+                    <div className="gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </>
+                ) : (
+                  <div className="rounded-3xl shadow-2xl w-full h-96 lg:h-128 bg-gradient-to-br from-accent-50 to-primary-50 flex items-center justify-center">
+                    <Music className="h-24 w-24 text-accent-300" />
+                  </div>
+                )}
               </div>
             </div>
           </div>

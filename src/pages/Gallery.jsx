@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { db } from '../lib/database'
+import { galleryService } from '../lib/galleryService'
 import {
   Play,
   Image as ImageIcon,
@@ -54,36 +54,45 @@ const Gallery = () => {
     try {
       setError(null)
 
-      // Use the new database service with timeout and retry
-      const data = await db.fetchGalleryItems()
+      // Use the new gallery service to fetch published items
+      const result = await galleryService.getPublishedGalleryItems()
 
-      // Successfully fetched data from database
-      if (data && data.length > 0) {
-        console.info(`Successfully loaded ${data.length} gallery items from database`)
-        setGalleryItems(data)
+      if (result.success) {
+        console.info(`Successfully loaded ${result.data.length} gallery items from database`)
+
+        // Transform the data to match the expected format
+        const transformedData = result.data.map(item => ({
+          id: item.id.toString(),
+          title: item.title,
+          description: item.description || '',
+          type: item.type,
+          url: item.file_url || item.external_url,
+          thumbnail: item.thumbnail_url,
+          created_at: item.published_at || item.created_at,
+          category: item.category,
+          tags: item.tags,
+          is_featured: item.is_featured
+        }))
+
+        setGalleryItems(transformedData)
       } else {
-        // If database is empty, show message but don't use sample data
-        console.info('No gallery items found in database')
-        setGalleryItems([])
-        setError(null) // Clear any previous errors
+        console.error('Gallery service error:', result.error)
+
+        // Handle specific error types
+        if (result.error.includes('gallery_items') && result.error.includes('does not exist')) {
+          setError('Database table not configured. Using sample data for demonstration.')
+        } else if (result.error.includes('network') || result.error.includes('fetch')) {
+          setError('Unable to connect to database. Please check your internet connection.')
+        } else {
+          setError(`Database error: ${result.error}`)
+        }
+
+        // Use sample data on error
+        setSampleData()
       }
     } catch (error) {
       console.error('Error fetching gallery items:', error)
-
-      // Handle specific error types
-      if (error.message.includes('timed out')) {
-        setError('Database connection timed out. Using sample data for demonstration.')
-      } else if (error.message.includes('relation "gallery_items" does not exist') ||
-                 error.code === '42P01' ||
-                 error.code === 'PGRST116') {
-        setError('Database table not configured. Using sample data for demonstration.')
-      } else if (error.message.includes('fetch') || error.message.includes('network')) {
-        setError('Unable to connect to database. Please check your internet connection.')
-      } else {
-        setError(`Database error: ${error.message}`)
-      }
-
-      // Always use sample data on error
+      setError(`Unexpected error: ${error.message}`)
       setSampleData()
     } finally {
       setLoading(false)
@@ -329,9 +338,20 @@ const Gallery = () => {
                 >
                   <div className="relative aspect-video rounded-3xl overflow-hidden bg-gray-200">
                     <img
-                      src={item.type === 'video' ? (item.thumbnail || getYouTubeThumbnail(item.url)) : item.url}
+                      src={item.type === 'video'
+                        ? (item.thumbnail || getYouTubeThumbnail(item.url))
+                        : item.url
+                      }
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        // Fallback for broken images
+                        if (item.type === 'video') {
+                          e.target.src = getYouTubeThumbnail(item.url)
+                        } else {
+                          e.target.src = 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+                        }
+                      }}
                     />
 
                     {/* Video Overlay */}
