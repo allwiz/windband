@@ -33,12 +33,13 @@ export class DatabaseDiagnostics {
 
       if (error) {
         // This is expected for new databases without migrations
-        if (error.code === '42P01' || error.message.includes('does not exist')) {
+        // Check for both PostgreSQL (42P01) and PostgREST (PGRST205) error codes
+        if (error.code === '42P01' || error.code === 'PGRST205' || error.message.includes('does not exist') || error.message.includes('Could not find the table')) {
           return this.logTest(
             'Basic Connection',
             true,
             'Connected successfully (no migrations table found - this is normal for new databases)',
-            { error: error.message }
+            { note: 'Migrations table not required for operation' }
           )
         } else {
           return this.logTest(
@@ -104,12 +105,13 @@ export class DatabaseDiagnostics {
 
       if (error) {
         // This is expected - the function might not exist
-        if (error.code === '42883' || error.message.includes('does not exist')) {
+        // Check for both PostgreSQL (42883) and PostgREST (PGRST202) error codes
+        if (error.code === '42883' || error.code === 'PGRST202' || error.message.includes('does not exist') || error.message.includes('Could not find the function')) {
           return this.logTest(
             'Database Permissions',
             true,
-            'Database accessible (RPC function not found - this is normal)',
-            { error: error.message }
+            'Database accessible (RPC function not found - creating it will enable full diagnostics)',
+            { note: 'Run CREATE_DIAGNOSTIC_FUNCTION.sql to add the get_current_user function' }
           )
         } else {
           return this.logTest(
@@ -157,7 +159,8 @@ export class DatabaseDiagnostics {
           .limit(1)
 
         if (error) {
-          if (error.code === '42P01' || error.message.includes('does not exist')) {
+          // Check for both PostgreSQL and PostgREST error codes for missing tables
+          if (error.code === '42P01' || error.code === 'PGRST205' || error.message.includes('does not exist') || error.message.includes('Could not find the table')) {
             results.push({
               table,
               status: 'table_not_found',
