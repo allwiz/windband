@@ -1,207 +1,161 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { authDb } from '../lib/authDatabase'
+import { createContext, useContext, useState, useEffect } from 'react';
+import { authService } from '../lib/auth';
 
-const AuthContext = createContext({})
+const AuthContext = createContext({});
 
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+};
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Initialize auth state
   useEffect(() => {
-    let mounted = true
-
-    // Initialize authentication state from stored session
-    const initializeAuth = async () => {
+    const initAuth = async () => {
       try {
-        setLoading(true)
-
-        // Try to validate existing session
-        const result = await authDb.validateSession()
-
-        if (!mounted) return
-
-        if (result.valid && result.user) {
-          setUser(result.user)
-          console.log('Session restored for:', result.user.email)
-        } else {
-          setUser(null)
-          console.log('No valid session found')
+        // Validate existing session
+        const result = await authService.validateSession();
+        if (result.success) {
+          setUser(result.user);
         }
-      } catch (error) {
-        console.error('Error initializing auth:', error)
-        if (mounted) {
-          setUser(null)
-        }
+      } catch (err) {
+        console.error('Auth initialization error:', err);
       } finally {
-        if (mounted) {
-          setLoading(false)
-        }
+        setLoading(false);
       }
-    }
+    };
 
-    initializeAuth()
+    initAuth();
+  }, []);
 
-    return () => {
-      mounted = false
-    }
-  }, [])
-
-  const signUp = async (email, password, userData = {}) => {
+  // Sign up function
+  const signUp = async (email, password, fullName = null, phone = null) => {
     try {
-      const result = await authDb.register(
-        email,
-        password,
-        userData.full_name || userData.fullName,
-        userData.phone
-      )
-
-      if (result.success) {
-        return {
-          data: { userId: result.userId },
-          error: null
-        }
-      } else {
-        return {
-          data: null,
-          error: { message: result.message }
-        }
-      }
-    } catch (error) {
-      return {
-        data: null,
-        error: { message: error.message || 'Registration failed' }
-      }
+      setError(null);
+      const result = await authService.register(email, password, fullName, phone);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
     }
-  }
+  };
 
+  // Sign in function
   const signIn = async (email, password) => {
     try {
-      const result = await authDb.login(email, password)
-
+      setError(null);
+      const result = await authService.login(email, password);
       if (result.success) {
-        setUser(result.user)
-        return {
-          data: { user: result.user },
-          error: null
-        }
-      } else {
-        return {
-          data: null,
-          error: { message: result.message }
-        }
+        setUser(result.user);
       }
-    } catch (error) {
-      return {
-        data: null,
-        error: { message: error.message || 'Login failed' }
-      }
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
     }
-  }
+  };
 
+  // Sign out function
   const signOut = async () => {
     try {
-      const result = await authDb.logout()
-      setUser(null)
-      return { error: null }
-    } catch (error) {
-      // Always clear user state on logout, even if there's an error
-      setUser(null)
-      return { error: { message: error.message || 'Logout failed' } }
+      setError(null);
+      await authService.logout();
+      setUser(null);
+    } catch (err) {
+      setError(err.message);
+      throw err;
     }
-  }
+  };
 
-  const resetPassword = async (email) => {
-    // Password reset functionality would need to be implemented
-    // For now, return not implemented
-    return {
-      data: null,
-      error: { message: 'Password reset not implemented yet' }
-    }
-  }
-
-  const updatePassword = async (oldPassword, newPassword) => {
+  // Update profile function
+  const updateProfile = async (updates) => {
     try {
-      if (!user) {
-        return {
-          data: null,
-          error: { message: 'User not authenticated' }
-        }
-      }
-
-      const result = await authDb.changePassword(user.id, oldPassword, newPassword)
-
+      setError(null);
+      const result = await authService.updateProfile(updates);
       if (result.success) {
-        return { data: { message: result.message }, error: null }
-      } else {
-        return { data: null, error: { message: result.message } }
+        setUser(result.user);
       }
-    } catch (error) {
-      return {
-        data: null,
-        error: { message: error.message || 'Password update failed' }
-      }
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
     }
-  }
+  };
 
-  // Admin helper functions
-  const isAdmin = () => {
-    return user?.role === 'admin'
-  }
-
-  const hasRole = (role) => {
-    return user?.role === role
-  }
-
-  // Additional helper functions for the new system
-  const getAllUsers = async () => {
-    if (!isAdmin()) {
-      return {
-        success: false,
-        message: 'Unauthorized',
-        users: []
-      }
+  // Change password function
+  const changePassword = async (currentPassword, newPassword) => {
+    try {
+      setError(null);
+      const result = await authService.changePassword(currentPassword, newPassword);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
     }
+  };
 
-    return await authDb.getAllUsers()
-  }
-
-  const setUserRole = async (targetUserId, newRole) => {
-    if (!isAdmin() || !user) {
-      return {
-        success: false,
-        message: 'Unauthorized'
-      }
+  // Request password reset
+  const requestPasswordReset = async (email) => {
+    try {
+      setError(null);
+      const result = await authService.requestPasswordReset(email);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
     }
+  };
 
-    return await authDb.setUserRole(user.id, targetUserId, newRole)
-  }
+  // Reset password
+  const resetPassword = async (token, newPassword) => {
+    try {
+      setError(null);
+      const result = await authService.resetPassword(token, newPassword);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
 
-  const updateProfile = async (userId, updates) => {
-    return await authDb.updateProfile(userId, updates)
-  }
+  // Verify email
+  const verifyEmail = async (token) => {
+    try {
+      setError(null);
+      const result = await authService.verifyEmail(token);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
+  // Helper functions
+  const isAdmin = () => user?.role === 'admin';
+  const isAuthenticated = () => !!user;
 
   const value = {
     user,
     loading,
+    error,
     signUp,
     signIn,
     signOut,
+    updateProfile,
+    changePassword,
+    requestPasswordReset,
     resetPassword,
-    updatePassword,
+    verifyEmail,
     isAdmin,
-    hasRole,
-    getAllUsers,
-    setUserRole,
-    updateProfile
-  }
+    isAuthenticated,
+  };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

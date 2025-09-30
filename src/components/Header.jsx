@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Music, LogIn, User, LogOut } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Music, LogIn, User, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, signOut, isAdmin } = useAuth();
-
-  const handleSignOut = async () => {
-    await signOut();
-    setIsMenuOpen(false);
-  };
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -23,6 +19,16 @@ const Header = () => {
   ];
 
   const isActive = (path) => location.pathname === path;
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setIsMenuOpen(false);
+      navigate('/');
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
 
   return (
     <header className="nav-blur sticky top-0 z-50">
@@ -60,41 +66,41 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Member Login/Dashboard Button - Desktop */}
-          <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 flex-shrink-0">
+          {/* Desktop Auth Buttons */}
+          <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
             {user ? (
-              <div className="flex items-center space-x-2 xl:space-x-3">
+              <>
                 <Link
-                  to="/dashboard"
-                  className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 font-medium text-sm transition-colors whitespace-nowrap"
+                  to={isAdmin() ? "/admin" : "/dashboard"}
+                  className="flex items-center space-x-1 px-3 py-2 text-gray-700 hover:text-gray-900 transition-colors whitespace-nowrap"
                 >
-                  <User className="h-4 w-4" />
-                  <span className="hidden xl:inline">Dashboard</span>
-                  <span className="xl:hidden">Dash</span>
+                  {isAdmin() ? (
+                    <>
+                      <Shield className="h-4 w-4 text-accent-600" />
+                      <span className="text-sm">Admin</span>
+                    </>
+                  ) : (
+                    <>
+                      <User className="h-4 w-4" />
+                      <span className="text-sm">{user.full_name ? user.full_name.split(' ')[0] : 'Dashboard'}</span>
+                    </>
+                  )}
                 </Link>
-                {isAdmin() && (
-                  <Link
-                    to="/admin"
-                    className="flex items-center space-x-1 text-accent-600 hover:text-accent-700 font-medium text-sm transition-colors whitespace-nowrap"
-                  >
-                    <span>🛡️</span>
-                    <span>Admin</span>
-                  </Link>
-                )}
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 font-medium text-sm transition-colors whitespace-nowrap"
+                  className="flex items-center space-x-1 px-3 py-2 text-red-600 hover:text-red-700 transition-colors whitespace-nowrap"
                 >
                   <LogOut className="h-4 w-4" />
-                  <span className="hidden xl:inline">Sign Out</span>
-                  <span className="xl:hidden">Out</span>
+                  <span className="text-sm">Logout</span>
                 </button>
-              </div>
+              </>
             ) : (
-              <Link to="/login" className="bg-gradient-to-r from-accent-600 to-accent-700 text-white px-4 xl:px-6 py-2.5 rounded-full text-sm font-medium hover:from-accent-700 hover:to-accent-800 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 whitespace-nowrap">
-                <LogIn className="h-4 w-4" />
-                <span className="hidden xl:inline">Member Login</span>
-                <span className="xl:hidden">Login</span>
+              <Link
+                to="/login"
+                className="flex items-center space-x-2 px-6 py-2.5 bg-gradient-to-r from-accent-600 to-accent-700 text-white rounded-full hover:from-accent-700 hover:to-accent-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              >
+                <LogIn className="h-5 w-5" />
+                <span>Sign In</span>
               </Link>
             )}
           </div>
@@ -131,44 +137,55 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-white/20">
+
+              {/* Mobile Auth Options */}
+              <div className="pt-4 mt-4 border-t border-gray-200">
                 {user ? (
                   <div className="space-y-2">
                     <Link
-                      to="/dashboard"
-                      className="w-full px-4 py-3 text-sm bg-white/40 text-gray-900 rounded-2xl font-medium flex items-center justify-center space-x-2 transition-all hover:bg-white/60"
+                      to={isAdmin() ? "/admin" : "/dashboard"}
+                      className="flex items-center space-x-2 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <User className="h-4 w-4" />
-                      <span>Dashboard</span>
+                      {isAdmin() ? (
+                        <>
+                          <Shield className="h-5 w-5 text-accent-600" />
+                          <span>Admin Panel</span>
+                        </>
+                      ) : (
+                        <>
+                          <User className="h-5 w-5" />
+                          <span>{user.full_name || 'Dashboard'}</span>
+                        </>
+                      )}
                     </Link>
-                    {isAdmin() && (
-                      <Link
-                        to="/admin"
-                        className="w-full px-4 py-3 text-sm bg-accent-100/60 text-accent-700 rounded-2xl font-medium flex items-center justify-center space-x-2 transition-all hover:bg-accent-200/60"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <span>🛡️</span>
-                        <span>Admin</span>
-                      </Link>
-                    )}
                     <button
                       onClick={handleSignOut}
-                      className="w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50/60 rounded-2xl font-medium flex items-center justify-center space-x-2 transition-all"
+                      className="flex items-center space-x-2 w-full px-4 py-3 rounded-xl text-red-600 hover:bg-red-50"
                     >
-                      <LogOut className="h-4 w-4" />
+                      <LogOut className="h-5 w-5" />
                       <span>Sign Out</span>
                     </button>
                   </div>
                 ) : (
-                  <Link
-                    to="/login"
-                    className="w-full px-4 py-3 text-sm bg-gradient-to-r from-accent-600 to-accent-700 text-white rounded-2xl font-medium flex items-center justify-center space-x-2 hover:from-accent-700 hover:to-accent-800 transition-all shadow-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <LogIn className="h-4 w-4" />
-                    <span>Member Login</span>
-                  </Link>
+                  <div className="space-y-2">
+                    <Link
+                      to="/login"
+                      className="flex items-center justify-center space-x-2 w-full px-4 py-3 bg-gradient-to-r from-accent-600 to-accent-700 text-white rounded-xl hover:from-accent-700 hover:to-accent-800"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <LogIn className="h-5 w-5" />
+                      <span>Sign In</span>
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="flex items-center justify-center space-x-2 w-full px-4 py-3 border border-accent-600 text-accent-600 rounded-xl hover:bg-accent-50"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <User className="h-5 w-5" />
+                      <span>Sign Up</span>
+                    </Link>
+                  </div>
                 )}
               </div>
             </div>
