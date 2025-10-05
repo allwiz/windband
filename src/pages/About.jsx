@@ -28,7 +28,7 @@ const About = () => {
                 {/* GMWB Director Section */}
                 <div>
                   <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-900 mb-6">
-                    GMWB Director
+                    Director
                   </h2>
                   <h3 className="font-serif text-2xl font-bold text-primary-900 mb-2">
                     Dr. Andrew Park
@@ -59,7 +59,7 @@ const About = () => {
                 {/* GMWB Assistant Conductor Section */}
                 <div>
                   <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-900 mb-6">
-                    GMWB Assistant Conductor
+                    Assistant Conductor
                   </h2>
                   <h3 className="font-serif text-2xl font-bold text-primary-900 mb-2">
                     Jongeui Kim

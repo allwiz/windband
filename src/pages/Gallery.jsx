@@ -121,7 +121,10 @@ const Gallery = () => {
                     </span>
                   </div>
                   {item.description && (
-                    <p className="mt-2 text-sm text-gray-600 line-clamp-2">{item.description}</p>
+                    <div
+                      className="mt-2 text-sm text-gray-600 line-clamp-2 prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
                   )}
                 </div>
               </div>
@@ -158,7 +161,10 @@ const Gallery = () => {
                   <span>{new Date(selectedImage.date).toLocaleDateString()}</span>
                 </div>
                 {selectedImage.description && (
-                  <p className="text-white/80">{selectedImage.description}</p>
+                  <div
+                    className="text-white/80 prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: selectedImage.description }}
+                  />
                 )}
               </div>
             </div>

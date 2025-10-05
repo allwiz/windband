@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { Upload, Plus, Image } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Upload, Plus, Image, Save } from 'lucide-react';
 import { galleryService } from '../../../services/galleryService';
+import RichTextEditor from '../../../components/RichTextEditor';
 
-const GalleryForm = ({ onSuccess }) => {
+const GalleryForm = ({ onSuccess, editItem = null }) => {
   const [galleryForm, setGalleryForm] = useState({
     title: '',
     description: '',
@@ -14,6 +15,19 @@ const GalleryForm = ({ onSuccess }) => {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Load edit data when editItem changes
+  useEffect(() => {
+    if (editItem) {
+      setGalleryForm({
+        title: editItem.title || '',
+        description: editItem.description || '',
+        category: editItem.category || 'concerts',
+        date: editItem.date || new Date().toISOString().split('T')[0]
+      });
+      setImagePreview(editItem.image_url || '');
+    }
+  }, [editItem]);
+
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -23,9 +37,9 @@ const GalleryForm = ({ onSuccess }) => {
         return;
       }
 
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB');
+      // Validate file size (max 50MB)
+      if (file.size > 50 * 1024 * 1024) {
+        alert('File size must be less than 50MB');
         return;
       }
 
@@ -43,7 +57,8 @@ const GalleryForm = ({ onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!selectedFile) {
+    // For edit mode, image is optional
+    if (!editItem && !selectedFile) {
       alert('Please select an image file');
       return;
     }
@@ -52,34 +67,67 @@ const GalleryForm = ({ onSuccess }) => {
     setError('');
 
     try {
-      // Upload image to Supabase storage
-      const uploadResult = await galleryService.uploadImage(selectedFile, galleryForm.category);
+      let imageUrl = editItem?.image_url;
+      let storagePath = editItem?.storage_path;
+      let fileSize = editItem?.file_size;
+      let mimeType = editItem?.mime_type;
+      let width = editItem?.width;
+      let height = editItem?.height;
 
-      if (!uploadResult.success) {
-        throw new Error(uploadResult.error);
+      // Upload new image if selected
+      if (selectedFile) {
+        const uploadResult = await galleryService.uploadImage(selectedFile, galleryForm.category);
+
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error);
+        }
+
+        // Get image dimensions
+        const dimensions = await galleryService.getImageDimensions(selectedFile);
+
+        imageUrl = uploadResult.url;
+        storagePath = uploadResult.storagePath;
+        fileSize = uploadResult.fileSize;
+        mimeType = uploadResult.mimeType;
+        width = dimensions.width;
+        height = dimensions.height;
       }
 
-      // Get image dimensions
-      const dimensions = await galleryService.getImageDimensions(selectedFile);
-
-      // Create gallery item in database
       const galleryData = {
         title: galleryForm.title,
         description: galleryForm.description,
         category: galleryForm.category,
-        imageUrl: uploadResult.url,
-        storagePath: uploadResult.storagePath,
-        fileSize: uploadResult.fileSize,
-        mimeType: uploadResult.mimeType,
-        width: dimensions.width,
-        height: dimensions.height,
+        imageUrl: imageUrl,
+        storagePath: storagePath,
+        fileSize: fileSize,
+        mimeType: mimeType,
+        width: width,
+        height: height,
         date: galleryForm.date
       };
 
-      const createResult = await galleryService.createGalleryItem(galleryData);
+      let result;
+      if (editItem) {
+        // Update existing item
+        result = await galleryService.updateGalleryItem(editItem.id, {
+          title: galleryData.title,
+          description: galleryData.description,
+          category: galleryData.category,
+          image_url: galleryData.imageUrl,
+          storage_path: galleryData.storagePath,
+          file_size: galleryData.fileSize,
+          mime_type: galleryData.mimeType,
+          width: galleryData.width,
+          height: galleryData.height,
+          date: galleryData.date
+        });
+      } else {
+        // Create new item
+        result = await galleryService.createGalleryItem(galleryData);
+      }
 
-      if (createResult.success) {
-        alert('Gallery item added successfully!');
+      if (result.success) {
+        alert(editItem ? 'Gallery item updated successfully!' : 'Gallery item added successfully!');
 
         // Reset form
         setGalleryForm({
@@ -94,10 +142,10 @@ const GalleryForm = ({ onSuccess }) => {
         // Notify parent of success
         if (onSuccess) onSuccess();
       } else {
-        throw new Error(createResult.error);
+        throw new Error(result.error);
       }
     } catch (err) {
-      setError('Failed to add gallery item: ' + err.message);
+      setError((editItem ? 'Failed to update gallery item: ' : 'Failed to add gallery item: ') + err.message);
       console.error(err);
     } finally {
       setUploadLoading(false);
@@ -108,7 +156,7 @@ const GalleryForm = ({ onSuccess }) => {
     <div className="max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
         <Image className="h-6 w-6 mr-2 text-accent-600" />
-        Add Gallery Item
+        {editItem ? 'Edit Gallery Item' : 'Add Gallery Item'}
       </h2>
 
       {error && (
@@ -165,7 +213,7 @@ const GalleryForm = ({ onSuccess }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Upload Image <span className="text-red-500">*</span>
+              Upload Image {!editItem && <span className="text-red-500">*</span>}
             </label>
             <div className="relative">
               <input
@@ -185,18 +233,16 @@ const GalleryForm = ({ onSuccess }) => {
                 </span>
               </label>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Max file size: 5MB</p>
+            <p className="text-xs text-gray-500 mt-1">Max file size: 50MB</p>
           </div>
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Description
             </label>
-            <textarea
-              rows="4"
+            <RichTextEditor
               value={galleryForm.description}
-              onChange={(e) => setGalleryForm({ ...galleryForm, description: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              onChange={(html) => setGalleryForm({ ...galleryForm, description: html })}
               placeholder="Enter image description"
             />
           </div>
@@ -243,6 +289,11 @@ const GalleryForm = ({ onSuccess }) => {
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                 <span>Uploading...</span>
+              </>
+            ) : editItem ? (
+              <>
+                <Save className="h-5 w-5" />
+                <span>Update Gallery Item</span>
               </>
             ) : (
               <>

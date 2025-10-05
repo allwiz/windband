@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { List, Plus, Eye, Trash2, Image } from 'lucide-react';
+import { List, Plus, Eye, Trash2, Image, Edit } from 'lucide-react';
 import { galleryService } from '../../../services/galleryService';
 
-const GalleryList = ({ onAddNew }) => {
+const GalleryList = ({ onAddNew, onEdit }) => {
   const [galleryItems, setGalleryItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -102,6 +102,13 @@ const GalleryList = ({ onAddNew }) => {
                       title="View Full Image"
                     >
                       <Eye className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => onEdit && onEdit(item)}
+                      className="text-blue-600 hover:text-blue-700"
+                      title="Edit"
+                    >
+                      <Edit className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDeleteGalleryItem(item.id)}

@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { emailService } from '../services/emailService';
 
 // Session storage key
 const SESSION_KEY = 'windband_session';
@@ -74,14 +75,72 @@ class AuthService {
         throw new Error(data.message || 'Registration failed');
       }
 
+      // Send verification email
+      let emailSent = false;
+      let emailError = null;
+
+      if (data.verification_token) {
+        try {
+          const emailResult = await emailService.sendVerificationEmail(
+            email,
+            fullName,
+            data.verification_token
+          );
+
+          if (emailResult.success) {
+            emailSent = true;
+          } else {
+            emailError = emailResult.error;
+            if (emailResult.configError) {
+              console.warn('Email service not configured - verification link:',
+                `${window.location.origin}/verify-email?token=${data.verification_token}`);
+            }
+          }
+        } catch (err) {
+          console.error('Failed to send verification email:', err);
+          emailError = err.message;
+        }
+      }
+
+      const responseMessage = emailSent
+        ? data.message + ' Please check your email to verify your account.'
+        : data.message + ' Email verification is pending - please contact administrator for verification link.';
+
       return {
         success: true,
-        message: data.message,
+        message: responseMessage,
         userId: data.user_id,
-        verificationToken: data.verification_token
+        verificationToken: data.verification_token,
+        emailSent,
+        emailError
       };
     } catch (error) {
       console.error('Registration error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Verify email with token
+   */
+  async verifyEmail(token) {
+    try {
+      const { data, error } = await supabase.rpc('verify_email', {
+        p_token: token
+      });
+
+      if (error) throw error;
+
+      if (!data.success) {
+        throw new Error(data.message || 'Email verification failed');
+      }
+
+      return {
+        success: true,
+        message: data.message || 'Email verified successfully'
+      };
+    } catch (error) {
+      console.error('Email verification error:', error);
       throw error;
     }
   }

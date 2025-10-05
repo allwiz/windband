@@ -1,17 +1,27 @@
+import { useState, useEffect } from 'react';
 import { Users, Music, Clock, Award, CheckCircle, Calendar, Mail, FileText } from 'lucide-react';
+import { openingsService } from '../services/openingsService';
 
 const Join = () => {
-  const instruments = [
-    { name: "Flute", openings: 2, description: "Including piccolo parts" },
-    { name: "Clarinet", openings: 3, description: "All parts welcome" },
-    { name: "Saxophone", openings: 1, description: "Alto or tenor preferred" },
-    { name: "Trumpet", openings: 2, description: "Strong sight-readers" },
-    { name: "French Horn", openings: 1, description: "Experienced players" },
-    { name: "Trombone", openings: 2, description: "Bass trombone needed" },
-    { name: "Euphonium", openings: 1, description: "Solo opportunities available" },
-    { name: "Tuba", openings: 1, description: "Foundation of our ensemble" },
-    { name: "Percussion", openings: 2, description: "Multi-percussion skills preferred" }
-  ];
+  const [instruments, setInstruments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchOpenings();
+  }, []);
+
+  const fetchOpenings = async () => {
+    setLoading(true);
+    const result = await openingsService.getOpenings({ isActive: true });
+    if (result.success) {
+      setInstruments(result.data.map(opening => ({
+        name: opening.instrument_name,
+        openings: opening.openings_count,
+        description: opening.description || ''
+      })));
+    }
+    setLoading(false);
+  };
 
   const requirements = [
     {
@@ -86,24 +96,34 @@ const Join = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {instruments.map((instrument, index) => (
-                <div key={index} className="card hover:scale-105 transition-transform duration-300">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-serif text-xl font-bold text-primary-900">
-                      {instrument.name}
-                    </h3>
-                    <div className="bg-brass-100 text-brass-700 px-3 py-1 rounded-full text-sm font-semibold">
-                      {instrument.openings} opening{instrument.openings > 1 ? 's' : ''}
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-600"></div>
+              </div>
+            ) : instruments.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600 text-lg">No current openings at this time. Please check back soon!</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {instruments.map((instrument, index) => (
+                  <div key={index} className="card hover:scale-105 transition-transform duration-300">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-serif text-xl font-bold text-primary-900">
+                        {instrument.name}
+                      </h3>
+                      <div className="bg-brass-100 text-brass-700 px-3 py-1 rounded-full text-sm font-semibold">
+                        {instrument.openings} opening{instrument.openings > 1 ? 's' : ''}
+                      </div>
                     </div>
+                    <p className="text-gray-600 mb-4">{instrument.description}</p>
+                    <button className="btn-outline w-full text-sm">
+                      Apply for {instrument.name}
+                    </button>
                   </div>
-                  <p className="text-gray-600 mb-4">{instrument.description}</p>
-                  <button className="btn-outline w-full text-sm">
-                    Apply for {instrument.name}
-                  </button>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             <div className="text-center mt-12">
               <div className="bg-primary-50 rounded-xl p-8">

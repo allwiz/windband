@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { galleryService } from '../../services/galleryService';
+import GalleryForm from './components/GalleryForm';
+import GalleryList from './components/GalleryList';
+import PerformanceForm from './components/PerformanceForm';
+import PerformanceList from './components/PerformanceList';
+import OpeningsForm from './components/OpeningsForm';
+import OpeningsList from './components/OpeningsList';
 import {
   Users,
   Shield,
-  Activity,
   Settings,
   UserCheck,
-  UserX,
   Mail,
   Calendar,
   TrendingUp,
@@ -20,15 +24,13 @@ import {
   X,
   Plus,
   Home,
-  Upload,
-  Trash2,
-  Edit,
-  Eye,
-  List
+  List,
+  ArrowLeft
 } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [stats, setStats] = useState({
@@ -40,25 +42,18 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  // Gallery form state
-  const [galleryForm, setGalleryForm] = useState({
-    title: '',
-    description: '',
-    category: 'concerts',
-    date: new Date().toISOString().split('T')[0]
-  });
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
-  const [uploadLoading, setUploadLoading] = useState(false);
-  const [galleryItems, setGalleryItems] = useState([]);
-  const [showGalleryList, setShowGalleryList] = useState(false);
+  const [editingGalleryItem, setEditingGalleryItem] = useState(null);
+  const [editingOpeningItem, setEditingOpeningItem] = useState(null);
 
   const sidebarMenuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'users', label: 'Manage Users', icon: Users },
     { id: 'gallery', label: 'Add Gallery Item', icon: Image },
     { id: 'galleryList', label: 'Gallery List', icon: List },
+    { id: 'performance', label: 'Add Performance', icon: Music },
+    { id: 'performanceList', label: 'Performance List', icon: Music },
+    { id: 'openings', label: 'Add Opening', icon: Plus },
+    { id: 'openingsList', label: 'Openings List', icon: List },
     { id: 'events', label: 'Manage Events', icon: Calendar },
     { id: 'content', label: 'Content Management', icon: FileText },
     { id: 'settings', label: 'Settings', icon: Settings },
@@ -67,8 +62,6 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (activeSection === 'dashboard' || activeSection === 'users') {
       fetchDashboardData();
-    } else if (activeSection === 'galleryList') {
-      fetchGalleryItems();
     }
   }, [activeSection]);
 
@@ -139,364 +132,66 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchGalleryItems = async () => {
-    setLoading(true);
-    const result = await galleryService.getGalleryItems();
-    if (result.success) {
-      setGalleryItems(result.data);
-    } else {
-      setError(result.error);
-    }
-    setLoading(false);
-  };
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        alert('Please select an image file');
-        return;
-      }
-
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB');
-        return;
-      }
-
-      setSelectedFile(file);
-
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleGallerySubmit = async (e) => {
-    e.preventDefault();
-
-    if (!selectedFile) {
-      alert('Please select an image file');
-      return;
-    }
-
-    setUploadLoading(true);
-    setError('');
-
-    try {
-      // Upload image to Supabase storage
-      const uploadResult = await galleryService.uploadImage(selectedFile, galleryForm.category);
-
-      if (!uploadResult.success) {
-        throw new Error(uploadResult.error);
-      }
-
-      // Get image dimensions
-      const dimensions = await galleryService.getImageDimensions(selectedFile);
-
-      // Create gallery item in database
-      const galleryData = {
-        title: galleryForm.title,
-        description: galleryForm.description,
-        category: galleryForm.category,
-        imageUrl: uploadResult.url,
-        storagePath: uploadResult.storagePath,
-        fileSize: uploadResult.fileSize,
-        mimeType: uploadResult.mimeType,
-        width: dimensions.width,
-        height: dimensions.height,
-        date: galleryForm.date
-      };
-
-      const createResult = await galleryService.createGalleryItem(galleryData);
-
-      if (createResult.success) {
-        alert('Gallery item added successfully!');
-
-        // Reset form
-        setGalleryForm({
-          title: '',
-          description: '',
-          category: 'concerts',
-          date: new Date().toISOString().split('T')[0]
-        });
-        setSelectedFile(null);
-        setImagePreview('');
-
-        // If on gallery list view, refresh the list
-        if (activeSection === 'galleryList') {
-          fetchGalleryItems();
-        }
-      } else {
-        throw new Error(createResult.error);
-      }
-    } catch (err) {
-      setError('Failed to add gallery item: ' + err.message);
-      console.error(err);
-    } finally {
-      setUploadLoading(false);
-    }
-  };
-
-  const handleDeleteGalleryItem = async (id) => {
-    if (!confirm('Are you sure you want to delete this gallery item?')) {
-      return;
-    }
-
-    const result = await galleryService.deleteGalleryItem(id);
-    if (result.success) {
-      fetchGalleryItems();
-    } else {
-      alert('Failed to delete gallery item: ' + result.error);
-    }
-  };
-
   const renderContent = () => {
     switch (activeSection) {
+      case 'openings':
+        return (
+          <OpeningsForm
+            editItem={editingOpeningItem}
+            onSuccess={() => {
+              setEditingOpeningItem(null);
+              setActiveSection('openingsList');
+            }}
+          />
+        );
+
+      case 'openingsList':
+        return (
+          <OpeningsList
+            onAddNew={() => {
+              setEditingOpeningItem(null);
+              setActiveSection('openings');
+            }}
+            onEdit={(item) => {
+              setEditingOpeningItem(item);
+              setActiveSection('openings');
+            }}
+          />
+        );
+
+      case 'performance':
+        return (
+          <PerformanceForm onSuccess={() => setActiveSection('performanceList')} />
+        );
+
+      case 'performanceList':
+        return (
+          <PerformanceList onAddNew={() => setActiveSection('performance')} />
+        );
+
       case 'gallery':
         return (
-          <div className="max-w-4xl">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Image className="h-6 w-6 mr-2 text-accent-600" />
-              Add Gallery Item
-            </h2>
-
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">
-                {error}
-              </div>
-            )}
-
-            <form onSubmit={handleGallerySubmit} className="bg-white rounded-xl shadow-lg p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Title <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={galleryForm.title}
-                    onChange={(e) => setGalleryForm({ ...galleryForm, title: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
-                    placeholder="Enter image title"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Category <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    required
-                    value={galleryForm.category}
-                    onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
-                  >
-                    <option value="concerts">Concerts</option>
-                    <option value="rehearsals">Rehearsals</option>
-                    <option value="events">Events</option>
-                    <option value="members">Members</option>
-                    <option value="general">General</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    value={galleryForm.date}
-                    onChange={(e) => setGalleryForm({ ...galleryForm, date: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Upload Image <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileSelect}
-                      className="hidden"
-                      id="image-upload"
-                    />
-                    <label
-                      htmlFor="image-upload"
-                      className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent-500 transition-colors flex items-center justify-center space-x-2 bg-gray-50 hover:bg-gray-100"
-                    >
-                      <Upload className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-600">
-                        {selectedFile ? selectedFile.name : 'Choose an image'}
-                      </span>
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">Max file size: 5MB</p>
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description
-                  </label>
-                  <textarea
-                    rows="4"
-                    value={galleryForm.description}
-                    onChange={(e) => setGalleryForm({ ...galleryForm, description: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
-                    placeholder="Enter image description"
-                  />
-                </div>
-              </div>
-
-              {imagePreview && (
-                <div className="mt-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Image Preview
-                  </label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50">
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="max-w-full h-64 object-contain mx-auto"
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="flex justify-end mt-6 space-x-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setGalleryForm({
-                      title: '',
-                      description: '',
-                      category: 'concerts',
-                      date: new Date().toISOString().split('T')[0]
-                    });
-                    setSelectedFile(null);
-                    setImagePreview('');
-                  }}
-                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors"
-                >
-                  Clear
-                </button>
-                <button
-                  type="submit"
-                  disabled={uploadLoading}
-                  className="px-6 py-3 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {uploadLoading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>Uploading...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="h-5 w-5" />
-                      <span>Add to Gallery</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
+          <GalleryForm
+            editItem={editingGalleryItem}
+            onSuccess={() => {
+              setEditingGalleryItem(null);
+              setActiveSection('galleryList');
+            }}
+          />
         );
 
       case 'galleryList':
         return (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center justify-between">
-              <div className="flex items-center">
-                <List className="h-6 w-6 mr-2 text-accent-600" />
-                Gallery Items
-              </div>
-              <button
-                onClick={() => setActiveSection('gallery')}
-                className="px-4 py-2 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors flex items-center space-x-2 text-sm"
-              >
-                <Plus className="h-4 w-4" />
-                <span>Add New</span>
-              </button>
-            </h2>
-
-            {loading ? (
-              <div className="flex justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-600"></div>
-              </div>
-            ) : galleryItems.length === 0 ? (
-              <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-                <Image className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                <p className="text-gray-500">No gallery items found</p>
-                <button
-                  onClick={() => setActiveSection('gallery')}
-                  className="mt-4 px-6 py-2 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors"
-                >
-                  Add First Item
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {galleryItems.map((item) => (
-                  <div key={item.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <div className="aspect-w-16 aspect-h-9 bg-gray-200">
-                      <img
-                        src={item.image_url}
-                        alt={item.title}
-                        className="w-full h-48 object-cover"
-                        onError={(e) => {
-                          e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23e5e7eb"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3EImage Not Found%3C/text%3E%3C/svg%3E';
-                        }}
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-gray-900 mb-1 truncate">{item.title}</h3>
-                      <p className="text-sm text-gray-500 mb-2">
-                        {item.category} • {new Date(item.date).toLocaleDateString()}
-                      </p>
-                      {item.description && (
-                        <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                          {item.description}
-                        </p>
-                      )}
-                      <div className="flex items-center justify-between">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          item.is_active
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {item.is_active ? 'Active' : 'Inactive'}
-                        </span>
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => window.open(item.image_url, '_blank')}
-                            className="text-gray-600 hover:text-accent-600"
-                            title="View Full Image"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteGalleryItem(item.id)}
-                            className="text-red-600 hover:text-red-700"
-                            title="Delete"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <GalleryList
+            onAddNew={() => {
+              setEditingGalleryItem(null);
+              setActiveSection('gallery');
+            }}
+            onEdit={(item) => {
+              setEditingGalleryItem(item);
+              setActiveSection('gallery');
+            }}
+          />
         );
 
       case 'users':
@@ -682,8 +377,8 @@ const AdminDashboard = () => {
         {/* Sidebar */}
         <aside className={`${
           sidebarOpen ? 'w-64' : 'w-16'
-        } bg-white shadow-lg min-h-screen transition-all duration-300 ease-in-out`}>
-          <div className="p-4">
+        } bg-white shadow-lg min-h-screen transition-all duration-300 ease-in-out flex flex-col`}>
+          <div className="p-4 flex-1 flex flex-col">
             <div className="flex items-center justify-between mb-8">
               <h1 className={`font-bold text-xl text-gray-800 ${!sidebarOpen && 'hidden'}`}>
                 Admin Panel
@@ -696,7 +391,7 @@ const AdminDashboard = () => {
               </button>
             </div>
 
-            <nav className="space-y-2">
+            <nav className="space-y-2 flex-1">
               {sidebarMenuItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -717,6 +412,20 @@ const AdminDashboard = () => {
                 );
               })}
             </nav>
+
+            {/* Back to Home Button */}
+            <div className="pt-4 border-t border-gray-200 mt-4">
+              <button
+                onClick={() => navigate('/')}
+                className="w-full flex items-center space-x-3 px-3 py-3 rounded-lg transition-colors text-gray-700 hover:bg-gray-100"
+                title="Back to Home"
+              >
+                <ArrowLeft className="h-5 w-5 flex-shrink-0" />
+                {sidebarOpen && (
+                  <span className="text-sm font-medium">Back to Home</span>
+                )}
+              </button>
+            </div>
           </div>
         </aside>
 
@@ -729,11 +438,21 @@ const AdminDashboard = () => {
               {activeSection === 'dashboard' ? 'Dashboard' :
                activeSection === 'users' ? 'User Management' :
                activeSection === 'gallery' ? 'Gallery Management' :
+               activeSection === 'galleryList' ? 'Gallery List' :
+               activeSection === 'performance' ? 'Performance Management' :
+               activeSection === 'performanceList' ? 'Performance List' :
+               activeSection === 'openings' ? 'Openings Management' :
+               activeSection === 'openingsList' ? 'Openings List' :
                'Admin Dashboard'}
             </h1>
             <p className="text-gray-600 mt-2">
               {activeSection === 'dashboard' ? 'Monitor system activity and manage users' :
                activeSection === 'gallery' ? 'Add and manage gallery items' :
+               activeSection === 'galleryList' ? 'View and manage gallery items' :
+               activeSection === 'performance' ? 'Add and manage performances' :
+               activeSection === 'performanceList' ? 'View and manage performances' :
+               activeSection === 'openings' ? 'Add and manage instrument openings' :
+               activeSection === 'openingsList' ? 'View and manage instrument openings' :
                'Manage your application'}
             </p>
           </div>

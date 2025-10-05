@@ -23,7 +23,7 @@ const Home = () => {
             Global Mission Wind Band
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed animate-fade-in-up animation-delay-200">
-            Excellence in Musical Performance Since 1985
+            Excellence in Musical Performance Since 2025 
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-400">
             <Link

@@ -11,6 +11,7 @@ import Join from './pages/Join';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import VerifyEmail from './pages/VerifyEmail';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
@@ -32,6 +33,7 @@ function App() {
             {/* Auth routes (no layout) */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
 
             {/* Protected routes */}
             <Route
