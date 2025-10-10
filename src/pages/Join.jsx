@@ -75,10 +75,16 @@ const Join = () => {
           <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed animate-slide-up" style={{animationDelay: '0.1s'}}>
             Become part of our musical family and share your passion for wind ensemble music
           </p>
-          <button className="btn-primary inline-flex items-center group hover:scale-[1.02] transition-transform duration-200 animate-slide-up" style={{animationDelay: '0.2s'}}>
+          <a
+            href="https://forms.gle/2fbvV4kWEunRPiWs8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-flex items-center group hover:scale-[1.02] transition-transform duration-200 animate-slide-up"
+            style={{animationDelay: '0.2s'}}
+          >
             <Mail className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             Apply Now
-          </button>
+          </a>
         </div>
       </section>
 
@@ -117,9 +123,14 @@ const Join = () => {
                       </div>
                     </div>
                     <p className="text-gray-600 mb-4">{instrument.description}</p>
-                    <button className="btn-outline w-full text-sm">
+                    <a
+                      href="https://forms.gle/2fbvV4kWEunRPiWs8"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-outline w-full text-sm inline-block text-center"
+                    >
                       Apply for {instrument.name}
-                    </button>
+                    </a>
                   </div>
                 ))}
               </div>
@@ -134,9 +145,14 @@ const Join = () => {
                   We're always looking for exceptional musicians, regardless of current openings.
                   Submit your application and we'll consider you for future opportunities.
                 </p>
-                <button className="btn-primary">
+                <a
+                  href="https://forms.gle/2fbvV4kWEunRPiWs8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-block"
+                >
                   General Application
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -312,10 +328,15 @@ const Join = () => {
             Take the first step toward joining our musical community. We're excited to hear from you!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-secondary inline-flex items-center">
+            <a
+              href="https://forms.gle/2fbvV4kWEunRPiWs8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary inline-flex items-center"
+            >
               <Mail className="mr-2 h-5 w-5" />
               Start Your Application
-            </button>
+            </a>
             <a
               href="mailto:auditions@globalmissionwindband.org"
               className="btn-outline border-white text-white hover:bg-white hover:text-primary-900 inline-flex items-center"
