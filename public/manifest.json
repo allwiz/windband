@@ -1,0 +1,17 @@
+{
+  "name": "Global Mission Wind Band",
+  "short_name": "GMWB",
+  "description": "Excellence in Musical Performance Since 1985",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e3a8a",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/gmwb.logo.JPG",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

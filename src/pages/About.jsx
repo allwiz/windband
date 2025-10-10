@@ -116,7 +116,7 @@ const About = () => {
                         </div>
                         <div>
                           <h5 className="font-serif text-lg font-bold text-primary-900">Vice President</h5>
-                          <p className="text-gray-700 font-medium">Yunjin Lee</p>
+                          <p className="text-gray-700 font-medium">Yoonjin Lee</p>
                         </div>
                       </div>
                     </div>
