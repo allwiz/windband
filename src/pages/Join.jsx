@@ -47,14 +47,26 @@ const Join = () => {
   ];
 
   const benefits = [
-    "Perform challenging and rewarding repertoire",
-    "Learn from experienced conductor Dr. Sarah Mitchell",
-    "Build lasting friendships with fellow musicians",
-    "Contribute to community cultural enrichment",
-    "Access to member-only events and workshops",
-    "Opportunities for solo performances",
-    "Flexible attendance policy for busy schedules",
-    "No membership fees or dues required"
+    {
+      title: "Musical Growth",
+      description: "Improve your musical skills, gain confidence, and experience the joy of making music together under inspiring conductors."
+    },
+    {
+      title: "Leadership & Teamwork",
+      description: "Build leadership and teamwork through ensemble rehearsals, performances, and shared musical goals."
+    },
+    {
+      title: "Community Service",
+      description: "Use your talent to serve the community — perform at local events and bring joy to others through music."
+    },
+    {
+      title: "Personal Development",
+      description: "Develop discipline, time management, and collaboration skills that will strengthen your college and scholarship applications."
+    },
+    {
+      title: "Belonging & Inspiration",
+      description: "Be part of a warm, supportive community where young musicians grow, connect, and make lasting memories."
+    }
   ];
 
   return (
@@ -201,19 +213,22 @@ const Join = () => {
                   You'll become part of a supportive community that values artistic growth and
                   meaningful connections.
                 </p>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {benefits.map((benefit, index) => (
                     <div key={index} className="flex items-start space-x-3">
-                      <CheckCircle className="h-5 w-5 text-brass-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{benefit}</span>
+                      <CheckCircle className="h-6 w-6 text-brass-600 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h3 className="font-semibold text-primary-900 mb-1">{benefit.title}</h3>
+                        <p className="text-gray-700">{benefit.description}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Band members enjoying rehearsal"
+                  src="/members.JPG"
+                  alt="Global Mission Wind Band members"
                   className="rounded-xl shadow-lg w-full h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl" />
@@ -223,8 +238,8 @@ const Join = () => {
         </div>
       </section>
 
-      {/* Audition Process */}
-      <section className="section-padding bg-primary-50">
+      {/* Audition Process - Hidden */}
+      {/* <section className="section-padding bg-primary-50">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary-900 mb-12 text-center">
@@ -316,7 +331,7 @@ const Join = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact for Auditions */}
       <section className="section-padding bg-primary-900 text-white">
