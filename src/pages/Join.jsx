@@ -225,13 +225,12 @@ const Join = () => {
                   ))}
                 </div>
               </div>
-              <div className="relative">
+              <div className="relative flex items-center justify-center bg-gradient-to-br from-primary-50 to-white rounded-xl shadow-lg p-8">
                 <img
-                  src="/members.JPG"
-                  alt="Global Mission Wind Band members"
-                  className="rounded-xl shadow-lg w-full h-96 object-cover"
+                  src="/logo.png"
+                  alt="Global Mission Wind Band"
+                  className="w-full max-w-md h-auto object-contain"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl" />
               </div>
             </div>
           </div>
