@@ -125,16 +125,26 @@ class AuthService {
    */
   async verifyEmail(token) {
     try {
+      console.log('Verifying email with token:', token);
+      console.log('Token length:', token?.length);
+
       const { data, error } = await supabase.rpc('verify_email', {
         p_token: token
       });
 
-      if (error) throw error;
+      console.log('Verification response:', { data, error });
+
+      if (error) {
+        console.error('Supabase RPC error:', error);
+        throw error;
+      }
 
       if (!data.success) {
+        console.error('Verification failed:', data.message);
         throw new Error(data.message || 'Email verification failed');
       }
 
+      console.log('Verification successful!');
       return {
         success: true,
         message: data.message || 'Email verified successfully'
@@ -227,23 +237,6 @@ class AuthService {
     }
   }
 
-  /**
-   * Verify email
-   */
-  async verifyEmail(token) {
-    try {
-      const { data, error } = await supabase.rpc('verify_email', {
-        p_token: token
-      });
-
-      if (error) throw error;
-
-      return data;
-    } catch (error) {
-      console.error('Email verification error:', error);
-      throw error;
-    }
-  }
 
   /**
    * Request password reset

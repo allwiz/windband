@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle, Loader, Mail } from 'lucide-react';
 import { authService } from '../lib/auth';
@@ -9,6 +9,7 @@ const VerifyEmail = () => {
   const [status, setStatus] = useState('verifying'); // verifying, success, error
   const [message, setMessage] = useState('');
   const token = searchParams.get('token');
+  const hasVerified = useRef(false);
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -17,6 +18,12 @@ const VerifyEmail = () => {
         setMessage('Invalid verification link. No token provided.');
         return;
       }
+
+      // Prevent double execution in React Strict Mode
+      if (hasVerified.current) {
+        return;
+      }
+      hasVerified.current = true;
 
       try {
         const result = await authService.verifyEmail(token);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Music, LogIn, User, LogOut, Shield } from 'lucide-react';
+import { Menu, X, LogIn, User, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
@@ -36,9 +36,11 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 lg:h-18 gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 lg:space-x-3 hover-lift group flex-shrink-0">
-            <div className="bg-gradient-to-br from-gray-900 to-gray-700 p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
-              <Music className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="GMWB Logo"
+              className="h-10 w-10 lg:h-12 lg:w-12 object-contain"
+            />
             <div className="flex flex-col min-w-0">
               <span className="font-display text-base lg:text-lg xl:text-xl font-semibold text-gray-900 tracking-tight group-hover:text-gray-700 transition-colors whitespace-nowrap truncate">
                 Global Mission Wind Band
