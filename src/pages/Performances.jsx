@@ -139,7 +139,7 @@ const Performances = () => {
                           <div className="flex items-center space-x-3">
                             <Calendar className="h-5 w-5 text-brass-600" />
                             <span className="text-gray-700 font-medium">
-                              {new Date(featuredPerformance.date).toLocaleDateString('en-US', {
+                              {new Date(featuredPerformance.date + 'T00:00:00').toLocaleDateString('en-US', {
                                 weekday: 'long',
                                 year: 'numeric',
                                 month: 'long',
@@ -226,7 +226,7 @@ const Performances = () => {
                           <div className="flex items-center space-x-2">
                             <Calendar className="h-4 w-4 text-brass-600" />
                             <span className="text-gray-700 text-sm">
-                              {new Date(concert.date).toLocaleDateString()}
+                              {new Date(concert.date + 'T00:00:00').toLocaleDateString()}
                             </span>
                           </div>
                           {concert.start_time && (
@@ -296,7 +296,7 @@ const Performances = () => {
                               <div className="flex items-center space-x-2">
                                 <Calendar className="h-4 w-4 text-brass-600" />
                                 <span className="text-gray-700">
-                                  {new Date(performance.date).toLocaleDateString()}
+                                  {new Date(performance.date + 'T00:00:00').toLocaleDateString()}
                                 </span>
                               </div>
                               {performance.venue && (
@@ -414,7 +414,7 @@ const Performances = () => {
                 <div className="flex items-center text-gray-700">
                   <Calendar className="h-5 w-5 mr-3 text-accent-600" />
                   <span className="font-medium">
-                    {new Date(selectedPerformance.date).toLocaleDateString('en-US', {
+                    {new Date(selectedPerformance.date + 'T00:00:00').toLocaleDateString('en-US', {
                       weekday: 'long',
                       year: 'numeric',
                       month: 'long',
