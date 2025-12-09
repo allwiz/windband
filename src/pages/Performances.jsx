@@ -8,6 +8,7 @@ const Performances = () => {
   const [selectedPerformance, setSelectedPerformance] = useState(null);
   const [performanceItems, setPerformanceItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     fetchPerformanceItems();
@@ -51,7 +52,7 @@ const Performances = () => {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
+            backgroundImage: 'url("https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-accent-600/5 via-transparent to-primary-600/10" />
@@ -210,13 +211,23 @@ const Performances = () => {
                         onClick={() => setSelectedPerformance(concert)}
                       >
                         {concert.image_url && (
-                          <div className="relative h-48 mb-6 -mx-6 -mt-6">
+                          <div
+                            className="relative h-48 mb-6 -mx-6 -mt-6 bg-gray-100 cursor-pointer group"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedImage(concert.image_url);
+                            }}
+                          >
                             <img
                               src={concert.image_url}
                               alt={concert.title}
-                              className="w-full h-full object-cover rounded-t-xl"
+                              className="w-full h-full object-contain rounded-t-xl transition-opacity group-hover:opacity-80"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-t-xl" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="bg-black/50 text-white px-4 py-2 rounded-lg text-sm">
+                                Click to enlarge
+                              </div>
+                            </div>
                           </div>
                         )}
                         <h3 className="font-serif text-xl font-bold text-primary-900 mb-3">
@@ -469,6 +480,29 @@ const Performances = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors z-10"
+            >
+              <X className="h-6 w-6 text-white" />
+            </button>
+            <img
+              src={selectedImage}
+              alt="Concert"
+              className="max-w-full max-h-full object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
           </div>
         </div>
       )}
