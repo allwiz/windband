@@ -116,7 +116,7 @@ const About = () => {
                         </div>
                         <div>
                           <h5 className="font-serif text-lg font-bold text-primary-900">Vice President</h5>
-                          <p className="text-gray-700 font-medium">Yoonjin Lee</p>
+                          <p className="text-gray-700 font-medium">Ynjin Lee</p>
                         </div>
                       </div>
                     </div>
@@ -132,7 +132,7 @@ const About = () => {
                         </div>
                       </div>
                     </div>
-
+{/*
                     <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                       <div className="flex items-center space-x-4">
                         <div className="bg-gradient-to-br from-primary-100 to-primary-200 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -144,7 +144,7 @@ const About = () => {
                         </div>
                       </div>
                     </div>
-
+*/}
                     <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                       <div className="flex items-center space-x-4">
                         <div className="bg-gradient-to-br from-brass-100 to-brass-200 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -176,7 +176,7 @@ const About = () => {
                         </div>
                       </div>
                     </div>
-
+{/*}
                     <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                       <div className="flex items-center space-x-4">
                         <div className="bg-gradient-to-br from-brass-100 to-brass-200 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -188,6 +188,10 @@ const About = () => {
                         </div>
                       </div>
                     </div>
+*/}
+
+
+
                   </div>
                 </div>
               </div>
