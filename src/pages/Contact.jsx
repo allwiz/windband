@@ -235,7 +235,7 @@ const Contact = () => {
                   Yes, we require a brief audition to ensure you'll be comfortable with our repertoire and to help us place you in the right section. Don't worry - it's more of a musical conversation than a formal test!
                 </p>
               </div>
-
+{/*}
               <div className="card-feature">
                 <h3 className="font-semibold text-gray-900 mb-2">
                   What if I haven't played in years?
@@ -244,13 +244,14 @@ const Contact = () => {
                   Many of our members return to music after years away. We're supportive of musicians getting back into playing and will work with you to help you regain your skills.
                 </p>
               </div>
+*/}
 
               <div className="card-feature">
                 <h3 className="font-semibold text-gray-900 mb-2">
                   Are there any fees to join?
                 </h3>
                 <p className="text-gray-500">
-                  No! The Global Mission Wind Band is completely free to join. We provide music and music stands. You just need to bring your instrument and enthusiasm.
+                  No! The Global Mission Winds & Brass is completely free to join. We provide music and music stands. You just need to bring your instrument and enthusiasm.
                 </p>
               </div>
 
