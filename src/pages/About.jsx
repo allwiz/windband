@@ -25,13 +25,14 @@ const About = () => {
 
   const boardMembers = [
     { role: 'President', name: 'Yunhee Lee' },
-    { role: 'Vice President', name: 'Ynjin Lee' },
+    { role: 'Vice President', name: 'Yoonjin Lee' },
     { role: 'Secretary', name: 'Ahyoung Cho' },
     { role: 'Committee', name: 'Jinmi Do' },
   ];
 
   const principalPlayers = [
     { role: 'President', name: 'Jihu Lee' },
+    { role: 'Vice President', name: 'Stella Kim' },
   ];
 
   const impactItems = [
