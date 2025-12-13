@@ -58,114 +58,116 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="container-custom pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-subtle">
+      <div className="container-main py-12">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-20 h-20 rounded-full flex items-center justify-center">
-                  <User className="h-10 w-10 text-accent-700" />
+          <div className="card-feature p-8 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-4">
+                <div className="icon-box w-16 h-16 rounded-2xl">
+                  <User className="h-7 w-7 text-gray-600" />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">
+                  <h1 className="text-2xl font-semibold text-gray-900">
                     Welcome back{user?.full_name ? `, ${user.full_name}` : ''}!
                   </h1>
-                  <p className="text-gray-600">Manage your account and preferences</p>
+                  <p className="text-gray-500">Manage your account and preferences</p>
                 </div>
               </div>
               <button
                 onClick={handleSignOut}
-                className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors"
+                className="btn btn-outline text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300"
               >
-                <LogOut className="h-5 w-5" />
-                <span>Sign Out</span>
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
               </button>
             </div>
 
             {/* User Role Badge */}
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent-100 text-accent-700">
-              {user?.role === 'admin' ? '🛡️ Administrator' : '🎵 Member'}
-            </div>
+            <span className="badge">
+              {user?.role === 'admin' ? 'Administrator' : 'Member'}
+            </span>
           </div>
 
           {/* Profile Information */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+          <div className="card-feature p-8 mb-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-                <Settings className="h-6 w-6 mr-2 text-gray-600" />
-                Profile Information
-              </h2>
+              <div className="flex items-center gap-3">
+                <div className="icon-box">
+                  <Settings className="h-4 w-4 text-gray-600" />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">Profile Information</h2>
+              </div>
               {!isEditing && (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors"
+                  className="btn btn-primary"
                 >
-                  <Edit2 className="h-4 w-4" />
-                  <span>Edit Profile</span>
+                  <Edit2 className="h-4 w-4 mr-2" />
+                  Edit Profile
                 </button>
               )}
             </div>
 
             {message.text && (
-              <div className={`mb-4 p-3 rounded-xl ${
-                message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+              <div className={`mb-6 px-4 py-3 rounded-xl flex items-center text-small ${
+                message.type === 'success'
+                  ? 'bg-green-50 text-green-700 border border-green-200'
+                  : 'bg-red-50 text-red-700 border border-red-200'
               }`}>
                 {message.text}
               </div>
             )}
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-small font-medium text-gray-700 mb-2">Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <User className="h-4 w-4 text-gray-400" />
+                  </div>
                   <input
                     type="text"
                     name="full_name"
                     value={formData.full_name}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    className={`w-full pl-10 pr-3 py-3 border rounded-xl ${
-                      isEditing
-                        ? 'border-gray-300 focus:ring-2 focus:ring-accent-600 focus:border-transparent'
-                        : 'border-gray-200 bg-gray-50'
-                    }`}
+                    className={`input pl-10 ${!isEditing ? 'bg-gray-100 text-gray-500' : ''}`}
                     placeholder="Enter your full name"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <label className="block text-small font-medium text-gray-700 mb-2">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <Mail className="h-4 w-4 text-gray-400" />
+                  </div>
                   <input
                     type="email"
                     value={formData.email}
                     disabled
-                    className="w-full pl-10 pr-3 py-3 border border-gray-200 bg-gray-50 rounded-xl text-gray-600"
+                    className="input pl-10 bg-gray-100 text-gray-500"
                   />
                 </div>
-                <p className="mt-1 text-sm text-gray-500">Email cannot be changed</p>
+                <p className="mt-1.5 text-tiny text-gray-400">Email cannot be changed</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <label className="block text-small font-medium text-gray-700 mb-2">Phone Number</label>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <Phone className="h-4 w-4 text-gray-400" />
+                  </div>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    className={`w-full pl-10 pr-3 py-3 border rounded-xl ${
-                      isEditing
-                        ? 'border-gray-300 focus:ring-2 focus:ring-accent-600 focus:border-transparent'
-                        : 'border-gray-200 bg-gray-50'
-                    }`}
+                    className={`input pl-10 ${!isEditing ? 'bg-gray-100 text-gray-500' : ''}`}
                     placeholder="Enter your phone number"
                   />
                 </div>
@@ -173,61 +175,65 @@ const Dashboard = () => {
             </div>
 
             {isEditing && (
-              <div className="flex space-x-3 mt-6">
+              <div className="flex gap-3 mt-6">
                 <button
                   onClick={handleSave}
                   disabled={loading}
-                  className="flex items-center space-x-2 px-6 py-3 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors disabled:opacity-50"
+                  className="btn btn-primary"
                 >
-                  <Save className="h-4 w-4" />
-                  <span>{loading ? 'Saving...' : 'Save Changes'}</span>
+                  {loading ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
+                  {loading ? 'Saving...' : 'Save Changes'}
                 </button>
                 <button
                   onClick={handleCancel}
                   disabled={loading}
-                  className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors disabled:opacity-50"
+                  className="btn btn-secondary"
                 >
-                  <X className="h-4 w-4" />
-                  <span>Cancel</span>
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel
                 </button>
               </div>
             )}
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="bg-blue-100 p-3 rounded-xl">
-                  <Music className="h-6 w-6 text-blue-600" />
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="card-feature cursor-pointer group">
+              <div className="flex items-center gap-4">
+                <div className="icon-box group-hover:scale-110 transition-transform">
+                  <Music className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">My Instruments</h3>
-                  <p className="text-sm text-gray-600">Manage your instruments</p>
+                  <p className="text-small text-gray-500">Manage your instruments</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="bg-green-100 p-3 rounded-xl">
-                  <Calendar className="h-6 w-6 text-green-600" />
+            <div className="card-feature cursor-pointer group">
+              <div className="flex items-center gap-4">
+                <div className="icon-box group-hover:scale-110 transition-transform">
+                  <Calendar className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Event History</h3>
-                  <p className="text-sm text-gray-600">View past performances</p>
+                  <p className="text-small text-gray-500">View past performances</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="bg-purple-100 p-3 rounded-xl">
-                  <Settings className="h-6 w-6 text-purple-600" />
+            <div className="card-feature cursor-pointer group">
+              <div className="flex items-center gap-4">
+                <div className="icon-box group-hover:scale-110 transition-transform">
+                  <Settings className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Preferences</h3>
-                  <p className="text-sm text-gray-600">Notification settings</p>
+                  <p className="text-small text-gray-500">Notification settings</p>
                 </div>
               </div>
             </div>

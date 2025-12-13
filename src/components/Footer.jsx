@@ -1,75 +1,90 @@
 import { Link } from 'react-router-dom';
-import { Music, Mail, Facebook, Youtube, Instagram } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const links = {
+    main: [
+      { name: 'Home', href: '/' },
+      { name: 'About', href: '/about' },
+      { name: 'Performances', href: '/performances' },
+      { name: 'Gallery', href: '/gallery' },
+    ],
+    secondary: [
+      { name: 'Join Us', href: '/join' },
+      { name: 'Contact', href: '/contact' },
+    ],
+  };
+
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      {/* Main Footer Content */}
-      <div className="container-custom py-12">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          {/* Brand Section - Compact */}
-          <div className="flex items-center space-x-3">
-            <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl">
-              <Music className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-display text-lg font-semibold text-white">Global Mission Wind Band</h3>
-              <p className="text-gray-300 text-sm">Excellence in Musical Performance</p>
-            </div>
+    <footer className="border-t border-gray-100">
+      <div className="container-main py-12 md:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1">
+            <Link to="/" className="flex items-center gap-2 mb-4">
+              <img
+                src="/logo.png"
+                alt="GMWB"
+                className="h-8 w-8 object-contain"
+              />
+              <span className="font-semibold text-gray-900">GMWB</span>
+            </Link>
+            <p className="text-small text-gray-500 max-w-xs">
+              Excellence in musical performance since 2025.
+            </p>
           </div>
 
-          {/* Quick Navigation */}
-          <nav className="flex flex-wrap gap-6 md:gap-8">
-            <Link to="/about" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">
-              About
-            </Link>
-            <Link to="/performances" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">
-              Concerts
-            </Link>
-            <Link to="/join" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">
-              Join Us
-            </Link>
-            <Link to="/contact" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">
-              Contact
-            </Link>
-          </nav>
+          {/* Links */}
+          <div>
+            <h4 className="text-small font-medium text-gray-900 mb-3">Navigate</h4>
+            <ul className="space-y-2">
+              {links.main.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-small text-gray-500 hover:text-gray-900 transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          {/* Social Media & Contact */}
-          <div className="flex items-center space-x-4">
-            <a href="mailto:info@globalmissionwindband.org" className="text-gray-300 hover:text-white transition-colors">
-              <Mail className="h-5 w-5" />
-            </a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors" aria-label="Facebook">
-              <Facebook className="h-5 w-5" />
-            </a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors" aria-label="YouTube">
-              <Youtube className="h-5 w-5" />
-            </a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors" aria-label="Instagram">
-              <Instagram className="h-5 w-5" />
+          <div>
+            <h4 className="text-small font-medium text-gray-900 mb-3">Get Involved</h4>
+            <ul className="space-y-2">
+              {links.secondary.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-small text-gray-500 hover:text-gray-900 transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-small font-medium text-gray-900 mb-3">Contact</h4>
+            <a
+              href="mailto:gmwbirvine@gmail.com"
+              className="text-small text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              gmwbirvine@gmail.com
             </a>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar - Minimal */}
-      <div className="border-t border-white/10">
-        <div className="container-custom py-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-xs">
-              © {currentYear} Global Mission Wind Band. All rights reserved.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-gray-300 text-xs transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-gray-300 text-xs transition-colors">
-                Terms
-              </a>
-            </div>
-          </div>
+        {/* Bottom */}
+        <div className="mt-12 pt-6 border-t border-gray-100">
+          <p className="text-tiny text-gray-400">
+            &copy; {currentYear} Global Mission Wind Band. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

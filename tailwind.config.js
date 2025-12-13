@@ -7,45 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Apple-inspired color palette
-        primary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        },
-        accent: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-        },
-        brass: {
-          50: '#fefdf4',
-          100: '#fef9e7',
-          200: '#fcf0ca',
-          300: '#f9e3a8',
-          400: '#f5d07a',
-          500: '#f0ba56',
-          600: '#e6a441',
-          700: '#d18b36',
-          800: '#b26f31',
-          900: '#945a2d',
-        },
-        // Apple-like neutral grays
+        // Minimal monochrome palette with single accent
         gray: {
           50: '#fafafa',
           100: '#f4f4f5',
@@ -57,50 +19,65 @@ export default {
           700: '#3f3f46',
           800: '#27272a',
           900: '#18181b',
+          950: '#09090b',
+        },
+        accent: {
+          DEFAULT: '#2563eb',
+          hover: '#1d4ed8',
+          light: '#3b82f6',
         },
       },
       fontFamily: {
-        // Apple uses San Francisco, but we'll use similar system fonts
-        'sans': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        'serif': ['Charter', 'Georgia', 'serif'],
-        'display': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'system-ui', 'sans-serif'],
+        sans: [
+          'Inter',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'sans-serif',
+        ],
       },
       fontSize: {
-        '4.5xl': ['2.5rem', { lineHeight: '1.1' }],
-        '5.5xl': ['3.5rem', { lineHeight: '1.1' }],
-        '6.5xl': ['4rem', { lineHeight: '1.05' }],
-        '7.5xl': ['5rem', { lineHeight: '1' }],
+        'display': ['4rem', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '600' }],
+        'title': ['2.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '600' }],
+        'subtitle': ['1.5rem', { lineHeight: '1.3', letterSpacing: '-0.01em', fontWeight: '500' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.7' }],
+        'body': ['1rem', { lineHeight: '1.6' }],
+        'small': ['0.875rem', { lineHeight: '1.5' }],
+        'tiny': ['0.75rem', { lineHeight: '1.4' }],
       },
       spacing: {
         '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
+        '22': '5.5rem',
+        '30': '7.5rem',
+      },
+      maxWidth: {
+        'content': '1200px',
+        'narrow': '680px',
+      },
+      borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.25rem',
+      },
+      boxShadow: {
+        'soft': '0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 4px 16px -4px rgba(0, 0, 0, 0.1)',
+        'card': '0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06)',
+        'elevated': '0 8px 30px rgba(0, 0, 0, 0.08)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.6s ease-out',
-        'float': 'float 6s ease-in-out infinite',
+        'fade-up': 'fadeUp 0.5s ease-out forwards',
+        'fade-in': 'fadeIn 0.4s ease-out forwards',
       },
       keyframes: {
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-      },
-      backdropBlur: {
-        'apple': '20px',
-      },
-      boxShadow: {
-        '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
-        '4xl': '0 40px 80px -12px rgba(0, 0, 0, 0.35)',
       },
     },
   },
