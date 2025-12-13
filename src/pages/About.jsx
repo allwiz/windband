@@ -111,54 +111,140 @@ const About = () => {
         </div>
       </section>
 
-      {/* Board & Principal */}
+      {/* Board & Principal - Organizational Graph */}
       <section className="section">
         <div className="container-main">
-          <div className="text-tiny font-medium text-gray-400 uppercase tracking-wider mb-3">
-            Organization
+          <div className="text-center mb-12">
+            <div className="text-tiny font-medium text-gray-400 uppercase tracking-wider mb-3">
+              Organization
+            </div>
+            <h2 className="heading-subtitle">2025 Leadership</h2>
           </div>
-          <h2 className="heading-subtitle mb-10">2025 Leadership</h2>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Board Members */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="icon-box">
-                  <Users className="w-4 h-4 text-gray-600" />
+          {/* Organizational Graph */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* SVG Connection Lines */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              preserveAspectRatio="none"
+            >
+              {/* Vertical line from GMWB to split point */}
+              <line
+                x1="50%"
+                y1="80"
+                x2="50%"
+                y2="140"
+                stroke="#e5e7eb"
+                strokeWidth="2"
+              />
+              {/* Horizontal line at split */}
+              <line
+                x1="25%"
+                y1="140"
+                x2="75%"
+                y2="140"
+                stroke="#e5e7eb"
+                strokeWidth="2"
+              />
+              {/* Left vertical to Board */}
+              <line
+                x1="25%"
+                y1="140"
+                x2="25%"
+                y2="180"
+                stroke="#e5e7eb"
+                strokeWidth="2"
+              />
+              {/* Right vertical to Principal */}
+              <line
+                x1="75%"
+                y1="140"
+                x2="75%"
+                y2="180"
+                stroke="#e5e7eb"
+                strokeWidth="2"
+              />
+            </svg>
+
+            {/* Central Node - GMWB */}
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <div className="w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center shadow-lg ring-4 ring-gray-100">
+                  <span className="text-white font-bold text-sm">GMWB</span>
                 </div>
-                <h3 className="font-semibold text-gray-900">Board Members</h3>
-              </div>
-              <div className="space-y-1">
-                {boardMembers.map((member) => (
-                  <div
-                    key={member.role}
-                    className="list-item"
-                  >
-                    <span className="text-gray-500 text-small flex-shrink-0 w-28">{member.role}</span>
-                    <span className="font-medium text-gray-900">{member.name}</span>
-                  </div>
-                ))}
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                  <span className="text-tiny text-gray-400 font-medium">Est. 2025</span>
+                </div>
               </div>
             </div>
 
-            {/* Principal Players */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="icon-box">
-                  <Award className="w-4 h-4 text-gray-600" />
+            {/* Spacing for connection lines */}
+            <div className="h-16" />
+
+            {/* Two Branch Nodes */}
+            <div className="grid grid-cols-2 gap-8">
+              {/* Board Members Branch */}
+              <div className="flex flex-col items-center">
+                {/* Branch Header Node */}
+                <div className="w-14 h-14 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-4 shadow-sm">
+                  <Users className="w-5 h-5 text-gray-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900">Principal Players</h3>
+                <h3 className="font-semibold text-gray-900 mb-4 text-center">Board Members</h3>
+
+                {/* Member Nodes */}
+                <div className="space-y-3 w-full max-w-xs">
+                  {boardMembers.map((member, index) => (
+                    <div
+                      key={member.role}
+                      className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all group"
+                    >
+                      {/* Connection dot */}
+                      <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-gray-200 border-2 border-white group-hover:bg-gray-400 transition-colors" />
+
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center flex-shrink-0 border border-gray-200">
+                        <span className="text-xs font-semibold text-gray-500">
+                          {member.name.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-medium text-gray-900 text-sm truncate">{member.name}</div>
+                        <div className="text-tiny text-gray-400">{member.role}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-1">
-                {principalPlayers.map((member) => (
-                  <div
-                    key={member.role}
-                    className="list-item"
-                  >
-                    <span className="text-gray-500 text-small flex-shrink-0 w-28">{member.role}</span>
-                    <span className="font-medium text-gray-900">{member.name}</span>
-                  </div>
-                ))}
+
+              {/* Principal Players Branch */}
+              <div className="flex flex-col items-center">
+                {/* Branch Header Node */}
+                <div className="w-14 h-14 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-4 shadow-sm">
+                  <Award className="w-5 h-5 text-gray-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-4 text-center">Principal Players</h3>
+
+                {/* Member Nodes */}
+                <div className="space-y-3 w-full max-w-xs">
+                  {principalPlayers.map((member, index) => (
+                    <div
+                      key={member.role}
+                      className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all group"
+                    >
+                      {/* Connection dot */}
+                      <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-gray-200 border-2 border-white group-hover:bg-gray-400 transition-colors" />
+
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center flex-shrink-0 border border-gray-200">
+                        <span className="text-xs font-semibold text-gray-500">
+                          {member.name.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-medium text-gray-900 text-sm truncate">{member.name}</div>
+                        <div className="text-tiny text-gray-400">{member.role}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
