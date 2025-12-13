@@ -193,7 +193,7 @@ const About = () => {
 
                 {/* Member Nodes */}
                 <div className="space-y-3 w-full max-w-xs">
-                  {boardMembers.map((member, index) => (
+                  {boardMembers.map((member) => (
                     <div
                       key={member.role}
                       className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all group"
@@ -225,7 +225,7 @@ const About = () => {
 
                 {/* Member Nodes */}
                 <div className="space-y-3 w-full max-w-xs">
-                  {principalPlayers.map((member, index) => (
+                  {principalPlayers.map((member) => (
                     <div
                       key={member.role}
                       className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all group"
