@@ -164,7 +164,7 @@ const Home = () => {
 
               <h1 className="heading-display text-balance animate-fade-up">
                 Global Mission
-                <span className="block text-gray-400">Wind Band</span>
+                <span className="block text-gray-400">Winds & Brass</span>
               </h1>
 
               <p className="mt-6 text-lg md:text-xl text-gray-500 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: '100ms' }}>
