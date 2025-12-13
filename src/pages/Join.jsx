@@ -32,7 +32,7 @@ const Join = () => {
     {
       icon: Clock,
       title: "Time Commitment",
-      description: "Weekly rehearsals Tuesday evenings 7:00-9:30 PM"
+      description: "Weekly rehearsals Saturday evenings 6:00-7:15 PM"
     },
     {
       icon: Calendar,
