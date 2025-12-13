@@ -38,8 +38,8 @@ const About = () => {
   const impactItems = [
     {
       icon: GraduationCap,
-      title: 'Education Programs',
-      description: 'Free masterclasses and workshops for student musicians',
+      title: 'Community & Friendship',
+      description: 'Build meaningful friendships and a sense of belonging through shared musical experiences',
     },
     {
       icon: Heart,
@@ -48,8 +48,8 @@ const About = () => {
     },
     {
       icon: Gift,
-      title: 'Scholarships',
-      description: '$25,000+ in music scholarships awarded annually',
+      title: 'Confidence & Self-Expression',
+      description: 'Gain confidence and express creativity through public performances',
     },
   ];
 
@@ -68,7 +68,7 @@ const About = () => {
               Inspiring musicians to serve through music
             </h1>
             <p className="text-xl text-gray-500 leading-relaxed">
-              GMWB inspires young musicians to use their talents to serve others and spread joy throughout the community.
+              Global Mission Winds & Brass inspires young musicians to use their talents to serve others and spread joy throughout the community.
             </p>
           </div>
         </div>
