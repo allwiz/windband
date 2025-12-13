@@ -100,6 +100,7 @@ const Join = () => {
       </section>
 
       {/* Current Openings */}
+{/*      
       <section className="section-sm bg-gradient-subtle">
         <div className="container-main">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -169,7 +170,7 @@ const Join = () => {
           </div>
         </div>
       </section>
-
+*/}
       {/* Requirements */}
       <section className="section">
         <div className="container-main">
