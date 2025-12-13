@@ -35,13 +35,13 @@ const Header = () => {
       <nav className="container-main">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src="/logo.png"
               alt="GMWB"
               className="h-8 w-8 object-contain"
             />
-            <span className="font-semibold text-gray-900 hidden sm:block">
+            <span className="block font-semibold text-gray-900">
               GMWB
             </span>
           </Link>
