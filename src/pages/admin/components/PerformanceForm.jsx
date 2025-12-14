@@ -119,7 +119,7 @@ const PerformanceForm = ({ onSuccess }) => {
   return (
     <div className="max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-        <Music className="h-6 w-6 mr-2 text-accent-600" />
+        <Music className="h-6 w-6 mr-2 text-accent" />
         Add Performance
       </h2>
 
@@ -140,7 +140,7 @@ const PerformanceForm = ({ onSuccess }) => {
               required
               value={performanceForm.title}
               onChange={(e) => setPerformanceForm({ ...performanceForm, title: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="Enter performance title"
             />
           </div>
@@ -153,7 +153,7 @@ const PerformanceForm = ({ onSuccess }) => {
               required
               value={performanceForm.category}
               onChange={(e) => setPerformanceForm({ ...performanceForm, category: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             >
               <option value="concert">Concert</option>
               <option value="competition">Competition</option>
@@ -172,7 +172,7 @@ const PerformanceForm = ({ onSuccess }) => {
               type="text"
               value={performanceForm.venue}
               onChange={(e) => setPerformanceForm({ ...performanceForm, venue: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="Enter venue name"
             />
           </div>
@@ -186,7 +186,7 @@ const PerformanceForm = ({ onSuccess }) => {
               required
               value={performanceForm.date}
               onChange={(e) => setPerformanceForm({ ...performanceForm, date: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
 
@@ -198,7 +198,7 @@ const PerformanceForm = ({ onSuccess }) => {
               type="time"
               value={performanceForm.startTime}
               onChange={(e) => setPerformanceForm({ ...performanceForm, startTime: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
 
@@ -210,7 +210,7 @@ const PerformanceForm = ({ onSuccess }) => {
               type="time"
               value={performanceForm.endTime}
               onChange={(e) => setPerformanceForm({ ...performanceForm, endTime: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
 
@@ -222,7 +222,7 @@ const PerformanceForm = ({ onSuccess }) => {
               type="url"
               value={performanceForm.ticketLink}
               onChange={(e) => setPerformanceForm({ ...performanceForm, ticketLink: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="https://..."
             />
           </div>
@@ -241,7 +241,7 @@ const PerformanceForm = ({ onSuccess }) => {
               />
               <label
                 htmlFor="image-upload"
-                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent-500 transition-colors flex items-center justify-center space-x-2 bg-gray-50 hover:bg-gray-100"
+                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent transition-colors flex items-center justify-center space-x-2 bg-gray-50 hover:bg-gray-100"
               >
                 <Upload className="h-5 w-5 text-gray-600" />
                 <span className="text-gray-600">
@@ -258,7 +258,7 @@ const PerformanceForm = ({ onSuccess }) => {
               id="featured"
               checked={performanceForm.isFeatured}
               onChange={(e) => setPerformanceForm({ ...performanceForm, isFeatured: e.target.checked })}
-              className="h-4 w-4 text-accent-600 focus:ring-accent-500 border-gray-300 rounded"
+              className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
             />
             <label htmlFor="featured" className="ml-2 block text-sm text-gray-700">
               Featured Performance
@@ -317,7 +317,7 @@ const PerformanceForm = ({ onSuccess }) => {
           <button
             type="submit"
             disabled={uploadLoading}
-            className="px-6 py-3 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploadLoading ? (
               <>

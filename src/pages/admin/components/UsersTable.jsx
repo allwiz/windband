@@ -37,7 +37,7 @@ const UsersTable = ({ users, loading, toggleUserStatus, changeUserRole }) => {
               <tr key={user.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-accent-light to-accent rounded-full flex items-center justify-center text-white font-semibold">
                       {user.full_name ? user.full_name[0].toUpperCase() : user.email[0].toUpperCase()}
                     </div>
                     <div className="ml-4">
@@ -55,7 +55,7 @@ const UsersTable = ({ users, loading, toggleUserStatus, changeUserRole }) => {
                   <select
                     value={user.role}
                     onChange={(e) => changeUserRole(user.id, e.target.value)}
-                    className="text-sm border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-accent-500"
+                    className="text-sm border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-accent"
                   >
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
@@ -90,7 +90,7 @@ const UsersTable = ({ users, loading, toggleUserStatus, changeUserRole }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <button className="text-accent-600 hover:text-accent-700 font-medium">
+                  <button className="text-accent hover:text-accent-hover font-medium">
                     View Details
                   </button>
                 </td>

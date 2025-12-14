@@ -81,7 +81,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
   return (
     <div className="max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-        <Music className="h-6 w-6 mr-2 text-accent-600" />
+        <Music className="h-6 w-6 mr-2 text-accent" />
         {editItem ? 'Edit Opening' : 'Add New Opening'}
       </h2>
 
@@ -101,7 +101,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
               required
               value={openingForm.instrumentName}
               onChange={(e) => setOpeningForm({ ...openingForm, instrumentName: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             >
               <option value="">Select an instrument</option>
               {instrumentOptions.map((instrument) => (
@@ -123,7 +123,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
               max="10"
               value={openingForm.openingsCount}
               onChange={(e) => setOpeningForm({ ...openingForm, openingsCount: parseInt(e.target.value) })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
 
@@ -137,7 +137,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
               max="100"
               value={openingForm.priority}
               onChange={(e) => setOpeningForm({ ...openingForm, priority: parseInt(e.target.value) })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="0"
             />
             <p className="text-xs text-gray-500 mt-1">Higher priority items appear first on the Join page</p>
@@ -149,7 +149,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
               id="isActive"
               checked={openingForm.isActive}
               onChange={(e) => setOpeningForm({ ...openingForm, isActive: e.target.checked })}
-              className="h-4 w-4 text-accent-600 focus:ring-accent-500 border-gray-300 rounded"
+              className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
             />
             <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700">
               Active (visible on Join page)
@@ -164,7 +164,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
               rows="3"
               value={openingForm.description}
               onChange={(e) => setOpeningForm({ ...openingForm, description: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="e.g., Including piccolo parts, Strong sight-readers, Multi-percussion skills preferred"
             />
             <p className="text-xs text-gray-500 mt-1">Brief description of the opening requirements or details</p>
@@ -191,7 +191,7 @@ const OpeningsForm = ({ onSuccess, editItem = null }) => {
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>

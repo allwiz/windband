@@ -40,7 +40,7 @@ const AdminSidebar = ({ activeSection, setActiveSection, sidebarOpen, setSidebar
                     }}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                       activeSection === item.id
-                        ? 'bg-accent-600 text-white shadow-lg'
+                        ? 'bg-accent text-white shadow-lg'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >

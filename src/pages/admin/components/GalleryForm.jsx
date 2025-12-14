@@ -155,7 +155,7 @@ const GalleryForm = ({ onSuccess, editItem = null }) => {
   return (
     <div className="max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-        <Image className="h-6 w-6 mr-2 text-accent-600" />
+        <Image className="h-6 w-6 mr-2 text-accent" />
         {editItem ? 'Edit Gallery Item' : 'Add Gallery Item'}
       </h2>
 
@@ -176,7 +176,7 @@ const GalleryForm = ({ onSuccess, editItem = null }) => {
               required
               value={galleryForm.title}
               onChange={(e) => setGalleryForm({ ...galleryForm, title: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="Enter image title"
             />
           </div>
@@ -189,7 +189,7 @@ const GalleryForm = ({ onSuccess, editItem = null }) => {
               required
               value={galleryForm.category}
               onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             >
               <option value="concerts">Concerts</option>
               <option value="rehearsals">Rehearsals</option>
@@ -207,7 +207,7 @@ const GalleryForm = ({ onSuccess, editItem = null }) => {
               type="date"
               value={galleryForm.date}
               onChange={(e) => setGalleryForm({ ...galleryForm, date: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
 
@@ -225,7 +225,7 @@ const GalleryForm = ({ onSuccess, editItem = null }) => {
               />
               <label
                 htmlFor="image-upload"
-                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent-500 transition-colors flex items-center justify-center space-x-2 bg-gray-50 hover:bg-gray-100"
+                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent transition-colors flex items-center justify-center space-x-2 bg-gray-50 hover:bg-gray-100"
               >
                 <Upload className="h-5 w-5 text-gray-600" />
                 <span className="text-gray-600">
@@ -283,7 +283,7 @@ const GalleryForm = ({ onSuccess, editItem = null }) => {
           <button
             type="submit"
             disabled={uploadLoading}
-            className="px-6 py-3 bg-accent-600 text-white rounded-xl hover:bg-accent-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploadLoading ? (
               <>
