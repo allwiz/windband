@@ -80,7 +80,7 @@ const GalleryList = ({ onAddNew, onEdit }) => {
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-1 truncate">{item.title}</h3>
                 <p className="text-sm text-gray-500 mb-2">
-                  {item.category} • {new Date(item.date).toLocaleDateString()}
+                  {item.category} • {new Date(item.date + 'T00:00:00').toLocaleDateString()}
                 </p>
                 {item.description && (
                   <p className="text-sm text-gray-600 line-clamp-2 mb-3">

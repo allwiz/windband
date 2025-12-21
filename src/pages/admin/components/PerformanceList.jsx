@@ -101,7 +101,7 @@ const PerformanceList = ({ onAddNew }) => {
                 <div className="space-y-1 text-sm text-gray-600 mb-3">
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-2 text-gray-400" />
-                    <span>{new Date(item.date).toLocaleDateString()}</span>
+                    <span>{new Date(item.date + 'T00:00:00').toLocaleDateString()}</span>
                   </div>
 
                   {item.start_time && (

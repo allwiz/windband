@@ -520,7 +520,7 @@ const AdminDashboard = () => {
                     {!event.is_active && <span className="px-2 py-0.5 text-tiny bg-red-50 text-red-700 rounded-full">Inactive</span>}
                   </div>
                   <div className="flex items-center gap-4 text-small text-gray-500">
-                    <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(event.date).toLocaleDateString()}</span>
+                    <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(event.date + 'T00:00:00').toLocaleDateString()}</span>
                     {event.start_time && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{event.start_time}{event.end_time && ` - ${event.end_time}`}</span>}
                     {event.location && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{event.location}</span>}
                   </div>

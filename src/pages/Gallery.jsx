@@ -239,7 +239,7 @@ const Gallery = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3.5 h-3.5" />
-                        {new Date(item.date).toLocaleDateString()}
+                        {new Date(item.date + 'T00:00:00').toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -340,7 +340,7 @@ const Gallery = () => {
                   </span>
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" />
-                    {new Date(filteredItems[carouselIndex]?.date).toLocaleDateString()}
+                    {new Date(filteredItems[carouselIndex]?.date + 'T00:00:00').toLocaleDateString()}
                   </span>
                 </div>
                 {filteredItems[carouselIndex]?.description && (
@@ -437,7 +437,7 @@ const Gallery = () => {
                 <span className="badge bg-white/10 text-white/80">
                   {selectedImage.category.charAt(0).toUpperCase() + selectedImage.category.slice(1)}
                 </span>
-                <span>{new Date(selectedImage.date).toLocaleDateString()}</span>
+                <span>{new Date(selectedImage.date + 'T00:00:00').toLocaleDateString()}</span>
                 <span>
                   {filteredItems.findIndex(item => item.id === selectedImage.id) + 1} / {filteredItems.length}
                 </span>
