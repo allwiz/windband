@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ArrowRight, Calendar, MapPin, Clock, Music, Users, Award, Sparkles, X, ZoomIn, ExternalLink, Map, Navigation, CalendarPlus } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Clock, Music, Users, Award, Sparkles, X, ZoomIn, ExternalLink, Map, Navigation, CalendarPlus, Play } from 'lucide-react';
 import { performanceService } from '../services/performanceService';
+import { galleryService } from '../services/galleryService';
 
 const Home = () => {
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
+  const [recentGalleryItems, setRecentGalleryItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [galleryLoading, setGalleryLoading] = useState(true);
   const [selectedPerformance, setSelectedPerformance] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
   const [showMapModal, setShowMapModal] = useState(false);
@@ -13,6 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchUpcomingPerformances();
+    fetchRecentGalleryItems();
   }, []);
 
   const fetchUpcomingPerformances = async () => {
@@ -29,6 +33,16 @@ const Home = () => {
     setLoading(false);
   };
 
+  const fetchRecentGalleryItems = async () => {
+    setGalleryLoading(true);
+    const result = await galleryService.getGalleryItems({ isActive: true });
+    if (result.success) {
+      const recent = result.data.slice(0, 3);
+      setRecentGalleryItems(recent);
+    }
+    setGalleryLoading(false);
+  };
+
   const formatDate = (dateStr, options = {}) => {
     return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
       month: 'short',
@@ -36,6 +50,24 @@ const Home = () => {
       year: 'numeric',
       ...options
     });
+  };
+
+  // Helper function to extract YouTube video ID
+  const extractYouTubeId = (url) => {
+    if (!url) return null;
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/,
+      /^([a-zA-Z0-9_-]{11})$/
+    ];
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+    return null;
+  };
+
+  const isYouTubeUrl = (url) => {
+    return url && (url.includes('youtube.com') || url.includes('youtu.be'));
   };
 
   // Calendar helper functions
@@ -302,6 +334,85 @@ const Home = () => {
         </section>
       )}
 
+      {/* Recent Activities */}
+      {!galleryLoading && recentGalleryItems.length > 0 && (
+        <section className="section-sm">
+          <div className="container-main">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <div className="text-tiny font-medium text-gray-400 uppercase tracking-wider mb-2">
+                  Latest Updates
+                </div>
+                <h2 className="heading-subtitle">Recent Activities</h2>
+              </div>
+              <Link
+                to="/gallery"
+                className="hidden md:flex items-center gap-2 text-small font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                View gallery
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 stagger">
+              {recentGalleryItems.map((item) => (
+                <article
+                  key={item.id}
+                  className="card card-hover group cursor-pointer"
+                  onClick={() => setLightboxImage(item.media_type === 'video' ? item.youtube_url : item.image_url)}
+                >
+                  <div className="aspect-[16/10] bg-gray-50 overflow-hidden flex items-center justify-center relative">
+                    <img
+                      src={item.image_url}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3ENo Image%3C/text%3E%3C/svg%3E';
+                      }}
+                    />
+                    {item.media_type === 'video' && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="bg-red-600 rounded-full p-3 shadow-lg group-hover:scale-110 transition-transform">
+                          <Play className="w-6 h-6 text-white fill-current" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-gray-600 transition-colors truncate">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-small text-gray-500">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      {new Date(item.date + 'T00:00:00').toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                      {item.media_type === 'video' && (
+                        <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                          Video
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-8 text-center md:hidden">
+              <Link
+                to="/gallery"
+                className="btn btn-secondary"
+              >
+                View full gallery
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Features */}
       <section className="section relative overflow-hidden">
         {/* Background accent */}
@@ -493,12 +604,27 @@ const Home = () => {
           >
             <X className="w-6 h-6" />
           </button>
-          <img
-            src={lightboxImage}
-            alt="Full size"
-            className="max-w-full max-h-full object-contain animate-fade-up"
-            onClick={(e) => e.stopPropagation()}
-          />
+          {isYouTubeUrl(lightboxImage) ? (
+            <div
+              className="w-full max-w-4xl aspect-video animate-fade-up"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/${extractYouTubeId(lightboxImage)}?autoplay=1&rel=0`}
+                title="YouTube video"
+                className="w-full h-full rounded-lg"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <img
+              src={lightboxImage}
+              alt="Full size"
+              className="max-w-full max-h-full object-contain animate-fade-up"
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
         </div>
       )}
 
