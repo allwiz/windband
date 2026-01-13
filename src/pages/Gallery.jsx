@@ -1,6 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Search, X, Calendar, Tag, Image, Grid3X3, GalleryHorizontal, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { Search, X, Calendar, Tag, Image, Grid3X3, GalleryHorizontal, ChevronLeft, ChevronRight, ZoomIn, Play } from 'lucide-react';
 import { galleryService } from '../services/galleryService';
+
+// Helper function to extract YouTube video ID from various URL formats
+const extractYouTubeId = (url) => {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/,
+    /^([a-zA-Z0-9_-]{11})$/
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
 
 const Gallery = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -97,6 +111,72 @@ const Gallery = () => {
     }
   };
 
+  // Check if item is a video
+  const isVideo = (item) => item?.media_type === 'video' && item?.youtube_url;
+
+  // Render media content (image or video)
+  const renderMediaContent = (item, className = '', showPlayButton = true) => {
+    if (isVideo(item)) {
+      return (
+        <div className="relative w-full h-full">
+          <img
+            src={item.image_url}
+            alt={item.title}
+            className={className}
+            onError={(e) => {
+              e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect width="400" height="300" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3EVideo Thumbnail%3C/text%3E%3C/svg%3E';
+            }}
+          />
+          {showPlayButton && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="bg-red-600 rounded-full p-3 shadow-lg">
+                <Play className="w-6 h-6 text-white fill-white" />
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+    return (
+      <img
+        src={item.image_url}
+        alt={item.title}
+        className={className}
+        onError={(e) => {
+          e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect width="400" height="300" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3EImage Not Available%3C/text%3E%3C/svg%3E';
+        }}
+      />
+    );
+  };
+
+  // Render lightbox content (YouTube embed for videos, image for photos)
+  const renderLightboxContent = () => {
+    if (!selectedImage) return null;
+
+    if (isVideo(selectedImage)) {
+      const videoId = extractYouTubeId(selectedImage.youtube_url);
+      return (
+        <div className="w-full aspect-video max-h-[75vh]">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+            title={selectedImage.title}
+            className="w-full h-full rounded-lg"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={selectedImage.image_url}
+        alt={selectedImage.title}
+        className="w-full max-h-[75vh] object-contain rounded-lg animate-fade-up"
+      />
+    );
+  };
+
   return (
     <div>
       {/* Hero */}
@@ -108,7 +188,7 @@ const Gallery = () => {
             <div className="text-tiny font-medium text-gray-400 uppercase tracking-wider mb-4">
               Memories
             </div>
-            <h1 className="heading-title mb-4">Photo Gallery</h1>
+            <h1 className="heading-title mb-4">Photo & Video Gallery</h1>
             <p className="text-lg text-gray-500">
               Explore memorable moments from our concerts, rehearsals, and special events.
             </p>
@@ -190,7 +270,7 @@ const Gallery = () => {
               <div className="icon-box icon-box-lg mx-auto mb-4">
                 <Image className="w-6 h-6 text-gray-400" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">No images found</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">No items found</h3>
               <p className="text-gray-500 mb-6 max-w-sm mx-auto">
                 Try adjusting your search or filter to find what you're looking for.
               </p>
@@ -214,24 +294,26 @@ const Gallery = () => {
                   className="card card-hover cursor-pointer group"
                 >
                   <div className="aspect-[4/3] bg-gray-50 overflow-hidden flex items-center justify-center relative">
-                    <img
-                      src={item.image_url}
-                      alt={item.title}
-                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect width="400" height="300" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3EImage Not Available%3C/text%3E%3C/svg%3E';
-                      }}
-                    />
+                    {renderMediaContent(item, "w-full h-full object-contain transition-transform duration-500 group-hover:scale-105")}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg">
-                        <ZoomIn className="w-5 h-5 text-gray-700" />
+                        {isVideo(item) ? (
+                          <Play className="w-5 h-5 text-gray-700" />
+                        ) : (
+                          <ZoomIn className="w-5 h-5 text-gray-700" />
+                        )}
                       </div>
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-gray-600 transition-colors">
-                      {item.title}
-                    </h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="font-semibold text-gray-900 group-hover:text-gray-600 transition-colors">
+                        {item.title}
+                      </h3>
+                      {isVideo(item) && (
+                        <span className="px-2 py-0.5 text-tiny bg-red-100 text-red-700 rounded-full">Video</span>
+                      )}
+                    </div>
                     <div className="flex items-center gap-3 text-small text-gray-500">
                       <span className="flex items-center gap-1">
                         <Tag className="w-3.5 h-3.5" />
@@ -269,23 +351,23 @@ const Gallery = () => {
                     </div>
                   </div>
 
-                  {/* Main Image */}
+                  {/* Main Image/Video */}
                   <div className="flex-1 max-w-4xl relative">
                     <div
                       className="aspect-[16/10] bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center cursor-pointer group shadow-lg"
                       onClick={() => setSelectedImage(filteredItems[carouselIndex])}
                     >
-                      <img
-                        src={filteredItems[carouselIndex]?.image_url}
-                        alt={filteredItems[carouselIndex]?.title}
-                        className="w-full h-full object-contain transition-transform duration-300"
-                        onError={(e) => {
-                          e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect width="400" height="300" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3EImage Not Available%3C/text%3E%3C/svg%3E';
-                        }}
-                      />
+                      {renderMediaContent(
+                        filteredItems[carouselIndex],
+                        "w-full h-full object-contain transition-transform duration-300"
+                      )}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center rounded-2xl">
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-lg">
-                          <ZoomIn className="w-6 h-6 text-gray-700" />
+                          {isVideo(filteredItems[carouselIndex]) ? (
+                            <Play className="w-6 h-6 text-gray-700" />
+                          ) : (
+                            <ZoomIn className="w-6 h-6 text-gray-700" />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -305,7 +387,8 @@ const Gallery = () => {
                     </button>
 
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/50 backdrop-blur-sm rounded-full text-white text-small">
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/50 backdrop-blur-sm rounded-full text-white text-small flex items-center gap-2">
+                      {isVideo(filteredItems[carouselIndex]) && <Play className="w-3 h-3" />}
                       {carouselIndex + 1} / {filteredItems.length}
                     </div>
                   </div>
@@ -331,9 +414,14 @@ const Gallery = () => {
 
               {/* Image Info */}
               <div className="mt-6 text-center">
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                  {filteredItems[carouselIndex]?.title}
-                </h2>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    {filteredItems[carouselIndex]?.title}
+                  </h2>
+                  {isVideo(filteredItems[carouselIndex]) && (
+                    <span className="px-2 py-0.5 text-tiny bg-red-100 text-red-700 rounded-full">Video</span>
+                  )}
+                </div>
                 <div className="flex items-center justify-center gap-4 text-small text-gray-500">
                   <span className="badge">
                     {filteredItems[carouselIndex]?.category.charAt(0).toUpperCase() + filteredItems[carouselIndex]?.category.slice(1)}
@@ -358,7 +446,7 @@ const Gallery = () => {
                     <button
                       key={item.id}
                       onClick={() => setCarouselIndex(index)}
-                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all relative ${
                         index === carouselIndex
                           ? 'border-gray-900 ring-2 ring-gray-900/20'
                           : 'border-transparent hover:border-gray-300'
@@ -372,6 +460,11 @@ const Gallery = () => {
                           e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect width="80" height="80" fill="%23f3f4f6"/%3E%3C/svg%3E';
                         }}
                       />
+                      {isVideo(item) && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                          <Play className="w-4 h-4 text-white fill-white" />
+                        </div>
+                      )}
                     </button>
                   ))}
                 </div>
@@ -426,13 +519,14 @@ const Gallery = () => {
           )}
 
           <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={selectedImage.image_url}
-              alt={selectedImage.title}
-              className="w-full max-h-[75vh] object-contain rounded-lg animate-fade-up"
-            />
+            {renderLightboxContent()}
             <div className="mt-4 text-center">
-              <h2 className="text-xl font-semibold text-white mb-2">{selectedImage.title}</h2>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h2 className="text-xl font-semibold text-white">{selectedImage.title}</h2>
+                {isVideo(selectedImage) && (
+                  <span className="px-2 py-0.5 text-tiny bg-red-600 text-white rounded-full">Video</span>
+                )}
+              </div>
               <div className="flex items-center justify-center gap-4 text-small text-white/60">
                 <span className="badge bg-white/10 text-white/80">
                   {selectedImage.category.charAt(0).toUpperCase() + selectedImage.category.slice(1)}

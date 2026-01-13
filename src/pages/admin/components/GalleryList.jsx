@@ -1,6 +1,20 @@
 import { useState, useEffect } from 'react';
-import { List, Plus, Eye, Trash2, Image, Edit } from 'lucide-react';
+import { List, Plus, Eye, Trash2, Image, Edit, Video, Play } from 'lucide-react';
 import { galleryService } from '../../../services/galleryService';
+
+// Helper function to extract YouTube video ID from various URL formats
+const extractYouTubeId = (url) => {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/,
+    /^([a-zA-Z0-9_-]{11})$/
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
 
 const GalleryList = ({ onAddNew, onEdit }) => {
   const [galleryItems, setGalleryItems] = useState([]);
@@ -67,7 +81,7 @@ const GalleryList = ({ onAddNew, onEdit }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {galleryItems.map((item) => (
             <div key={item.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="aspect-w-16 aspect-h-9 bg-gray-200">
+              <div className="aspect-w-16 aspect-h-9 bg-gray-200 relative">
                 <img
                   src={item.image_url}
                   alt={item.title}
@@ -76,6 +90,13 @@ const GalleryList = ({ onAddNew, onEdit }) => {
                     e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23e5e7eb"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-family="system-ui" font-size="14"%3EImage Not Found%3C/text%3E%3C/svg%3E';
                   }}
                 />
+                {item.media_type === 'video' && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-red-600 rounded-full p-3 shadow-lg">
+                      <Play className="h-6 w-6 text-white fill-current" />
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-1 truncate">{item.title}</h3>
@@ -88,18 +109,35 @@ const GalleryList = ({ onAddNew, onEdit }) => {
                   </p>
                 )}
                 <div className="flex items-center justify-between">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    item.is_active
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {item.is_active ? 'Active' : 'Inactive'}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      item.is_active
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {item.is_active ? 'Active' : 'Inactive'}
+                    </span>
+                    {item.media_type === 'video' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        <Video className="h-3 w-3 mr-1" />
+                        Video
+                      </span>
+                    )}
+                  </div>
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => window.open(item.image_url, '_blank')}
+                      onClick={() => {
+                        if (item.media_type === 'video' && item.youtube_url) {
+                          const videoId = extractYouTubeId(item.youtube_url);
+                          if (videoId) {
+                            window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+                          }
+                        } else {
+                          window.open(item.image_url, '_blank');
+                        }
+                      }}
                       className="text-gray-600 hover:text-accent"
-                      title="View Full Image"
+                      title={item.media_type === 'video' ? 'Watch Video' : 'View Full Image'}
                     >
                       <Eye className="h-4 w-4" />
                     </button>

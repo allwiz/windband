@@ -145,7 +145,9 @@ class GalleryService {
         height: galleryData.height || null,
         date: galleryData.date || new Date().toISOString().split('T')[0],
         created_by: userId, // Can be null if RLS is disabled
-        is_active: true
+        is_active: true,
+        media_type: galleryData.mediaType || 'image',
+        youtube_url: galleryData.youtubeUrl || null
       };
 
       const { data, error } = await supabase
