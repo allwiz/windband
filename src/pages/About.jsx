@@ -24,10 +24,12 @@ const About = () => {
   ];
 
   const boardMembers = [
-    { role: 'President', name: 'Yunhee Lee' },
-    { role: 'Vice President', name: 'Yoonjin Lee' },
-    { role: 'Secretary', name: 'Ahyoung Cho' },
-    { role: 'Committee', name: 'Jinmi Do' },
+    { role: 'Clarinet', name: 'Jihu Lee' },
+    { role: 'Clarinet', name: 'Stella Kim' },
+    { role: 'Clarinet', name: 'Jayden Lim' },    
+    { role: 'Clarinet', name: 'Leia Kim' },
+    { role: 'French Horn', name: 'Aiden Rhee' },
+    { role: 'Clarinet', name: 'Sihu Lee' },
   ];
 
   const principalPlayers = [
@@ -190,7 +192,7 @@ const About = () => {
                 <div className="w-14 h-14 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-4 shadow-sm">
                   <Users className="w-5 h-5 text-gray-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-4 text-center">Board Members</h3>
+                <h3 className="font-semibold text-gray-900 mb-4 text-center">Founding Members</h3>
 
                 {/* Member Nodes */}
                 <div className="space-y-3 w-full max-w-xs">
