@@ -188,29 +188,59 @@ const Home = () => {
 
         <div className="section relative">
           <div className="container-main">
-            <div className="max-w-3xl">
-              <div className="badge mb-6">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-                Est. 2025
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-0 items-center">
+              {/* Left: Text content + buttons */}
+              <div className="max-w-xl relative z-10">
+                <div className="inline-flex">
+                  <div className="badge mb-6">
+                    <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                    Est. 2025
+                  </div>
+                </div>
+
+                <h1 className="heading-display text-balance animate-fade-up">
+                  Global Mission
+                  <span className="block" style={{ color: '#b08d57' }}>Winds & Brass</span>
+                </h1>
+
+                <p className="mt-6 text-lg md:text-xl text-gray-500 leading-relaxed animate-fade-up" style={{ animationDelay: '100ms' }}>
+                  A community wind ensemble dedicated to musical excellence and inspiring young musicians to serve others through music.
+                </p>
+
+                <div className="mt-10 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '200ms' }}>
+                  <Link to="/join" className="btn btn-primary px-6 py-3">
+                    Join the band
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                  <Link to="/performances" className="btn btn-secondary px-6 py-3">
+                    View performances
+                  </Link>
+                </div>
               </div>
 
-              <h1 className="heading-display text-balance animate-fade-up">
-                Global Mission
-                <span className="block text-gray-400">Winds & Brass</span>
-              </h1>
-
-              <p className="mt-6 text-lg md:text-xl text-gray-500 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: '100ms' }}>
-                A community wind ensemble dedicated to musical excellence and inspiring young musicians to serve others through music.
-              </p>
-
-              <div className="mt-10 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '200ms' }}>
-                <Link to="/join" className="btn btn-primary px-6 py-3">
-                  Join the band
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-                <Link to="/performances" className="btn btn-secondary px-6 py-3">
-                  View performances
-                </Link>
+              {/* Right: Member photo — fades into white on all edges to blend organically with the page */}
+              <div className="relative animate-fade-up lg:-ml-16 xl:-ml-24" style={{ animationDelay: '300ms' }}>
+                <img
+                  src="/2026-gmwb-members.jpg"
+                  alt="Global Mission Winds & Brass members"
+                  className="w-full h-auto block"
+                  style={{
+                    maskImage: [
+                      'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 12%, rgba(0,0,0,0.85) 28%, black 42%, black 100%)',
+                      'linear-gradient(to left, transparent 0%, black 6%, black 100%)',
+                      'linear-gradient(to bottom, transparent 0%, black 6%, black 100%)',
+                      'linear-gradient(to top, transparent 0%, black 6%, black 100%)',
+                    ].join(', '),
+                    WebkitMaskImage: [
+                      'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 12%, rgba(0,0,0,0.85) 28%, black 42%, black 100%)',
+                      'linear-gradient(to left, transparent 0%, black 6%, black 100%)',
+                      'linear-gradient(to bottom, transparent 0%, black 6%, black 100%)',
+                      'linear-gradient(to top, transparent 0%, black 6%, black 100%)',
+                    ].join(', '),
+                    maskComposite: 'intersect',
+                    WebkitMaskComposite: 'source-in',
+                  }}
+                />
               </div>
             </div>
 
