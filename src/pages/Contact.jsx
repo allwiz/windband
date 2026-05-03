@@ -244,7 +244,7 @@ const Contact = () => {
                   Many of our members return to music after years away. We're supportive of musicians getting back into playing and will work with you to help you regain your skills.
                 </p>
               </div>
-*/}
+
 
               <div className="card-feature">
                 <h3 className="font-semibold text-gray-900 mb-2">
@@ -254,7 +254,7 @@ const Contact = () => {
                   No! The Global Mission Winds & Brass is completely free to join. We provide music and music stands. You just need to bring your instrument and enthusiasm.
                 </p>
               </div>
-
+*/}
               <div className="card-feature">
                 <h3 className="font-semibold text-gray-900 mb-2">
                   Can I miss rehearsals occasionally?
