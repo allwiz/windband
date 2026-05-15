@@ -28,7 +28,6 @@ const About = () => {
     { role: 'Clarinet', name: 'Stella Kim' },
     { role: 'Clarinet', name: 'Jayden Lim' },    
     { role: 'Clarinet', name: 'Leia Kim' },
-    { role: 'French Horn', name: 'Aiden Rhee' },
     { role: 'Clarinet', name: 'Sihu Lee' },
   ];
 
