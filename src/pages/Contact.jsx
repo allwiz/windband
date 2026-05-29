@@ -251,7 +251,7 @@ const Contact = () => {
                   Are there any fees to join?
                 </h3>
                 <p className="text-gray-500">
-                  No! The Global Mission Winds & Brass is completely free to join. We provide music and music stands. You just need to bring your instrument and enthusiasm.
+                  No! The Global Mission Woodwind & Brass is completely free to join. We provide music and music stands. You just need to bring your instrument and enthusiasm.
                 </p>
               </div>
 */}

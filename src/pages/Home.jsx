@@ -200,7 +200,7 @@ const Home = () => {
 
                 <h1 className="heading-display text-balance animate-fade-up">
                   Global Mission
-                  <span className="block" style={{ color: '#b08d57' }}>Winds & Brass</span>
+                  <span className="block" style={{ color: '#b08d57' }}>Woodwind & Brass</span>
                 </h1>
 
                 <p className="mt-6 text-lg md:text-xl text-gray-500 leading-relaxed animate-fade-up" style={{ animationDelay: '100ms' }}>
@@ -222,7 +222,7 @@ const Home = () => {
               <div className="relative animate-fade-up lg:-ml-16 xl:-ml-24" style={{ animationDelay: '300ms' }}>
                 <img
                   src="/2026-gmwb-members.jpg"
-                  alt="Global Mission Winds & Brass members"
+                  alt="Global Mission Woodwind & Brass members"
                   className="w-full h-auto block"
                   style={{
                     maskImage: [

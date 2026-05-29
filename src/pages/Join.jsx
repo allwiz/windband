@@ -211,7 +211,7 @@ const Join = () => {
               </div>
               <h2 className="heading-subtitle mb-6">Member Benefits</h2>
               <p className="text-gray-500 mb-8">
-                Joining the Global Mission Winds & Brass offers more than just the opportunity to make music. You'll become part of a supportive community.
+                Joining the Global Mission Woodwind & Brass offers more than just the opportunity to make music. You'll become part of a supportive community.
               </p>
               <div className="space-y-4">
                 {benefits.map((benefit, index) => (
@@ -228,7 +228,7 @@ const Join = () => {
             <div className="flex items-center justify-center p-8 bg-white rounded-2xl border border-gray-100">
               <img
                 src="/logo.png"
-                alt="Global Mission Winds & Brass"
+                alt="Global Mission Woodwind & Brass"
                 className="w-full max-w-xs h-auto object-contain"
               />
             </div>
@@ -257,7 +257,7 @@ const Join = () => {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
               <a
-                href="mailto:info@globalmissionwindband.org"
+                href="mailto:gmwbirvine@gmail.com"
                 className="btn btn-outline px-6 py-3"
               >
                 Email Questions

@@ -69,7 +69,7 @@ const About = () => {
               Inspiring musicians to serve through music
             </h1>
             <p className="text-xl text-gray-500 leading-relaxed">
-              Global Mission Winds & Brass inspires young musicians—middle and high school students—to use their talents to serve others and spread joy throughout the community.
+              Global Mission Woodwind & Brass inspires young musicians—middle and high school students—to use their talents to serve others and spread joy throughout the community.
             </p>
           </div>
         </div>

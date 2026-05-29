@@ -83,7 +83,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-gray-100">
           <p className="text-tiny text-gray-400">
-            &copy; {currentYear} Global Mission Wind Band. All rights reserved.
+            &copy; {currentYear} Global Mission Woodwind & Brass. All rights reserved.
           </p>
         </div>
       </div>
