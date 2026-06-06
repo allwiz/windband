@@ -5,6 +5,7 @@ const About = () => {
     {
       name: 'Dr. Andrew Park',
       role: 'Director & Conductor',
+      image: '/dr-andrew.png',
       credentials: [
         'Professor at Azusa Pacific University',
         'CEO & Executive Director, OpusOne International Music Festival',
@@ -15,6 +16,7 @@ const About = () => {
     {
       name: 'Jongeui Kim',
       role: 'Assistant Conductor',
+      image: '/Jongeui.png',
       credentials: [
         'Master of Music at USC',
         'Performs with LA Phil, San Diego Symphony, LA Opera, and New West Symphony',
@@ -98,6 +100,13 @@ const About = () => {
                       {person.name}
                     </h3>
                   </div>
+                  {person.image && (
+                    <img
+                      src={person.image}
+                      alt={person.name}
+                      className="w-16 h-16 rounded-full object-cover ml-auto flex-shrink-0"
+                    />
+                  )}
                 </div>
                 <ul className="space-y-3">
                   {person.credentials.map((credential, idx) => (
