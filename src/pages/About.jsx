@@ -27,7 +27,6 @@ const About = () => {
 
   const boardMembers = [
     { role: 'Clarinet', name: 'Jihu Lee' },
-    { role: 'Clarinet', name: 'Stella Kim' },
     { role: 'Clarinet', name: 'Jayden Lim' },    
     { role: 'Clarinet', name: 'Leia Kim' },
     { role: 'Clarinet', name: 'Sihu Lee' },
