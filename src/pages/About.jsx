@@ -166,7 +166,21 @@ const About = () => {
           <div className="relative max-w-4xl mx-auto">
             {/* SVG Connection Lines */}
             <svg
-              className="absolute inset-0 w-full h-full pointer-events-none"
+              className="absolute inset-0 w-full h-full pointer-events-none md:hidden"
+              preserveAspectRatio="none"
+            >
+              {/* Mobile: vertical line from GMWB to first branch */}
+              <line
+                x1="50%"
+                y1="80"
+                x2="50%"
+                y2="180"
+                stroke="#e5e7eb"
+                strokeWidth="2"
+              />
+            </svg>
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none hidden md:block"
               preserveAspectRatio="none"
             >
               {/* Vertical line from GMWB to split point */}
@@ -223,7 +237,7 @@ const About = () => {
             <div className="h-16" />
 
             {/* Two Branch Nodes */}
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               {/* Board Members Branch */}
               <div className="flex flex-col items-center">
                 {/* Branch Header Node */}
