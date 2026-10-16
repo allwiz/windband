@@ -237,7 +237,7 @@ const About = () => {
             <div className="h-16" />
 
             {/* Two Branch Nodes */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8">
               {/* Board Members Branch */}
               <div className="flex flex-col items-center">
                 {/* Branch Header Node */}
@@ -256,6 +256,8 @@ const About = () => {
 
               {/* Leadership Branch */}
               <div className="flex flex-col items-center">
+                {/* Mobile: connector from Founding Members */}
+                <div className="md:hidden w-0.5 h-12 bg-gray-200" />
                 {/* Branch Header Node */}
                 <div className="w-14 h-14 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-4 shadow-sm">
                   <Award className="w-5 h-5 text-gray-600" />
